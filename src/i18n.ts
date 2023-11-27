@@ -1,40 +1,17 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import EnMessage from './locales/en/messages.json';
-import ViMessage from './locales/vi/messages.json';
-import { LOCALE_KEY } from './utils/constants';
-
-// the translations
-// (tip move them in a JSON file and import them,
-// or even better, manage them separated from your code: https://react.i18next.com/guides/multiple-translation-files)
-const resources = {
-  en: {
-    translation: EnMessage,
-  },
-  vi: {
-    translation: ViMessage,
-  },
-};
+import i18nextHttpBackend from 'i18next-http-backend';
+import I18nextBrowserLanguageDetector from 'i18next-browser-languagedetector';
 
 i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(initReactI18next)
+  .use(i18nextHttpBackend)
+  .use(I18nextBrowserLanguageDetector)
   .init({
-    resources,
-    lng: getLocale(), // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
-    // you can use the i18n.changeLanguage function to change the language manually: https://www.i18next.com/overview/api#changelanguage
-    // if you're using a language detector, do not define the lng option
-
+    fallbackLng: 'vi',
     interpolation: {
-      escapeValue: false, // react already safes from xss
+      escapeValue: false,
     },
   });
-
-export function getLocale() {
-  try {
-    return JSON.parse(localStorage.getItem(LOCALE_KEY) || 'en');
-  } catch {
-    return 'en';
-  }
-}
 
 export default i18n;
