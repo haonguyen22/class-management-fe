@@ -1,49 +1,17 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import { get, post } from '../generic';
 
-const createAxios = () => {
-  const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_SERVER_URL}v1/api/`,
-    headers: {
-      'Content-Type': 'application/json',
-      timeout: 10000,
-    },
-  });
-  const get = async (
-    url: string,
-    params: AxiosRequestConfig<any> | undefined,
-  ) => {
-    try {
-      const res = await instance.get(url, params);
-      return res;
-    } catch (err) {
-      console.log('Error: ', err);
-      return err;
-    }
-  };
+const AuthService = {
+  login: (email: string, password: string) => {
+    return post('/auth/login', { data: { email, password } });
+  },
 
-  const post = async (url: string, params: any) => {
-    try {
-      const res = await instance.post(url, params);
-      return res;
-    } catch (err) {
-      console.log('Error: ', err);
-      return err;
-    }
-  };
-  const put = async (
-    url: string,
-    data: any,
-    params: AxiosRequestConfig<any> | undefined,
-  ) => {
-    try {
-      const res = await instance.put(url, data, params);
-      return res;
-    } catch (err) {
-      console.log('Error: ', err);
-      return err;
-    }
-  };
-  return { get, post, put };
+  register: (email: string, password: string) => {
+    return post('/auth/register', { data: { email, password } });
+  },
+  logout: () => {
+    return post('/auth/logout');
+  },
+  me: () => {
+    return get('/auth/me');
+  },
 };
-
-export default createAxios();
