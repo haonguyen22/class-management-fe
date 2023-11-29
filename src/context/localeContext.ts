@@ -4,8 +4,7 @@ import i18n from '../i18n';
 
 const defaultLocale = {
   locale: i18n.language,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setLocale: (s: string) => {},
+  setLocale: (_: string) => {},
 };
 
 export default createContext(defaultLocale);

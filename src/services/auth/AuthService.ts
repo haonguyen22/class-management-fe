@@ -1,17 +1,22 @@
-import { get, post } from '../generic';
+import { apiService } from '../generic';
 
-const AuthService = {
-  login: (email: string, password: string) => {
-    return post('/auth/login', { data: { email, password } });
+export const authService = {
+  login: async (email: string, password: string) => {
+    const res = await apiService.post('/auth/login', {
+      data: { email, password },
+    });
+    return res;
   },
 
-  register: (email: string, password: string) => {
-    return post('/auth/register', { data: { email, password } });
+  register: async (email: string, password: string) => {
+    const res = await apiService.post('/auth/register', {
+      data: { email, password },
+    });
+    return res;
   },
-  logout: () => {
-    return post('/auth/logout');
-  },
-  me: () => {
-    return get('/auth/me');
+
+  logout: async () => {
+    const res = await apiService.post('/auth/logout');
+    return res;
   },
 };

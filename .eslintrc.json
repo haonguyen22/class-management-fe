@@ -32,6 +32,7 @@
             "single"
         ],
         "no-duplicate-imports": "error",
+        "@typescript-eslint/no-empty-function": "off",
         "semi": "warn",
         "array-bracket-spacing": "warn",
         "arrow-parens": "off",

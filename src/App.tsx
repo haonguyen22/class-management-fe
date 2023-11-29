@@ -1,22 +1,32 @@
-import { useState } from 'react';
-import LocaleContext from './context/localeContext';
+import { useEffect, useState } from 'react';
+import LocaleContext from './context/LocaleContext';
 import Routes from './routes/routes';
 import i18n from './i18n';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import { AuthProvider } from 'react-auth-kit';
 
 function App() {
   const [locale, setLocale] = useState(i18n.language);
 
-  i18n.on('languageChanged', () => {
-    setLocale(i18n.language);
-  });
+  useEffect(() => {
+    i18n.on('languageChanged', () => {
+      setLocale(i18n.language);
+    });
+  }, []);
 
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
-      <Header />
-      <Routes />
-      <Footer />
+      <AuthProvider
+        authName={'_auth'}
+        authType={'cookie'}
+        cookieDomain={process.env.REACT_APP_SERVER_URL}
+        cookieSecure={true}
+      >
+        <Header />
+        <Routes />
+        <Footer />
+      </AuthProvider>
     </LocaleContext.Provider>
   );
 }

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import localeContext from '../../context/localeContext';
+import localeContext from '../../context/LocaleContext';
 import i18n from '../../i18n';
 
 function Header() {
