@@ -20,7 +20,7 @@ function App() {
       <AuthProvider
         authName={'_auth'}
         authType={'cookie'}
-        cookieDomain={process.env.REACT_APP_SERVER_URL}
+        cookieDomain={window.location.hostname}
         cookieSecure={true}
       >
         <Header />
