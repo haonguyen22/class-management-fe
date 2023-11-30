@@ -1,0 +1,22 @@
+{
+  "Welcome to React": "Chào mừng tới React and react-i18next",
+  "Footer": "Chân trang",
+  "Other": "Hoặc, đăng nhập bằng tài khoản của bạn",
+  "email.invalid": "Email không hợp lệ",
+  "email.required": "Email là bắt buộc",
+  "password.required": "Mật khẩu là bắt buộc",
+  "email.label": "Email",
+  "password.label": "Mật khẩu",
+  "submit.label": "Đăng nhập",
+  "Google.label": "Đăng nhập bằng Google",
+  "Facebook.label": "Đăng nhập bằng Facebook",
+  "firstName.required": "Tên họ là bắt buộc",
+  "lastName.required": "Tên là bắt buộc",
+  "password.min": "Mật khẩu phải có ít nhất 8 ký tự",
+  "confirmPassword.notMatch": "Mật khẩu không khớp",
+  "confirmPassword.required": "Xác nhận mật khẩu là bắt buộc",
+  "acceptTerms.required": "Bạn phải đồng ý với điều khoản của chúng tôi",
+  "firstName.label": "Tên họ",
+  "lastName.label": "Tên",
+  "confirmPassword.label": "Xác nhận mật khẩu"
+}

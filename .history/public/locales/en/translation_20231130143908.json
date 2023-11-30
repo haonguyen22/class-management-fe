@@ -1,0 +1,7 @@
+{
+  "Welcome to React": "Welcome to React and react-i18next",
+  "Footer": "Footer",
+  "LoginPage.email.invalid": "Invalid email address",
+  "LoginPage.email.required": "Email is required",
+  "LoginPage.password.required": "Password is required",
+}

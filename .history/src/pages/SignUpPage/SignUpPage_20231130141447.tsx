@@ -1,0 +1,91 @@
+import { useTranslation } from 'react-i18next';
+import { Formik, Form,Field,ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+function SignUpPage() {
+  const { t } = useTranslation();
+
+  return <>
+    <Formik initialValues={{
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      acceptTerms: false,
+    }}
+    validationSchema={Yup.object({
+      firstName: Yup.string()
+        .max(15, t('Max 15 characters'))
+        .required(t('First name is required')),
+      lastName: Yup.string()
+        .max(20, t('Max 20 characters'))
+        .required(t('Last name is required')),
+      email: Yup.string()
+        .email(t('Email is invalid'))
+        .required(t('Email is required')),
+      password: Yup.string()
+        .min(6, t('Min 6 characters'))
+        .max(20, t('Max 20 characters'))
+        .required(t('Password is required')),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), ''], t('Confirm password is not match'))
+        .required(t('Confirm password is required')),
+      acceptTerms: Yup.boolean()
+        .oneOf([true], t('Accept terms is required'))
+        .required(t('Accept terms is required')),
+    })}
+    onSubmit={(values)=>{
+      console.log(values);
+    }}>
+      <Form className="form" autoComplete='off'>
+        <div className='FirstName'>
+          <label htmlFor="firstName">{t('First name')}</label>
+          <Field name="firstName" type="text" />
+          <div className="error">
+            <ErrorMessage name="firstName" />
+          </div>
+        </div>
+        <div className='LastName'>
+          <label htmlFor="lastName">{t('Last name')}</label>
+          <Field name="lastName" type="text" />
+          <div className="error">
+            <ErrorMessage name="lastName" />
+          </div>
+        </div>
+        <div className='Email'>
+          <label htmlFor="email">{t('Email')}</label>
+          <Field name="email" type="email" />
+          <div className="error">
+            <ErrorMessage name="email" />
+          </div>
+        </div>
+        <div className='Password'>
+          <label htmlFor="password">{t('Password')}</label>
+          <Field name="password" type="password" />
+          <div className="error">
+            <ErrorMessage name="password" />
+          </div>
+        </div>
+        <div className='ConfirmPassword'>
+          <label htmlFor="confirmPassword">{t('Confirm password')}</label>
+          <Field name="confirmPassword" type="password" />
+          <div className="error">
+            <ErrorMessage name="confirmPassword" />
+          </div>
+        </div>
+        <div className='AcceptTerms'>
+          <label htmlFor="acceptTerms">{t('I accept the terms and conditions')}</label>
+          <Field name="acceptTerms" type="checkbox" />
+          <div className="error">
+            <ErrorMessage name="acceptTerms" />
+          </div>
+        </div>
+      </Form>
+    </Formik>
+
+
+  </>;
+}
+
+export default SignUpPage;

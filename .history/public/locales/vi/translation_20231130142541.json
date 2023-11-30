@@ -1,0 +1,18 @@
+{
+  "Welcome to React": "Chào mừng tới React and react-i18next",
+  "Footer": "Chân trang",
+  "signUpPage.firstName.max": "First name must be less than 20 characters (Tên họ phải ít hơn 20 ký tự)",
+  "signUpPage.firstName.required": "First name is required (Tên họ là bắt buộc)",
+  "signUpPage.lastName.max": "Last name must be less than 20 characters (Tên phải ít hơn 20 ký tự)",
+  "signUpPage.lastName.required": "Last name is required (Tên là bắt buộc)",
+  "signUpPage.email.required": "Email is required (Email là bắt buộc)",
+  "signUpPage.email.invalid": "Email must be a valid email (Email phải là một email hợp lệ)",
+  "signUpPage.password.required": "Password is required (Mật khẩu là bắt buộc)",
+  "signUpPage.password.min": "Password must be at least 8 characters (Mật khẩu phải ít nhất 8 ký tự)",
+  "signUpPage.password.max": "Password must be less than 20 characters (Mật khẩu phải ít hơn 20 ký tự)",
+  "signUpPage.password.invalid": "Password must contain at least one number and one letter (Mật khẩu phải chứa ít nhất một số và một chữ cái)",
+  "signUpPage.confirmPassword.required": "Confirm password is required (Xác nhận mật khẩu là bắt buộc)",
+  "signUpPage.confirmPassword.match": "Confirm password must match password (Xác nhận mật khẩu phải khớp với mật khẩu)",
+  "signUpPage.acceptTerms.oneOf": "You must accept the terms and conditions (Bạn phải chấp nhận các điều khoản và điều kiện)",
+  "signUpPage.acceptTerms.required": "You must accept the terms and conditions (Ban phải chấp nhận các điều khoản và điều kiện)",
+}

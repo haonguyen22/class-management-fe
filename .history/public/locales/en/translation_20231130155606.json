@@ -1,0 +1,12 @@
+{
+  "Welcome to React": "Welcome to React and react-i18next",
+  "Footer": "Footer",
+  "LoginPage.Other": "Or, sign in with your account",
+  "LoginPage.email.invalid": "Invalid email address",
+  "LoginPage.email.required": "Email is required",
+  "LoginPage.password.required": "Password is required",
+  "LoginPage.email.label": "Email",
+  "LoginPage.password.label": "Password",
+  "LoginPage.submit.label": "Submit",
+  "LoginPage.Google.label": "Sign in with Google"
+}
