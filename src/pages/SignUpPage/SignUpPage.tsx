@@ -36,7 +36,7 @@ function SignUpPage() {
       onSubmit={(values) => {
         console.log(values);
       }}>
-      <Form className='font-medium text-lg flex flex-col gap-5 w-full items-center'>
+      <Form className='font-medium text-lg flex flex-col gap-5 w-full items-center' autoComplete='off'>
         <div className='w-full'>
           <label htmlFor='firstName' >{t('firstName.label')}</label>
           <Field name='firstName' type='text' placeholder={t('firstName.label')} className='w-full px-3 py-2 border ring-1 border-gray-500 rounded-md focus:outline-none focus:ring-green-300 transition-all'/>
