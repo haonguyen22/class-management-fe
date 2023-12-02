@@ -12,14 +12,17 @@
   "submit.label": "Submit",
   "Google.label": "Sign in with Google",
   "Facebook.label": "Sign in with Facebook",
-  "firstName.required": "First name is required",
-  "lastName.required": "Last name is required",
+  "name.required": "Name is required",
   "password.min": "Password must be at least 8 characters",
   "confirmPassword.notMatch": "Confirm password does not match",
   "confirmPassword.required": "Confirm password is required",
   "acceptTerms.required": "You must accept the terms and conditions",
-  "firstName.label": "First name",
-  "lastName.label": "Last name",
+  "name.label": "Name",
   "confirmPassword.label": "Confirm password",
-  "acceptTerms.label": "I accept the terms and conditions"
+  "acceptTerms.label": "I accept the terms and conditions",
+  "phone.required": "Phone is required",
+  "phone.label": "Phone",
+  "phone.invalid": "Invalid phone number",
+  "address.required": "Address is required",
+  "address.label": "Address"
 }
