@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = `${process.env.REACT_APP_SERVER_URL}v1/api/`;
+const baseURL = `${process.env.REACT_APP_SERVER_URL}/api/v1`;
 
 const configHeader = (token?: string) => {
   const config = {
@@ -58,3 +58,4 @@ export const apiService = {
     }
   },
 };
+

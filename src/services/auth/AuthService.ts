@@ -19,4 +19,9 @@ export const authService = {
     const res = await apiService.post('/auth/logout');
     return res;
   },
+
+  getGoogleSignInUrl: () => {
+    return `${process.env.REACT_APP_SERVER_URL}/api/v1/auth/google`;
+  },
 };
+
