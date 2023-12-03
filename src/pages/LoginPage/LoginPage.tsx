@@ -4,12 +4,14 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaSquareFacebook } from 'react-icons/fa6';
 import * as Yup from 'yup';
 import { authService } from '../../services/auth/AuthService';
-import { ILogin, IResponse } from '../../utils/interface';
+import { IError, ILogin, IResponse } from '../../utils/interface';
+import { useNavigate } from 'react-router-dom';
 import { useSignIn } from 'react-auth-kit';
 
 function LoginPage() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
-  const Signin = useSignIn();
+  const signIn = useSignIn();
 
   const handleGoogleSignInClick = async () => {
     try {
@@ -22,18 +24,26 @@ function LoginPage() {
   const handleLogin = async (values: ILogin) => {
     try {
       const res = await authService.login(values);
-      const temp = res as IResponse;
-      if (temp.status === 200) {
-        const token = temp.data.metadata as {token: string};
-        console.log(token);
-        Signin({
-          token: token.token,
-          tokenType: 'Bearer',
-          expiresIn: 3600,
-          authState: { email: values.email},
-        });
-        window.location.href = '/';
+      let response;
+      if (
+        (res as IResponse).status === undefined ||
+        (res as IResponse).data === undefined
+      ) {
+        response = res as IError;
+        console.log(response);
+      } else {
+        response = res as IResponse;
+        if (response.status === 200) {
+          const token = response.data.metadata as { token: string };
+          signIn({
+            token: token.token,
+            tokenType: 'Bearer',
+            expiresIn: 3600,
+            authState: { email: values.email },
+          });
+        }
       }
+      navigate('/');
     } catch (error) {
       console.error('Error calling API:', error);
     }
@@ -71,7 +81,7 @@ function LoginPage() {
       </div>
 
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ email: 'hieu@gmail.com', password: '12345678' }}
         validationSchema={Yup.object({
           email: Yup.string()
             .email(t('email.invalid'))
@@ -119,7 +129,9 @@ function LoginPage() {
                 <div className="flex justify-center items-center">
                   <div className="animate-spin rounded-full h-7 w-7 border-[3px] border-b-transparent border-white"></div>
                 </div>
-              ) : t('submit.label')}
+              ) : (
+                t('submit.label')
+              )}
             </button>
           </Form>
         )}
@@ -129,4 +141,6 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
+function Either<T, U>(res: unknown) {
+  throw new Error('Function not implemented.');
+}

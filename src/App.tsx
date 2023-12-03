@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import LocaleContext from './context/localeContext';
+import LocaleContext from './context/LocaleContext';
 import Routes from './routes/routes';
 import i18n from './i18n';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
 import { AuthProvider } from 'react-auth-kit';
 
 function App() {
@@ -23,9 +21,7 @@ function App() {
         cookieDomain={window.location.hostname}
         cookieSecure={true}
       >
-        <Header />
         <Routes />
-        <Footer />
       </AuthProvider>
     </LocaleContext.Provider>
   );

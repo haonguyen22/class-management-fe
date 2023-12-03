@@ -21,3 +21,15 @@ export interface IResponse {
   data: Record<string, unknown>;
   status: number;
 }
+
+export interface IError {
+  message: string;
+  status: number;
+}
+
+export interface IErrorResponse {
+  data: object,
+  status: number,
+  statusText: string,
+  
+}
