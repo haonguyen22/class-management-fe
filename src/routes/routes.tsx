@@ -14,6 +14,7 @@ import HomePage from '../pages/HomePage';
 import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
 import ResetPassword from '../pages/Auth/ResetPassword';
+import Auth from '../pages/Auth';
 
 function Layout() {
   return (
@@ -32,6 +33,7 @@ export const RouteList = {
   resetPassword: '/reset-password',
   forgotPassword: '/forgot-password',
   confirm: '/confirm',
+  auth: '/auth/success',
 };
 
 function Routes() {
@@ -54,6 +56,7 @@ function Routes() {
         />
         <Route path={RouteList.resetPassword} element={<ResetPassword />} />
         <Route path={RouteList.confirm} element={<ConfirmEmailPage />} />,
+        <Route path={RouteList.auth } element={<Auth />}/>
       </Route>,
     ),
   );

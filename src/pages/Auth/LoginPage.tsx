@@ -166,10 +166,8 @@ function LoginPage() {
         <div className="flex rounded-md justify-stretch border bg-blue-200 p-2 min-w-fit cursor-pointer ml-2 hover:bg-blue-300"
           onClick={handleFacebookSignInClick}
         >
-        <div className="flex rounded-md justify-stretch border bg-blue-200 p-2 min-w-fit cursor-pointer ml-2 hover:bg-blue-300">
           <FaSquareFacebook className="w-8 h-8" />
         </div>
-      </div>
     </div>
   </div>);
 }
