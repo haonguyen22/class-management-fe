@@ -4,7 +4,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaSquareFacebook } from 'react-icons/fa6';
 import * as Yup from 'yup';
 import { authService } from '../../services/auth/AuthService';
-import { ILogin } from '../../utils/interface';
+import { ILogin } from '../../models/IAxiosResponse';
 import { Link, useNavigate } from 'react-router-dom';
 import { useIsAuthenticated, useSignIn } from 'react-auth-kit';
 import { useEffect, useState } from 'react';
@@ -20,7 +20,6 @@ function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticate()) {
-      console.log(1);
       navigate('/');
     }
   }, [isAuthenticate, navigate]);

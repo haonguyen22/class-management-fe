@@ -32,5 +32,8 @@
   "emailResetPassSend": "Email to reset password has been sent",
   "emailResetPassSendFailed": "Email to reset password has been sent failed",
   "weWillSendYouResetPassword": "We will send you an email with a link to reset your password",
-  "backToLogin": "Back to login"
+  "backToLogin": "Back to login",
+  "verify.loading": "Verifying...",
+  "verify.fail": "Confirm email failed.",
+  "error": "Error message: {{message}}"
 }

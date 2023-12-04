@@ -1,4 +1,4 @@
-import { IError, IErrorResponse, IResponse } from './interface';
+import { IError, IErrorResponse, IResponse } from '../models/IAxiosResponse.js';
 
 export function handleAxiosReponse(
   res: unknown,

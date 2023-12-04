@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { authService } from '../../services/auth/AuthService';
-import { IError, IErrorResponse, ISignup } from '../../utils/interface';
+import { IError, IErrorResponse, ISignup } from '../../models/IAxiosResponse';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useIsAuthenticated } from 'react-auth-kit';

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
 import i18n from '../../i18n';
+import { RouteList } from '../../routes/routes';
 
 function Header() {
   const { locale } = useContext(localeContext);
@@ -14,14 +15,19 @@ function Header() {
 
   const logOut = () => {
     signOut();
-    navigate('/login');
+    navigate(RouteList.login);
+  };
+
+  const home = () => {
+    if (isAuthenticate()) navigate(RouteList.home);
+    else navigate(RouteList.login);
   };
 
   return (
     <div>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <Link to="/" className="flex items-center">
+          <button onClick={home} className="flex items-center">
             <img
               src={'images/logo.png'}
               className={'mr-3 h-6 sm:h-9'}
@@ -30,7 +36,7 @@ function Header() {
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white ">
               Classroom
             </span>
-          </Link>
+          </button>
           <div className="flex items-center lg:order-2">
             <select
               className={

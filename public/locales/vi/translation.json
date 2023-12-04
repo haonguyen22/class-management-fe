@@ -24,5 +24,15 @@
   "phone.label": "Số điện thoại",
   "phone.invalid": "Số điện thoại không hợp lệ",
   "address.required": "Địa chỉ là bắt buộc",
-  "address.label": "Địa chỉ"
+  "address.label": "Địa chỉ",
+  "forgotPassword": "Quên mật khẩu?",
+  "notHaveAccount": "Chưa có tài khoản?",
+  "resetPassword": "Đặt lại mật khẩu",
+  "emailResetPassSend": "Email đặt lại mật khẩu đã được gửi",
+  "emailResetPassSendFailed": "Gửi email đặt lại mật khẩu thất bại",
+  "weWillSendYouResetPassword": "Chúng tôi sẽ gửi email với liên kết để đặt lại mật khẩu của bạn",
+  "backToLogin": "Quay lại đăng nhập",
+  "verify.loading": "Đang xác minh...",
+  "verify.fail": "Xác minh email thất bại.",
+  "error": "Thông báo lỗi: {{message}}"
 }
