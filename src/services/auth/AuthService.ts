@@ -24,4 +24,11 @@ export const authService = {
   getGoogleSignInUrl: () => {
     return `${process.env.REACT_APP_SERVER_URL}/api/v1/auth/google`;
   },
+
+  resetPassword: async (email: string) => {
+    const res = await apiService.get('/auth/forgot-password', {
+      param: { email },
+    });
+    return res;
+  },
 };

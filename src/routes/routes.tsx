@@ -11,6 +11,7 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import { RequireAuth } from 'react-auth-kit';
 import HomePage from '../pages/HomePage';
+import ForgotPasswordPage from '../pages/ForgotPasswordPage/ForgotPasswordPage';
 
 function Layout() {
   return (
@@ -22,20 +23,28 @@ function Layout() {
   );
 }
 
+export const RouteList = {
+  home: '/',
+  login: '/login',
+  signup: '/signup',
+  resetPassword: '/reset-password',
+};
+
 function Routes() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Layout />}>
         <Route
-          path="/"
+          path={RouteList.home}
           element={
-            <RequireAuth loginPath="/login">
+            <RequireAuth loginPath={RouteList.login}>
               <HomePage />
             </RequireAuth>
           }
         />
-        <Route path="/login" element={<LoginPage />} />,
-        <Route path="/signup" element={<SignUpPage />} />,
+        <Route path={RouteList.login} element={<LoginPage />} />,
+        <Route path={RouteList.signup} element={<SignUpPage />} />,
+        <Route path={RouteList.resetPassword} element={<ForgotPasswordPage />} />,
       </Route>,
     ),
   );

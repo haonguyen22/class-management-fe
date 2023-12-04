@@ -2,7 +2,7 @@
   "Welcome to React": "Chào mừng tới React and react-i18next",
   "Footer": "Chân trang",
   "Login": "Đăng nhập",
-  "Sign up": "Đăng ký",
+  "signUp": "Đăng ký",
   "Other": "Hoặc, đăng nhập bằng tài khoản của bạn",
   "email.invalid": "Email không hợp lệ",
   "email.required": "Email là bắt buộc",
