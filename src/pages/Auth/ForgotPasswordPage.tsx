@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { authService } from '../../services/auth/AuthService';
 import { IError, IErrorResponse, IResponse } from '../../models/IAxiosResponse';
 import { useEffect, useState } from 'react';
-import BackToHome from '../../components/BackToHome/BackToHome';
+import BackToHome from '../../components/BackToHome';
 
 function ForgotPasswordPage() {
   const { t } = useTranslation();

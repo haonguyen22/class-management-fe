@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { RouteList } from '../../routes/routes';
+import { RouteList } from '../routes/routes';
 import { useTranslation } from 'react-i18next';
 
 function BackToHome() {

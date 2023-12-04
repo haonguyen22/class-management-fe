@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSignIn } from 'react-auth-kit';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function Auth() {
+function SocialAuth() {
   const location = useLocation();
   const navigate = useNavigate();
   const SignIn = useSignIn();
@@ -21,7 +21,7 @@ function Auth() {
     navigate('/');
   }, [SignIn, name, navigate, token]);
 
-  return <h1> {token} - {name} </h1>;
+  return <h1>Redirecting...</h1>;
 }
 
-export default Auth;
+export default SocialAuth;

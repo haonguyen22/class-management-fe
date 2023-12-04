@@ -4,7 +4,7 @@
   "Login": "Login",
   "signUp": "Sign up",
   "logOut": "Log out",
-  "Other": "Or, sign in with your account",
+  "Other": "Or, sign in with",
   "email.invalid": "Invalid email address",
   "email.required": "Email is required",
   "password.required": "Password is required",
@@ -38,5 +38,11 @@
   "error": "Error message: {{message}}",
   "changePassword": "Change password",
   "newPassword": "New password",
-  "confirmNewPassword": "Confirm new password"
+  "confirmNewPassword": "Confirm new password",
+  "copyright": " © 2023 HCMUS - Advance Web Programming",
+  "about": "About",
+  "policy": "Privacy Policy",
+  "licening": "Licensing",
+  "contact": "Contact",
+  "alreadyHaveAccount": "Already have an account ?"
 }
