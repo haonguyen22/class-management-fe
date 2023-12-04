@@ -1,12 +1,11 @@
 import axios from 'axios';
 
-const baseURL = `${process.env.REACT_APP_SERVER_URL}v1/api/`;
+const baseURL = `${process.env.REACT_APP_SERVER_URL}/api/v1`;
 
 const configHeader = (token?: string) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      timeout: 10000,
       Authorization: '',
     },
   };
@@ -18,13 +17,18 @@ const configHeader = (token?: string) => {
 
 const instance = axios.create({
   baseURL: baseURL,
-  timeout: 10000,
 });
 
 export const apiService = {
-  get: async (url: string, { token }: { token?: string } = {}) => {
+  get: async (
+    url: string,
+    { token, param }: { token?: string; param?: object } = {},
+  ) => {
     try {
-      const res = await instance.get(url, configHeader(token));
+      const res = await instance.get(url, {
+        ...configHeader(token),
+        params: param,
+      });
       return res;
     } catch (err) {
       console.log(`⛔ Get error data from ${url}: `, err);

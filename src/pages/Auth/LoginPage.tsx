@@ -72,6 +72,7 @@ function LoginPage() {
   return (
     <div className="sm:w-1/2 sm:mx-auto  md:w-2/4 mdLg:w-1/2 lg:w-2/5 mx-5 min-w-max">
       <h1 className="text-4xl font-bold text-center py-10">{t('Login')}</h1>
+      {/* sign in with google */}
       <Formik
         initialValues={{ email: 'hieu@gmail.com', password: '12345678' }}
         validationSchema={Yup.object({
@@ -165,11 +166,12 @@ function LoginPage() {
         <div className="flex rounded-md justify-stretch border bg-blue-200 p-2 min-w-fit cursor-pointer ml-2 hover:bg-blue-300"
           onClick={handleFacebookSignInClick}
         >
+        <div className="flex rounded-md justify-stretch border bg-blue-200 p-2 min-w-fit cursor-pointer ml-2 hover:bg-blue-300">
           <FaSquareFacebook className="w-8 h-8" />
         </div>
       </div>
     </div>
-  );
-};
+  </div>);
+}
 
 export default LoginPage;
