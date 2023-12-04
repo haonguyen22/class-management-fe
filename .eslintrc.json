@@ -36,7 +36,8 @@
         "array-bracket-spacing": "warn",
         "arrow-parens": "off",
         "react/no-unescaped-entities": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "off"
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-non-null-assertion": "off"
     },
     "settings": {
         "import/resolver": {

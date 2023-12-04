@@ -13,6 +13,7 @@ import { RequireAuth } from 'react-auth-kit';
 import HomePage from '../pages/HomePage';
 import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
+import ResetPassword from '../pages/Auth/ResetPassword';
 
 function Layout() {
   return (
@@ -29,6 +30,7 @@ export const RouteList = {
   login: '/login',
   signup: '/signup',
   resetPassword: '/reset-password',
+  forgotPassword: '/forgot-password',
   confirm: '/confirm',
 };
 
@@ -47,10 +49,10 @@ function Routes() {
         <Route path={RouteList.login} element={<LoginPage />} />,
         <Route path={RouteList.signup} element={<SignUpPage />} />,
         <Route
-          path={RouteList.resetPassword}
+          path={RouteList.forgotPassword}
           element={<ForgotPasswordPage />}
         />
-        ,
+        <Route path={RouteList.resetPassword} element={<ResetPassword />} />
         <Route path={RouteList.confirm} element={<ConfirmEmailPage />} />,
       </Route>,
     ),

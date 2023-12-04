@@ -112,7 +112,7 @@ function LoginPage() {
             {/* Forgot password */}
             <div className="w-full flex items-center justify-between ">
               <Link
-                to={RouteList.resetPassword}
+                to={RouteList.forgotPassword}
                 className="text-sm text-blue-500"
               >
                 {t('forgotPassword')}

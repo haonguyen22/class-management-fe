@@ -25,7 +25,7 @@ export const authService = {
     return `${process.env.REACT_APP_SERVER_URL}/api/v1/auth/google`;
   },
 
-  resetPassword: async (email: string) => {
+  forgotPassword: async (email: string) => {
     const res = await apiService.get('/auth/forgot-password', {
       param: { email },
     });
@@ -35,6 +35,20 @@ export const authService = {
   confirmEmail: async (token: string) => {
     const res = await apiService.get('/auth/confirm', {
       param: { token },
+    });
+    return res;
+  },
+
+  changePassword: async (token: string, password: string) => {
+    const res = await apiService.post('/auth/reset-password', {
+      data: { token, password },
+    });
+    return res;
+  },
+
+  resetPassword: async (token: string, newPassword: string) => {
+    const res = await apiService.put('/auth/reset-password', {
+      data: { token, newPassword },
     });
     return res;
   },

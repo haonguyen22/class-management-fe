@@ -42,7 +42,7 @@ function ForgotPasswordPage() {
         })}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            const res = await authService.resetPassword(values.email);
+            const res = await authService.forgotPassword(values.email);
             const temp = res as IResponse;
             let response;
             if (temp.status === undefined || temp.data === undefined) {

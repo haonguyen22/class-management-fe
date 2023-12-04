@@ -35,5 +35,8 @@
   "backToLogin": "Back to login",
   "verify.loading": "Verifying...",
   "verify.fail": "Confirm email failed.",
-  "error": "Error message: {{message}}"
+  "error": "Error message: {{message}}",
+  "changePassword": "Change password",
+  "newPassword": "New password",
+  "confirmNewPassword": "Confirm new password"
 }
