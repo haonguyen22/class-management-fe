@@ -3,7 +3,7 @@
   "Footer": "Chân trang",
   "Login": "Đăng nhập",
   "signUp": "Đăng ký",
-  "Other": "Hoặc, đăng nhập bằng tài khoản của bạn",
+  "Other": "Hoặc, đăng nhập bằng ",
   "email.invalid": "Email không hợp lệ",
   "email.required": "Email là bắt buộc",
   "password.required": "Mật khẩu là bắt buộc",
@@ -37,5 +37,11 @@
   "error": "Lỗi: {{message}}",
   "changePassword": "Đổi mật khẩu",
   "newPassword": "Mật khẩu mới",
-  "confirmNewPassword": "Xác nhận mật khẩu mới"
+  "confirmNewPassword": "Xác nhận mật khẩu mới",
+  "copyright": " © 2023 HCMUS - Lập trình Web Nâng Cao",
+  "about": "Về chúng tôi",
+  "policy": "Chính sách bảo mật",
+  "licensing": "Giấy phép",
+  "contact": "Liên hệ",
+  "alreadyHaveAccount": "Đã có tài khoản?"
 }

@@ -3,11 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { authService } from '../../services/auth/AuthService';
 import { IError, IErrorResponse, ISignup } from '../../models/IAxiosResponse';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useIsAuthenticated } from 'react-auth-kit';
 import { phoneRegrex } from '../../constants/regexConst';
 import { handleAxiosReponse } from '../../utils/handleReponse';
+import { RouteList } from '../../routes/routes';
 
 function SignUpPage() {
   const { t } = useTranslation();
@@ -173,6 +174,12 @@ function SignUpPage() {
               </div>
             </div>
 
+            <div className="w-full flex items-center justify-between ">
+              <Link to={RouteList.login} className="text-sm text-blue-500">
+                {t('alreadyHaveAccount')}
+              </Link>
+            </div>
+
             {message != '' && (
               <div className="w-full text-center text-green-500 font-semibold">
                 {message}
@@ -194,7 +201,7 @@ function SignUpPage() {
                   <div className="animate-spin rounded-full h-7 w-7 border-[3px] border-b-transparent border-white"></div>
                 </div>
               ) : (
-                t('submit.label')
+                t('signUp')
               )}
             </button>
           </Form>

@@ -7,13 +7,14 @@ import {
 } from 'react-router-dom';
 import LoginPage from '../pages/Auth/LoginPage';
 import SignUpPage from '../pages/Auth/SignUpPage';
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { RequireAuth } from 'react-auth-kit';
-import HomePage from '../pages/HomePage';
+import HomePage from '../pages/Home/HomePage';
 import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
 import ResetPassword from '../pages/Auth/ResetPassword';
+import SocialAuth from '../pages/Auth';
 
 function Layout() {
   return (
@@ -32,6 +33,7 @@ export const RouteList = {
   resetPassword: '/reset-password',
   forgotPassword: '/forgot-password',
   confirm: '/confirm',
+  auth: '/auth/success',
 };
 
 function Routes() {
@@ -54,6 +56,7 @@ function Routes() {
         />
         <Route path={RouteList.resetPassword} element={<ResetPassword />} />
         <Route path={RouteList.confirm} element={<ConfirmEmailPage />} />,
+        <Route path={RouteList.auth} element={<SocialAuth />} />
       </Route>,
     ),
   );

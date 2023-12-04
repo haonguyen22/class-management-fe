@@ -7,7 +7,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useIsAuthenticated } from 'react-auth-kit';
 import { handleAxiosReponse } from '../../utils/handleReponse';
-import BackToHome from '../../components/BackToHome/BackToHome';
+import BackToHome from '../../components/BackToHome';
 
 function ResetPassword() {
   const { t } = useTranslation();

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { authService } from '../../services/auth/AuthService';
 import { handleAxiosReponse } from '../../utils/handleReponse';
-import BackToHome from '../../components/BackToHome/BackToHome';
+import BackToHome from '../../components/BackToHome';
 import { useTranslation } from 'react-i18next';
 
 function ConfirmEmailPage() {
