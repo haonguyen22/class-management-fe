@@ -4,14 +4,25 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaSquareFacebook } from 'react-icons/fa6';
 import * as Yup from 'yup';
 import { authService } from '../../services/auth/AuthService';
-import { IError, ILogin, IResponse } from '../../utils/interface';
-import { useNavigate } from 'react-router-dom';
-import { useSignIn } from 'react-auth-kit';
+import { ILogin } from '../../models/IAxiosResponse';
+import { Link, useNavigate } from 'react-router-dom';
+import { useIsAuthenticated, useSignIn } from 'react-auth-kit';
+import { useEffect, useState } from 'react';
+import { RouteList } from '../../routes/routes';
+import { handleAxiosReponse } from '../../utils/handleReponse';
 
 function LoginPage() {
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation();
   const signIn = useSignIn();
+  const isAuthenticate = useIsAuthenticated();
+
+  useEffect(() => {
+    if (isAuthenticate()) {
+      navigate('/');
+    }
+  }, [isAuthenticate, navigate]);
 
   const handleGoogleSignInClick = async () => {
     try {
@@ -21,29 +32,30 @@ function LoginPage() {
     }
   };
 
-  const handleLogin = async (values: ILogin) => {
+  const handleLogin = async (
+    values: ILogin,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
+  ) => {
     try {
       const res = await authService.login(values);
-      let response;
-      if (
-        (res as IResponse).status === undefined ||
-        (res as IResponse).data === undefined
-      ) {
-        response = res as IError;
-        console.log(response);
-      } else {
-        response = res as IResponse;
-        if (response.status === 200) {
-          const token = response.data.metadata as { token: string };
-          signIn({
-            token: token.token,
-            tokenType: 'Bearer',
-            expiresIn: 3600,
-            authState: { email: values.email },
-          });
-        }
-      }
-      navigate('/');
+      handleAxiosReponse(res, {
+        ifSuccess: (response) => {
+          if (response.status === 200) {
+            const token = response.data.metadata as { token: string };
+            signIn({
+              token: token.token,
+              tokenType: 'Bearer',
+              expiresIn: 3600,
+              authState: { email: values.email },
+            });
+            navigate('/');
+          }
+        },
+        ifFailed: (err) => {
+          setError(err?.response?.data?.message ?? err?.message);
+        },
+      });
+      setSubmitting(false);
     } catch (error) {
       console.error('Error calling API:', error);
     }
@@ -53,32 +65,6 @@ function LoginPage() {
     <div className="sm:w-1/2 sm:mx-auto  md:w-2/4 mdLg:w-1/2 lg:w-2/5 mx-5 min-w-max">
       <h1 className="text-4xl font-bold text-center py-10">{t('Login')}</h1>
       {/* sign in with google */}
-      <div
-        className="flex rounded-md justify-stretch border border-red-500 mb-5 min-w-fit cursor-pointer"
-        onClick={handleGoogleSignInClick}
-      >
-        <div className="bg-white rounded-l-md w-12 items-center justify-center flex">
-          <FcGoogle className="w-6 h-6" />
-        </div>
-        <div className="text-lg text-white font-semibold px-3 py-2 bg-red-500 w-full text-center rounded-r-md min-w-fit">
-          {t('Google.label')}
-        </div>
-      </div>
-      {/* sign in with facebook */}
-      <div className="flex rounded-md justify-stretch border border-blue-500 mb-5 min-w-fit cursor-pointer">
-        <div className="bg-white rounded-l-md w-12 items-center justify-center flex">
-          <FaSquareFacebook className="w-6 h-6" />
-        </div>
-        <div className="text-lg text-white font-semibold px-3 py-2 bg-blue-500 w-full text-center rounded-r-md min-w-fit">
-          {t('Facebook.label')}
-        </div>
-      </div>
-
-      <div className="flex items-center mb-4">
-        <hr className="flex-grow bg-gray-500 h-1 rounded-sm" />
-        <div className="mx-4 text-gray-500">{t('Other')}</div>
-        <hr className="flex-grow bg-gray-500 h-1 rounded-sm" />
-      </div>
 
       <Formik
         initialValues={{ email: 'hieu@gmail.com', password: '12345678' }}
@@ -88,8 +74,10 @@ function LoginPage() {
             .required(t('email.required')),
           password: Yup.string().required(t('password.required')),
         })}
-        onSubmit={(values) => {
-          handleLogin(values);
+        onSubmit={(values, { setSubmitting }) => {
+          handleLogin(values, {
+            setSubmitting,
+          });
         }}
       >
         {({ isSubmitting }) => (
@@ -121,6 +109,24 @@ function LoginPage() {
                 <ErrorMessage name="password" />
               </div>
             </div>
+            {/* Forgot password */}
+            <div className="w-full flex items-center justify-between ">
+              <Link
+                to={RouteList.forgotPassword}
+                className="text-sm text-blue-500"
+              >
+                {t('forgotPassword')}
+              </Link>
+              <Link to={RouteList.signup} className="text-sm text-blue-500">
+                {t('notHaveAccount')}
+              </Link>
+            </div>
+
+            {error != '' && (
+              <div className="w-full text-center text-red-500 font-semibold">
+                {error}
+              </div>
+            )}
             <button
               type="submit"
               className="px-3 py-2 w-full bg-green-500 hover:bg-green-600 rounded-md text-white"
@@ -130,17 +136,32 @@ function LoginPage() {
                   <div className="animate-spin rounded-full h-7 w-7 border-[3px] border-b-transparent border-white"></div>
                 </div>
               ) : (
-                t('submit.label')
+                t('Login')
               )}
             </button>
           </Form>
         )}
       </Formik>
+
+      <div className="flex items-center my-6">
+        <hr className="flex-grow bg-gray-500 h-1 rounded-sm" />
+        <div className="mx-4 text-gray-500">{t('Other')}</div>
+        <hr className="flex-grow bg-gray-500 h-1 rounded-sm" />
+      </div>
+      <div className="flex items-center justify-center">
+        <div
+          className="flex rounded-md justify-stretch border bg-red-200 p-2 min-w-fit cursor-pointer mr-2 hover:bg-red-300"
+          onClick={handleGoogleSignInClick}
+        >
+          <FcGoogle className="w-8 h-8" />
+        </div>
+        {/* sign in with facebook */}
+        <div className="flex rounded-md justify-stretch border bg-blue-200 p-2 min-w-fit cursor-pointer ml-2 hover:bg-blue-300">
+          <FaSquareFacebook className="w-8 h-8" />
+        </div>
+      </div>
     </div>
   );
 }
 
 export default LoginPage;
-function Either<T, U>(res: unknown) {
-  throw new Error('Function not implemented.');
-}

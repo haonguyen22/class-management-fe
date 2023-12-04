@@ -22,14 +22,14 @@ export interface IResponse {
   status: number;
 }
 
-export interface IError {
+export interface IError<T> {
   message: string;
-  status: number;
+  name: number;
+  response?: T;
 }
 
 export interface IErrorResponse {
-  data: object,
-  status: number,
-  statusText: string,
-  
+  data: any;
+  status: number;
+  statusText: string;
 }

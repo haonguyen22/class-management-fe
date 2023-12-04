@@ -5,12 +5,15 @@ import {
   RouterProvider,
   Outlet,
 } from 'react-router-dom';
-import LoginPage from '../pages/LoginPage/LoginPage';
-import SignUpPage from '../pages/SignUpPage/SignUpPage';
+import LoginPage from '../pages/Auth/LoginPage';
+import SignUpPage from '../pages/Auth/SignUpPage';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import { RequireAuth } from 'react-auth-kit';
 import HomePage from '../pages/HomePage';
+import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
+import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
+import ResetPassword from '../pages/Auth/ResetPassword';
 
 function Layout() {
   return (
@@ -22,20 +25,35 @@ function Layout() {
   );
 }
 
+export const RouteList = {
+  home: '/',
+  login: '/login',
+  signup: '/signup',
+  resetPassword: '/reset-password',
+  forgotPassword: '/forgot-password',
+  confirm: '/confirm',
+};
+
 function Routes() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Layout />}>
         <Route
-          path="/"
+          path={RouteList.home}
           element={
-            <RequireAuth loginPath="/login">
+            <RequireAuth loginPath={RouteList.login}>
               <HomePage />
             </RequireAuth>
           }
         />
-        <Route path="/login" element={<LoginPage />} />,
-        <Route path="/signup" element={<SignUpPage />} />,
+        <Route path={RouteList.login} element={<LoginPage />} />,
+        <Route path={RouteList.signup} element={<SignUpPage />} />,
+        <Route
+          path={RouteList.forgotPassword}
+          element={<ForgotPasswordPage />}
+        />
+        <Route path={RouteList.resetPassword} element={<ResetPassword />} />
+        <Route path={RouteList.confirm} element={<ConfirmEmailPage />} />,
       </Route>,
     ),
   );
