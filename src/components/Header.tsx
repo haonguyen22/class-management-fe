@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import localeContext from '../context/LocaleContext';
+import localeContext from '../context/localeContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
