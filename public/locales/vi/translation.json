@@ -43,5 +43,6 @@
   "policy": "Chính sách bảo mật",
   "licensing": "Giấy phép",
   "contact": "Liên hệ",
-  "alreadyHaveAccount": "Đã có tài khoản?"
+  "alreadyHaveAccount": "Đã có tài khoản?",
+  "logOut": "Đăng xuất"
 }
