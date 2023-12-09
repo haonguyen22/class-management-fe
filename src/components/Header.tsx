@@ -1,14 +1,15 @@
 import { useContext } from 'react';
-import localeContext from '../context/localeContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
 import i18n from '../i18n';
 import { RouteList } from '../routes/routes';
 import Logo from './Logo';
+import LocaleContext from '../context/LocaleContext';
+import CustomDropDown from '../common/CustomDropdown';
 
 function Header() {
-  const { locale } = useContext(localeContext);
+  const { locale } = useContext(LocaleContext);
   const { t } = useTranslation();
   const isAuthenticate = useIsAuthenticated();
   const signOut = useSignOut();
@@ -25,6 +26,32 @@ function Header() {
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Logo />
           <div className="flex items-center lg:order-2">
+            <CustomDropDown
+              className="bg-transparent hover:bg-slate-100 text-black mr-2 "
+              label={
+                <div>
+                  <svg
+                    focusable="false"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    className=" NMm5M"
+                  >
+                    <path d="M20 13h-7v7h-2v-7H4v-2h7V4h2v7h7v2z"></path>
+                  </svg>
+                </div>
+              }
+              enableIcon={false}
+              options={[
+                {
+                  label: `${t('createClass')}`,
+                },
+                {
+                  label: `${t('joinClass')}`,
+                  onClick: () => console.log('hello'),
+                },
+              ]}
+            />
             <select
               className={
                 'bg-gray-50 mr-2 border border-gray-300 text-gray-900 text-sm rounded-lg  block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  dark:focus:border-blue-500'
@@ -35,6 +62,7 @@ function Header() {
               <option value="en">English</option>
               <option value="vi">Vietnamese</option>
             </select>
+
             {isAuthenticate() ? (
               <button
                 onClick={logOut}

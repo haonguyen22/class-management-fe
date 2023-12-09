@@ -4,7 +4,7 @@
   "Login": "Login",
   "signUp": "Sign up",
   "logOut": "Log out",
-  "Other": "Or, sign in with",
+  "Other": "Or sign in with",
   "email.invalid": "Invalid email address",
   "email.required": "Email is required",
   "password.required": "Password is required",
@@ -42,7 +42,7 @@
   "copyright": " © 2023 HCMUS - Advance Web Programming",
   "about": "About",
   "policy": "Privacy Policy",
-  "licening": "Licensing",
+  "licensing": "Licensing",
   "contact": "Contact",
   "alreadyHaveAccount": "Already have an account ?"
 }

@@ -3,6 +3,7 @@
   "Footer": "Chân trang",
   "Login": "Đăng nhập",
   "signUp": "Đăng ký",
+  "logOut": "Đăng xuất",
   "Other": "Hoặc, đăng nhập bằng ",
   "email.invalid": "Email không hợp lệ",
   "email.required": "Email là bắt buộc",
@@ -43,6 +44,5 @@
   "policy": "Chính sách bảo mật",
   "licensing": "Giấy phép",
   "contact": "Liên hệ",
-  "alreadyHaveAccount": "Đã có tài khoản?",
-  "logOut": "Đăng xuất"
+  "alreadyHaveAccount": "Đã có tài khoản?"
 }
