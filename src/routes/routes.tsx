@@ -15,6 +15,15 @@ import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
 import ResetPassword from '../pages/Auth/ResetPassword';
 import SocialAuth from '../pages/Auth';
+import RowUser from '../components/RowUser';
+import Navigation from '../components/Navigation';
+import LayoutLarge from '../common/Layout/LayoutLarge';
+import ClassBanner from '../components/ClassBanner';
+import ClassCode from '../components/ClassCode';
+import ClassDetail from '../pages/Class/ClassDetail';
+import TypeMember from '../components/TypeMember';
+import ClassMember from '../pages/Class/ClassMember';
+import ListUser from '../components/ListUser';
 
 function Layout() {
   return (
@@ -34,6 +43,10 @@ export const RouteList = {
   forgotPassword: '/forgot-password',
   confirm: '/confirm',
   auth: '/auth/success',
+  class: '/class',
+  classDetail: '/class/detail',
+  classMembers: '/class/members',
+  classScores: '/class/scores',
 };
 
 function Routes() {
@@ -57,6 +70,18 @@ function Routes() {
         <Route path={RouteList.resetPassword} element={<ResetPassword />} />
         <Route path={RouteList.confirm} element={<ConfirmEmailPage />} />,
         <Route path={RouteList.auth} element={<SocialAuth />} />
+        <Route path={RouteList.class} element={
+            <Navigation>
+              <LayoutLarge>
+                <Outlet></Outlet>
+              </LayoutLarge>
+            </Navigation>}
+          >
+          <Route path={RouteList.classDetail} element={<ClassDetail/>} />
+          <Route path={RouteList.classMembers} element={<ClassMember/>} />
+          <Route path={RouteList.classScores} element={<></>} />
+        </Route>
+        <Route path='test' element={<ListUser/>} />
       </Route>,
     ),
   );
