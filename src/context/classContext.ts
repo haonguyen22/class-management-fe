@@ -5,9 +5,7 @@ export interface IClassContext {
   setId: (id: string) => void;
 }
 
-const ClassContext = React.createContext<IClassContext>({
+export const ClassContext = React.createContext<IClassContext>({
   id: '',
   setId: () => {},
 });
-
-export default ClassContext;

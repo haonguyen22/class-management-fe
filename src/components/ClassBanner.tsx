@@ -1,8 +1,5 @@
 import React from 'react';
-import LayoutLarge from '../common/Layout/MarginLarge';
-import { use } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 
 interface ClassBannerProps {
   name?: string;
