@@ -11,14 +11,17 @@ function SocialAuth() {
   const token = searchParams.get('token');
   const name = searchParams.get('name');
   useEffect(() => {
-    if (!token || !name) navigate('/login');
-    SignIn({
-      token: token as string,
-      tokenType: 'Bearer',
-      expiresIn: 3600,
-      authState: { email: 'email' },
-    });
-    navigate('/');
+    if (!token || !name) {
+      navigate('/login');
+    } else {
+      SignIn({
+        token: token as string,
+        tokenType: 'Bearer',
+        expiresIn: 3600,
+        authState: { email: 'email' },
+      });
+      navigate('/');
+    }
   }, [SignIn, name, navigate, token]);
 
   return <h1>Redirecting...</h1>;
