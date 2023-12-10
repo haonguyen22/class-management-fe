@@ -12,7 +12,7 @@ import HomePage from '../pages/Home/HomePage';
 import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
 import ResetPassword from '../pages/Auth/ResetPassword';
-import SocialAuth from '../pages/Auth';
+import SocialAuth from '../pages/Auth/SocialAuthPage';
 import Navigation from '../components/Navigation';
 import LayoutLarge from '../common/Layout/MarginLarge';
 import ClassDetail from '../pages/Class/ClassDetail';

@@ -48,7 +48,7 @@
   "create": "Tạo mới",
   "createClass": "Tạo lớp",
   "joinClass": "Tham gia lớp",
-  "lastUpdate": "Cập nhật",
+  "lastUpdate": "Cập nhật: {{date}}",
   "className": "Tên lớp",
   "section": "Phần",
   "subject": "Môn học",
