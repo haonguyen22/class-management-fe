@@ -48,7 +48,7 @@
   "create": "Create",
   "createClass": "Create class",
   "joinClass": "Join class",
-  "lastUpdate": "Last update",
+  "lastUpdate": "Last update: {{date}}",
   "className": "Class name",
   "section": "Section",
   "subject": "Subject",
