@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-// import LocaleContext from './context/localeContext';
+import LocaleContext from './context/localeContext';
 import Routes from './routes/routes';
 import i18n from './i18n';
 import { AuthProvider } from 'react-auth-kit';
-import LocaleContext from './context/LocaleContext';
+// import LocaleContext from './context/LocaleContext';
 import { GlobalContext } from './context/ClassContext';
 import { IClass } from './models/IClass';
 import { handleAxiosReponse } from './utils/handleReponse';
@@ -19,7 +19,7 @@ function App() {
     });
   }, []);
 
-  const fetchData = async (token: string) => {
+  const fetchClasses = async (token: string) => {
     setClasses([]);
     const res = await classService.getAllClass(token);
     handleAxiosReponse(res, {
@@ -36,9 +36,7 @@ function App() {
 
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
-      <GlobalContext.Provider
-        value={{ classes, setClasses, fetchClasses: fetchData }}
-      >
+      <GlobalContext.Provider value={{ classes, setClasses, fetchClasses }}>
         <AuthProvider
           authName={'_auth'}
           authType={'cookie'}

@@ -46,7 +46,8 @@ function CreateClassDialog() {
     setIsOpenJoinDialog(false);
   };
 
-  const handleChangeClassName = (e: any) => {
+  const handleChangeClassName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(typeof e);
     const { name, value } = e.target;
     setCreateClass((prevState) => ({
       ...prevState,
