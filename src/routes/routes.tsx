@@ -19,7 +19,7 @@ import ClassDetail from '../pages/Class/ClassDetail';
 import ClassMember from '../pages/Class/ClassMember';
 import ListUser from '../components/ListUser';
 import MiniDrawer from '../pages/Drawer/MiniDrawer';
-import ClassContext, { IClassContext } from '../context/classContext';
+import ClassContext, { IClassContext } from '../context/ClassContext';
 import React from 'react';
 
 function Layout() {

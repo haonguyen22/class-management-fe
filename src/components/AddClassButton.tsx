@@ -12,10 +12,10 @@ import { useTranslation } from 'react-i18next';
 import { BsPlusLg } from 'react-icons/bs';
 import CustomizedMenus from '../common/CustomizedMenus';
 import { ICreateCLass } from '../models/IClass';
-import { classService } from '../services/class/ClassService';
+import { ClassService } from '../services/Class/ClassService';
 import { useAuthHeader } from 'react-auth-kit';
 import { handleAxiosReponse } from '../utils/handleReponse';
-import { GlobalContext } from '../context/ClassContext';
+import { GlobalContext } from '../context/GlobalContext';
 import { httpStatus } from '../constants/httpStatus';
 
 function CreateClassDialog() {
@@ -56,7 +56,7 @@ function CreateClassDialog() {
   };
 
   const submitCreateClass = async () => {
-    const res = await classService.createClass(token, createClass);
+    const res = await ClassService.createClass(token, createClass);
     handleAxiosReponse(res, {
       ifSuccess: (data) => {
         if (data.status === httpStatus.CREATED) {

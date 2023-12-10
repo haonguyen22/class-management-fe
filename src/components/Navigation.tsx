@@ -2,7 +2,7 @@ import { AppBar, Toolbar, Button } from '@mui/material';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, NavLink, useLocation, useParams } from 'react-router-dom';
-import ClassContext from '../context/classContext';
+import ClassContext from '../context/ClassContext';
 
 const Navigation = ({children}: { children: React.ReactNode }) => {
   const {t} = useTranslation();

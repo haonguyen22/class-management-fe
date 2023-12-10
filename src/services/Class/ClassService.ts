@@ -1,7 +1,15 @@
+import { ICreateCLass } from '../../models/IClass';
 import { apiService } from '../generic';
-import { ILogin, ISignup } from '../../models/IAxiosResponse';
 
 export const ClassService = {
+  getAllClass: async (token: string) => {
+    const res = await apiService.get('/class', { token: token });
+    return res;
+  },
+  createClass: async (token: string, data: ICreateCLass) => {
+    const res = await apiService.post('/class', { token: token, data: data });
+    return res;
+  },
   GetClassInfo: async (id: string, token: string) => {
     return await apiService.get('/class/' + id, { token });
   },

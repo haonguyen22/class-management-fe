@@ -41,6 +41,7 @@ const ListUser: React.FC<ListUserProps> = ({type, members}) => {
   }, [checked]);
 
   return (
+    members?.length!=0 &&
     <div>
       <TypeMember type={type} memberCount={members?.length}></TypeMember>
       <div className='px-7'>
@@ -53,7 +54,7 @@ const ListUser: React.FC<ListUserProps> = ({type, members}) => {
         return <RowUser key={user.id} name={user.name} isChecked={test}
         setIsChecked={()=>handleCheck(user.id)}></RowUser>;
       })}
-    </div>
+    </div>||<></>
   );
 };
 

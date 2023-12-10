@@ -3,7 +3,7 @@ import ListUser from '../../components/ListUser';
 import LayoutSmall from '../../common/Layout/MarginSmall';
 import { useTranslation } from 'react-i18next';
 import React, { useContext } from 'react';
-import ClassContext, { IClassContext } from '../../context/classContext';
+import ClassContext, { IClassContext } from '../../context/ClassContext';
 import { ClassService } from '../../services/Class/ClassService';
 import { useAuthHeader } from 'react-auth-kit';
 import { IMember, IResponse } from '../../models/IAxiosResponse';
