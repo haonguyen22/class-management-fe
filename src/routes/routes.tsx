@@ -13,6 +13,11 @@ import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
 import ResetPassword from '../pages/Auth/ResetPassword';
 import SocialAuth from '../pages/Auth';
+import Navigation from '../components/Navigation';
+import LayoutLarge from '../common/Layout/MarginLarge';
+import ClassDetail from '../pages/Class/ClassDetail';
+import ClassMember from '../pages/Class/ClassMember';
+import ListUser from '../components/ListUser';
 import MiniDrawer from '../pages/Drawer/MiniDrawer';
 
 function Layout() {
@@ -31,22 +36,41 @@ export const RouteList = {
   forgotPassword: '/forgot-password',
   confirm: '/confirm',
   auth: '/auth/success',
+  class: '/class',
+  classDetail: '/class/detail',
+  classMembers: '/class/members',
+  classScores: '/class/scores',
 };
 
 function Routes() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route element={<Layout />}>
-        <Route
-          path={RouteList.home}
-          element={
-            <RequireAuth loginPath={RouteList.login}>
-              <HomePage />
-            </RequireAuth>
-          }
-        />
+      <Route>
         <Route path={RouteList.login} element={<LoginPage />} />,
         <Route path={RouteList.signup} element={<SignUpPage />} />,
+        <Route
+          element={
+            <RequireAuth loginPath={RouteList.login}>
+              <Layout />
+            </RequireAuth>
+          }
+        >
+          <Route path={RouteList.home} element={<HomePage />} />
+          <Route
+            element={
+              <Navigation>
+                <LayoutLarge>
+                  <Outlet></Outlet>
+                </LayoutLarge>
+              </Navigation>
+            }
+          >
+            <Route path={RouteList.classDetail} element={<ClassDetail />} />
+            <Route path={RouteList.classMembers} element={<ClassMember />} />
+            <Route path={RouteList.classScores} element={<></>} />
+          </Route>
+          <Route path="test" element={<ListUser />} />
+        </Route>
         <Route
           path={RouteList.forgotPassword}
           element={<ForgotPasswordPage />}
