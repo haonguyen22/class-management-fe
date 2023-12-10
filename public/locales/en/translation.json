@@ -57,5 +57,8 @@
   "joinClassDescription": "Ask your teacher for the class code, then enter it here.",
   "classCode": "Class code",
   "join": "Join",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "profile": "Profile",
+  "settings": "Settings"
+  
 }

@@ -57,5 +57,7 @@
   "joinClassDescription": "Nhập mã lớp để tham gia lớp học",
   "classCode": "Mã lớp",
   "join": "Tham gia",
-  "cancel": "Hủy"
+  "cancel": "Hủy",
+  "profile": "Xem hồ sơ",
+  "settings": "Cài đặt"
 }
