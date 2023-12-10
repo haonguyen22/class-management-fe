@@ -5,8 +5,8 @@ import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
 import i18n from '../i18n';
 import { RouteList } from '../routes/routes';
 import Logo from './Logo';
-import LocaleContext from '../context/LocaleContext';
 import AddClassButton from './AddClassButton';
+import { LocaleContext } from '../context/LocaleContext';
 
 function Header() {
   const { locale } = useContext(LocaleContext);

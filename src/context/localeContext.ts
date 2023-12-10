@@ -7,4 +7,4 @@ const defaultLocale = {
   setLocale: (_: string) => {},
 };
 
-export default createContext(defaultLocale);
+export const LocaleContext = createContext(defaultLocale);
