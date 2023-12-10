@@ -44,5 +44,18 @@
   "policy": "Privacy Policy",
   "licensing": "Licensing",
   "contact": "Contact",
-  "alreadyHaveAccount": "Already have an account ?"
+  "alreadyHaveAccount": "Already have an account ?",
+  "create": "Create",
+  "createClass": "Create class",
+  "joinClass": "Join class",
+  "lastUpdate": "Last update",
+  "className": "Class name",
+  "section": "Section",
+  "subject": "Subject",
+  "room": "Room",
+  "myClass": "My class",
+  "joinClassDescription": "Ask your teacher for the class code, then enter it here.",
+  "classCode": "Class code",
+  "join": "Join",
+  "cancel": "Cancel"
 }

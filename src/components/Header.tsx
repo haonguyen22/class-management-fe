@@ -6,7 +6,7 @@ import i18n from '../i18n';
 import { RouteList } from '../routes/routes';
 import Logo from './Logo';
 import LocaleContext from '../context/LocaleContext';
-import CustomDropDown from '../common/CustomDropdown';
+import AddClassButton from './AddClassButton';
 
 function Header() {
   const { locale } = useContext(LocaleContext);
@@ -26,35 +26,10 @@ function Header() {
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Logo />
           <div className="flex items-center lg:order-2">
-            <CustomDropDown
-              className="bg-transparent hover:bg-slate-100 text-black mr-2 "
-              label={
-                <div>
-                  <svg
-                    focusable="false"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    className=" NMm5M"
-                  >
-                    <path d="M20 13h-7v7h-2v-7H4v-2h7V4h2v7h7v2z"></path>
-                  </svg>
-                </div>
-              }
-              enableIcon={false}
-              options={[
-                {
-                  label: `${t('createClass')}`,
-                },
-                {
-                  label: `${t('joinClass')}`,
-                  onClick: () => console.log('hello'),
-                },
-              ]}
-            />
+            <AddClassButton />
             <select
               className={
-                'bg-gray-50 mr-2 border border-gray-300 text-gray-900 text-sm rounded-lg  block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  dark:focus:border-blue-500'
+                'bg-gray-50 mx-2 border border-gray-300 text-gray-900 text-sm rounded-lg  block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  dark:focus:border-blue-500'
               }
               value={locale}
               onChange={(e) => i18n.changeLanguage(e.target.value)}

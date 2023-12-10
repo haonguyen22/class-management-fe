@@ -44,5 +44,18 @@
   "policy": "Chính sách bảo mật",
   "licensing": "Giấy phép",
   "contact": "Liên hệ",
-  "alreadyHaveAccount": "Đã có tài khoản?"
+  "alreadyHaveAccount": "Đã có tài khoản?",
+  "create": "Tạo mới",
+  "createClass": "Tạo lớp",
+  "joinClass": "Tham gia lớp",
+  "lastUpdate": "Cập nhật",
+  "className": "Tên lớp",
+  "section": "Phần",
+  "subject": "Môn học",
+  "room": "Phòng",
+  "myClass": "Lớp của tôi",
+  "joinClassDescription": "Nhập mã lớp để tham gia lớp học",
+  "classCode": "Mã lớp",
+  "join": "Tham gia",
+  "cancel": "Hủy"
 }
