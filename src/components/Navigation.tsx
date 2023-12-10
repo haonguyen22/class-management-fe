@@ -1,25 +1,28 @@
 import { AppBar, Toolbar, Button } from '@mui/material';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, NavLink } from 'react-router-dom';
-
-
-const NavList = [
-  {
-    name: 'ClassInfo',
-    path: '/class/detail',
-  },
-  {
-    name: 'PeopleInfo',
-    path: '/class/members',
-  },
-  {
-    name: 'ScoreTable',
-    path: '/class/scores',
-  },
-];
+import { Link, NavLink, useLocation, useParams } from 'react-router-dom';
+import ClassContext from '../context/classContext';
 
 const Navigation = ({children}: { children: React.ReactNode }) => {
   const {t} = useTranslation();
+  // const id = localStorage.getItem('classId');
+  const {id, setId} = useContext(ClassContext);
+
+  const NavList = [
+    {
+      name: 'ClassInfo',
+      path: `/class/${id}/detail`,
+    },
+    {
+      name: 'PeopleInfo',
+      path: `/class/${id}/members`,
+    },
+    {
+      name: 'ScoreTable',
+      path: `/class/${id}/scores`,
+    },
+  ];
   return (
     <div>
       <AppBar position="static" sx={{background: 'white', color:'black', boxShadow: 'none', fontFamily:'serif' }}>

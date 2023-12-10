@@ -19,6 +19,8 @@ import ClassDetail from '../pages/Class/ClassDetail';
 import ClassMember from '../pages/Class/ClassMember';
 import ListUser from '../components/ListUser';
 import MiniDrawer from '../pages/Drawer/MiniDrawer';
+import ClassContext, { IClassContext } from '../context/classContext';
+import React from 'react';
 
 function Layout() {
   return (
@@ -36,13 +38,15 @@ export const RouteList = {
   forgotPassword: '/forgot-password',
   confirm: '/confirm',
   auth: '/auth/success',
-  class: '/class',
-  classDetail: '/class/detail',
-  classMembers: '/class/members',
-  classScores: '/class/scores',
+  classDetail: '/class/:id/detail',
+  classMembers: '/class/:id/members',
+  classScores: '/class/:id/scores',
 };
 
 function Routes() {
+
+  const [id, setId] = React.useState<string>();
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
@@ -58,11 +62,13 @@ function Routes() {
           <Route path={RouteList.home} element={<HomePage />} />
           <Route
             element={
-              <Navigation>
-                <LayoutLarge>
-                  <Outlet></Outlet>
-                </LayoutLarge>
-              </Navigation>
+              <ClassContext.Provider value={{id, setId}}>
+                <Navigation>
+                  <LayoutLarge>
+                    <Outlet></Outlet>
+                  </LayoutLarge>
+                </Navigation>
+              </ClassContext.Provider>
             }
           >
             <Route path={RouteList.classDetail} element={<ClassDetail />} />

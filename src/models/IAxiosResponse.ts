@@ -33,3 +33,15 @@ export interface IErrorResponse {
   status: number;
   statusText: string;
 }
+
+export interface IClassDetail {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface IMember {
+  id: number;
+  name: string;
+  email: string;
+}
