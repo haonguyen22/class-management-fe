@@ -9,4 +9,5 @@ export interface IClass {
   name: string;
   description: string;
   subject: string;
+  avatar: string;
 }
