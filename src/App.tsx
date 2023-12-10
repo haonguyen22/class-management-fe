@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import LocaleContext from './context/localeContext';
 import Routes from './routes/routes';
 import i18n from './i18n';
 import { AuthProvider } from 'react-auth-kit';
-import { LocaleContext } from './context/LocaleContext';
 
 function App() {
   const [locale, setLocale] = useState(i18n.language);

@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import localeContext from '../context/localeContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
@@ -6,10 +7,9 @@ import i18n from '../i18n';
 import { RouteList } from '../routes/routes';
 import Logo from './Logo';
 import AddClassButton from './AddClassButton';
-import { LocaleContext } from '../context/LocaleContext';
 
 function Header() {
-  const { locale } = useContext(LocaleContext);
+  const { locale } = useContext(localeContext);
   const { t } = useTranslation();
   const isAuthenticate = useIsAuthenticated();
   const signOut = useSignOut();
