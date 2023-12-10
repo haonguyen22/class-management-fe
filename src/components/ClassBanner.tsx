@@ -1,11 +1,14 @@
 import React from 'react';
 import LayoutLarge from '../common/Layout/MarginLarge';
+import { use } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 interface ClassBannerProps {
   name?: string;
 }
 
 const ClassBanner: React.FC<ClassBannerProps> = ({name}) => {
+  const {t} = useTranslation();
   return (
     // <LayoutLarge>
       <div className='mx-auto relative mt-3'>
@@ -17,8 +20,8 @@ const ClassBanner: React.FC<ClassBannerProps> = ({name}) => {
           <div className="flex items-center gap-5">
             <img src="https://picsum.photos/100" alt="avatar" className="w-24 h-24 rounded-full" />
             <div>
-              <h1 className="text-2xl text-white">{name||'Default Class'}</h1>
-              <p className="text-white line-clamp-2 overflow-hidden">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+              <h1 className="text-2xl text-white">{name||t('ClassBanner.default')}</h1>
+              <p className="text-white line-clamp-2 overflow-hidden">{t('ClassBanner.defaultTitle')}</p>
             </div>
           </div>
         </ div>

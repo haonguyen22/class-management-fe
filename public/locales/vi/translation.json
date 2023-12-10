@@ -59,5 +59,18 @@
   "join": "Tham gia",
   "cancel": "Hủy",
   "profile": "Xem hồ sơ",
-  "settings": "Cài đặt"
+  "settings": "Cài đặt",
+  "ClassBanner.default": "Lớp học",
+  "ClassBanner.defaultTitle": "tiêu đề banner lớp học",
+  "ClassCode.title": "Mã lớp học",
+  "ClassCode.code": "Mã mặc định",
+  "ClassCode.copy": "Sao chép mã",
+  "RowUser.clear": "Xóa",
+  "TypeMember.type": "Thành viên",
+  "RowUser.DefaultName": "Tên mặc định",
+  "ClassMember.Teacher": "Giáo viên",
+  "ClassMember.Student": "Học sinh",
+  "ClassInfo": "Thông tin lớp học",
+  "PeopleInfo": "Thông tin thành viên",
+  "ScoreTable": "Bảng điểm"
 }

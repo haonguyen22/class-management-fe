@@ -7,6 +7,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import {MoreVert} from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface RowWithDropdownProps {
   name?: string;
@@ -17,6 +18,7 @@ interface RowWithDropdownProps {
 const RowUser: React.FC<RowWithDropdownProps> = ({ name, isChecked, setIsChecked }) => {
   // name = name || 'default';
   const [anchorEl, setAnchorEl] = useState(null);
+  const {t} = useTranslation();
 
   const handleMoreClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -32,12 +34,12 @@ const RowUser: React.FC<RowWithDropdownProps> = ({ name, isChecked, setIsChecked
   };
 
   return (
-      <div className="flex items-center mx-5 justify-between hover:bg-blue-100 hover:rounded-md p-2"
-        onClick={setIsChecked}
-      >
-        <div className='flex items-center gap-5'>
+      <div className="flex items-center mx-5 justify-between hover:bg-blue-100 hover:rounded-md p-2">
+        <div className='flex items-center gap-5 cursor-pointer'
+          onClick={setIsChecked}
+        >
           <Checkbox checked={isChecked}  />
-          <Typography className='text-left'>{name||'Default User'}</Typography>
+          <Typography className='text-left'>{name||t('RowUser.DefaultName')}</Typography>
         </div>
         <IconButton onClick={handleMoreClick}>
           <MoreVert />
@@ -49,7 +51,7 @@ const RowUser: React.FC<RowWithDropdownProps> = ({ name, isChecked, setIsChecked
           onClose={handleMenuClose}
         >
           <MenuItem onClick={() => handleMenuItemClick('Option 1')}>
-            xóa {name}
+            {t('RowUser.clear')}
           </MenuItem>
           <MenuItem onClick={() => handleMenuItemClick('Option 2')}>
             Option 2
