@@ -1,6 +1,6 @@
 import TypeMember from '../../components/TypeMember';
 import ListUser from '../../components/ListUser';
-import LayoutSmall from '../../common/Layout/LayoutSmall';
+import LayoutSmall from '../../common/Layout/MarginSmall';
 
 const ClassMember = () => {
   return (
@@ -8,13 +8,11 @@ const ClassMember = () => {
       <LayoutSmall>
       {/* giáo viên */}
         <div>
-          <TypeMember type='Giáo viên'></TypeMember>
-          <ListUser></ListUser>
+          <ListUser type="Giáo viên"></ListUser>
         </div>
         {/* học sinh */}
         <div>
-          <TypeMember type='Học sinh'></TypeMember>
-          <ListUser></ListUser>
+          <ListUser type={'Học Sinh'}></ListUser>
         </div>
       </LayoutSmall>
     </div>

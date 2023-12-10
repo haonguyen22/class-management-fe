@@ -3,6 +3,7 @@
   "Footer": "Chân trang",
   "Login": "Đăng nhập",
   "signUp": "Đăng ký",
+  "logOut": "Đăng xuất",
   "Other": "Hoặc, đăng nhập bằng ",
   "email.invalid": "Email không hợp lệ",
   "email.required": "Email là bắt buộc",
@@ -44,5 +45,19 @@
   "licensing": "Giấy phép",
   "contact": "Liên hệ",
   "alreadyHaveAccount": "Đã có tài khoản?",
-  "logOut": "Đăng xuất"
+  "create": "Tạo mới",
+  "createClass": "Tạo lớp",
+  "joinClass": "Tham gia lớp",
+  "lastUpdate": "Cập nhật",
+  "className": "Tên lớp",
+  "section": "Phần",
+  "subject": "Môn học",
+  "room": "Phòng",
+  "myClass": "Lớp của tôi",
+  "joinClassDescription": "Nhập mã lớp để tham gia lớp học",
+  "classCode": "Mã lớp",
+  "join": "Tham gia",
+  "cancel": "Hủy",
+  "profile": "Xem hồ sơ",
+  "settings": "Cài đặt"
 }

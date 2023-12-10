@@ -1,5 +1,5 @@
 import React from 'react';
-import LayoutLarge from '../common/Layout/LayoutLarge';
+import LayoutLarge from '../common/Layout/MarginLarge';
 
 interface ClassBannerProps {
   name?: string;

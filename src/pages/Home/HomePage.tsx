@@ -1,7 +1,20 @@
+import { useTranslation } from 'react-i18next';
+import ClassComponent from '../../components/ClassComponent';
+
 const HomePage = () => {
+  const { t } = useTranslation();
   return (
-    <div>
-      <h1 className="text-4xl">Home Page</h1>
+    <div className="flex flex-wrap items-center  ">
+      <ClassComponent />
+      <ClassComponent />
+      <ClassComponent />
+      <ClassComponent />
+      <ClassComponent />
+      <ClassComponent />
+      <ClassComponent />
+      <ClassComponent />
+      <ClassComponent />
+      <ClassComponent />
     </div>
   );
 };

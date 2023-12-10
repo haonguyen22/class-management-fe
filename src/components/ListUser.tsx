@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import RowUser from './RowUser';
 import { Checkbox } from '@mui/material';
+import TypeMember from './TypeMember';
+
+interface ListUserProps {
+  type?: string;
+}
 
 
-
-const ListUser = () => {
+const ListUser: React.FC<ListUserProps> = ({type}) => {
   // tree user data
   const data = [
     {
@@ -64,9 +68,9 @@ const ListUser = () => {
 
   return (
     <div>
-      <div>
+      <TypeMember type={type} memberCount={data.length}></TypeMember>
+      <div className='px-7'>
         <Checkbox checked={checkedAll} onChange={handleCheckAll}></Checkbox>
-        <span>Chọn tất cả</span>
       </div>
       {data.map((user) => {
         let test = false;
