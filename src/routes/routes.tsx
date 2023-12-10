@@ -7,22 +7,19 @@ import {
 } from 'react-router-dom';
 import LoginPage from '../pages/Auth/LoginPage';
 import SignUpPage from '../pages/Auth/SignUpPage';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { RequireAuth } from 'react-auth-kit';
 import HomePage from '../pages/Home/HomePage';
 import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
 import ResetPassword from '../pages/Auth/ResetPassword';
 import SocialAuth from '../pages/Auth';
+import MiniDrawer from '../pages/Drawer/MiniDrawer';
 
 function Layout() {
   return (
-    <div>
-      <Header />
+    <MiniDrawer>
       <Outlet />
-      <Footer />
-    </div>
+    </MiniDrawer>
   );
 }
 

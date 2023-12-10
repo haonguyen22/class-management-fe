@@ -29,17 +29,6 @@ export default function AccountMenu() {
     navigate(RouteList.login);
   };
 
-  function RenderAvatar() {
-    return (
-      <img
-        src={
-          'https://lh3.googleusercontent.com/ogw/ANLem4YUD68lxa_-KKaoufPpiFUzxyrjbxBWlsFUgJFx8Q=s32-c-mo'
-        }
-        className="rounded-full w-[32px] h-[32px]"
-      />
-    );
-  }
-
   return (
     <React.Fragment>
       <Tooltip title="Account settings">
@@ -51,7 +40,12 @@ export default function AccountMenu() {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <RenderAvatar />
+          <img
+            src={
+              'https://lh3.googleusercontent.com/ogw/ANLem4YUD68lxa_-KKaoufPpiFUzxyrjbxBWlsFUgJFx8Q=s32-c-mo'
+            }
+            className="rounded-full w-[32px] h-[32px]"
+          />
         </IconButton>
       </Tooltip>
       <Menu
@@ -91,7 +85,12 @@ export default function AccountMenu() {
       >
         <MenuItem onClick={handleClose}>
           <Avatar>
-            <RenderAvatar />
+            <img
+              src={
+                'https://lh3.googleusercontent.com/ogw/ANLem4YUD68lxa_-KKaoufPpiFUzxyrjbxBWlsFUgJFx8Q=s32-c-mo'
+              }
+              className="rounded-full w-[32px] h-[32px]"
+            />
           </Avatar>
           {t('profile')}
         </MenuItem>
