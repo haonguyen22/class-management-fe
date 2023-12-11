@@ -1,18 +1,16 @@
 import ListUser from '../../components/ListUser';
 import LayoutSmall from '../../common/Layout/MarginSmall';
 import { useTranslation } from 'react-i18next';
-import React, { useContext } from 'react';
-import { IClassContext, ClassContext } from '../../context/GlobalContext';
+import React from 'react';
 import { useAuthHeader } from 'react-auth-kit';
 import { IMember, IResponse } from '../../models/IAxiosResponse';
-import { classService } from '../../services/class/ClassService';
+import { classService } from '../../services/Class/ClassService';
 import { useParams } from 'react-router-dom';
 
 const ClassMember = () => {
   const { t } = useTranslation();
   const useHeader = useAuthHeader();
   const { id } = useParams<{ id: string }>();
-  const {setId} = useContext(ClassContext) as IClassContext;
 
   const [teachers, setTeachers] = React.useState<IMember[]>([]);
   const [students, setStudents] = React.useState<IMember[]>([]);

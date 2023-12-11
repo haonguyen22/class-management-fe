@@ -23,18 +23,6 @@ export const classService = {
       token,
     });
   },
-
-  addMember: async (
-    email: string,
-    id: string | undefined,
-    type: string,
-    token: string,
-  ) => {
-    return await apiService.post(`/class/${id}/${type}`, {
-      token,
-      data: { email },
-    });
-  },
   joinClass: async (token: string, classId: string) => {
     const res = await apiService.get(`/class/${classId}/join`, {
       token: token,
@@ -46,5 +34,16 @@ export const classService = {
       token: token,
     });
     return res;
+  },
+  addMember: async (
+    email: string,
+    id: string | undefined,
+    type: string,
+    token: string,
+  ) => {
+    return await apiService.post(`/class/${id}/${type}`, {
+      token,
+      data: { email },
+    });
   },
 };

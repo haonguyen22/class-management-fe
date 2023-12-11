@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ClassBanner from '../../components/ClassBanner';
 import { useParams } from 'react-router-dom';
 
@@ -8,13 +8,11 @@ import { useTranslation } from 'react-i18next';
 import DropdownCode from '../../components/DropdownCode';
 import { IClass } from '../../models/IClass';
 import { CircularProgress } from '@mui/material';
-import { classService } from '../../services/class/ClassService';
-import { ClassContext } from '../../context/GlobalContext';
+import { classService } from '../../services/Class/ClassService';
 
 const ClassDetail = () => {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
-  const { setId } = useContext(ClassContext);
   const header = useAuthHeader();
   const token = header()!.substring(7);
 
