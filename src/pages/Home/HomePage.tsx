@@ -22,12 +22,13 @@ const HomePage = () => {
   }, []);
 
   if (!isFetchingClasses && classes.length === 0) {
-    return <div className="flex mt-12 justify-center h-[300px]">{t('noClass')}</div>;
+    return (
+      <div className="flex mt-12 justify-center h-[300px]">{t('noClass')}</div>
+    );
   } else {
     return (
       <div className="flex flex-wrap items-start min-h-[400px]">
         {classes.map((item) => {
-          console.log(item);
           return (
             <ClassComponent
               onClick={() => navigate(`/class/${item.id}/detail`)}

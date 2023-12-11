@@ -16,7 +16,7 @@ interface DropdownCodeProps {
 
 const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [type, setType] = useState('students');
 
@@ -70,7 +70,7 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
         <MenuItem
           onClick={() =>
             handleCopy(
-              `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/class/join`,
+              `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/class/join?code=${code}`,
             )
           }
         >

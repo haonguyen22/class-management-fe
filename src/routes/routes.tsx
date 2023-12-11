@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import LoginPage from '../pages/Auth/LoginPage';
 import SignUpPage from '../pages/Auth/SignUpPage';
-import { RequireAuth, useAuthHeader } from 'react-auth-kit';
+import { RequireAuth, useAuthHeader, useIsAuthenticated } from 'react-auth-kit';
 import HomePage from '../pages/Home/HomePage';
 import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
@@ -20,6 +20,9 @@ import ClassMember from '../pages/Class/ClassMember';
 import MiniDrawer from '../pages/Drawer/MiniDrawer';
 import React, { useContext, useEffect } from 'react';
 import { ClassContext, GlobalContext } from '../context/GlobalContext';
+import JoinClassPage from '../pages/Class/JoinClassPage';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Layout() {
   return (
@@ -43,23 +46,42 @@ export const RouteList = {
   classDetail: '/class/:id/detail',
   classMembers: '/class/:id/members',
   classScores: '/class/:id/scores',
+  joinClass: '/class/join',
 };
 
 function Routes() {
-
   const [id, setId] = React.useState<string>();
   const { fetchClasses } = useContext(GlobalContext);
   const useHeader = useAuthHeader();
   const token = useHeader().replace('Bearer ', '');
+  const isAuthenticate = useIsAuthenticated();
+
   useEffect(() => {
-    fetchClasses(token);
+    if (isAuthenticate()) {
+      fetchClasses(token);
+    }
   }, []);
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
-        <Route path={RouteList.login} element={<LoginPage />} />,
-        <Route path={RouteList.signup} element={<SignUpPage />} />,
+        <Route
+          element={
+            <>
+              <Header />
+              <Outlet />
+              <Footer />
+            </>
+          }
+        >
+          <Route path={RouteList.login} element={<LoginPage />} />,
+          <Route path={RouteList.signup} element={<SignUpPage />} />,
+          <Route path={RouteList.resetPassword} element={<ResetPassword />} />
+          <Route path={RouteList.confirm} element={<ConfirmEmailPage />} />,
+          <Route path={RouteList.authGoogle} element={<SocialAuth />} />
+          <Route path={RouteList.authFacebook} element={<SocialAuth />} />
+          <Route path={RouteList.joinClass} element={<JoinClassPage />} />
+        </Route>
         <Route
           element={
             <RequireAuth loginPath={RouteList.login}>
@@ -70,7 +92,7 @@ function Routes() {
           <Route path={RouteList.home} element={<HomePage />} />
           <Route
             element={
-              <ClassContext.Provider value={{id, setId}}>
+              <ClassContext.Provider value={{ id, setId }}>
                 <Navigation>
                   <LayoutLarge>
                     <Outlet></Outlet>
@@ -89,10 +111,6 @@ function Routes() {
           path={RouteList.forgotPassword}
           element={<ForgotPasswordPage />}
         />
-        <Route path={RouteList.resetPassword} element={<ResetPassword />} />
-        <Route path={RouteList.confirm} element={<ConfirmEmailPage />} />,
-        <Route path={RouteList.authGoogle} element={<SocialAuth />} />
-        <Route path={RouteList.authFacebook} element={<SocialAuth />} />
       </Route>,
     ),
   );

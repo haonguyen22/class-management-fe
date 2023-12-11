@@ -10,6 +10,7 @@ import { useIsAuthenticated, useSignIn } from 'react-auth-kit';
 import { useEffect, useState } from 'react';
 import { RouteList } from '../../routes/routes';
 import { handleAxiosReponse } from '../../utils/handleReponse';
+import { useCookies } from 'react-cookie';
 
 function LoginPage() {
   const [error, setError] = useState('');
@@ -17,12 +18,13 @@ function LoginPage() {
   const { t } = useTranslation();
   const signIn = useSignIn();
   const isAuthenticate = useIsAuthenticated();
+  const [cookies, setCookie, removeCookie] = useCookies(['redirectUrl']);
 
   useEffect(() => {
     if (isAuthenticate()) {
       navigate('/');
     }
-  }, [isAuthenticate, navigate]);
+  }, []);
 
   const handleGoogleSignInClick = async () => {
     try {
@@ -56,7 +58,13 @@ function LoginPage() {
               expiresIn: 3600,
               authState: { email: values.email },
             });
-            navigate('/');
+            // Check is have redirect url
+            if (cookies.redirectUrl) {
+              navigate(RouteList.joinClass + cookies.redirectUrl);
+              removeCookie('redirectUrl', { path: '/' });
+            } else {
+              navigate('/');
+            }
           }
         },
         ifFailed: (err) => {
@@ -163,13 +171,15 @@ function LoginPage() {
           <FcGoogle className="w-8 h-8" />
         </div>
         {/* sign in with facebook */}
-        <div className="flex rounded-md justify-stretch border bg-blue-200 p-2 min-w-fit cursor-pointer ml-2 hover:bg-blue-300"
+        <div
+          className="flex rounded-md justify-stretch border bg-blue-200 p-2 min-w-fit cursor-pointer ml-2 hover:bg-blue-300"
           onClick={handleFacebookSignInClick}
         >
           <FaSquareFacebook className="w-8 h-8" />
         </div>
+      </div>
     </div>
-  </div>);
+  );
 }
 
 export default LoginPage;

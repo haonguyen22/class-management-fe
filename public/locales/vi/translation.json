@@ -4,7 +4,7 @@
   "Login": "Đăng nhập",
   "signUp": "Đăng ký",
   "logOut": "Đăng xuất",
-  "Other": "Hoặc, đăng nhập bằng ",
+  "Other": "Hoặc đăng nhập bằng ",
   "email.invalid": "Email không hợp lệ",
   "email.required": "Email là bắt buộc",
   "password.required": "Mật khẩu là bắt buộc",
@@ -77,5 +77,8 @@
   "inviteMember.Teacher": "Mời giáo viên",
   "inviteMember.Student": "Mời học sinh",
   "Loading": "Đang tải...",
-  "noClass": "Hiện tại chưa có lớp học nào mà bạn tham gia. Hãy tạo lớp học mới  hoặc tham gia lớp với mã lớp được giáo viên cung cấp"
+  "noClass": "Hiện tại chưa có lớp học nào mà bạn tham gia. Hãy tạo lớp học mới  hoặc tham gia lớp với mã lớp được giáo viên cung cấp",
+  "participating.success": "Tham gia lớp học thành công",
+  "participating.fail": "Tham gia lớp học thất bại",
+  "participating.login": "Bạn cần đăng nhập để tham gia lớp học"
 }

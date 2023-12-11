@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { useAuthHeader } from 'react-auth-kit';
 import { IMember, IResponse } from '../../models/IAxiosResponse';
-import { classService } from '../../services/Class/ClassService';
+import { classService } from '../../services/class/ClassService';
 import { useParams } from 'react-router-dom';
 
 const ClassMember = () => {
@@ -19,7 +19,6 @@ const ClassMember = () => {
     const token = useHeader().replace('Bearer ', '');
     const res = (await classService.GetListMember(id, token)) as IResponse;
     if (res.status === 200) {
-      console.log(res.data);
       const data = res.data.metadata as {
         students: IMember[];
         teachers: IMember[];

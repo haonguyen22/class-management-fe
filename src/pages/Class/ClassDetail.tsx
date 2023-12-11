@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import DropdownCode from '../../components/DropdownCode';
 import { IClass } from '../../models/IClass';
 import { CircularProgress } from '@mui/material';
-import { classService } from '../../services/Class/ClassService';
+import { classService } from '../../services/class/ClassService';
 
 const ClassDetail = () => {
   const { t } = useTranslation();
@@ -38,7 +38,7 @@ const ClassDetail = () => {
         setClassDetail(data.data.metadata as IClass);
       },
       ifFailed: (err) => {
-        console.log('🐛Get detail class error :', err.message);
+        console.log('🐛 Get detail class error :', err.message);
       },
     });
     setIsLoading(false);

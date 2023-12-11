@@ -5,8 +5,9 @@ import { AuthProvider } from 'react-auth-kit';
 import { GlobalContext } from './context/GlobalContext';
 import { IClass } from './models/IClass';
 import { handleAxiosReponse } from './utils/handleReponse';
-import { classService } from './services/Class/ClassService';
+import { classService } from './services/class/ClassService';
 import LocaleContext from './context/LocaleContext';
+import { SnackbarProvider } from 'notistack';
 
 function App() {
   const [locale, setLocale] = useState(i18n.language);
@@ -36,20 +37,22 @@ function App() {
   };
 
   return (
-    <LocaleContext.Provider value={{ locale, setLocale }}>
-      <GlobalContext.Provider
-        value={{ classes, setClasses, fetchClasses, isFetchingClasses }}
-      >
-        <AuthProvider
-          authName={'_auth'}
-          authType={'cookie'}
-          cookieDomain={window.location.hostname}
-          cookieSecure={true}
+    <SnackbarProvider>
+      <LocaleContext.Provider value={{ locale, setLocale }}>
+        <GlobalContext.Provider
+          value={{ classes, setClasses, fetchClasses, isFetchingClasses }}
         >
-          <Routes />
-        </AuthProvider>
-      </GlobalContext.Provider>
-    </LocaleContext.Provider>
+          <AuthProvider
+            authName={'_auth'}
+            authType={'cookie'}
+            cookieDomain={window.location.hostname}
+            cookieSecure={true}
+          >
+            <Routes />
+          </AuthProvider>
+        </GlobalContext.Provider>
+      </LocaleContext.Provider>
+    </SnackbarProvider>
   );
 }
 

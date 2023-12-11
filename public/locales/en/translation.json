@@ -77,5 +77,8 @@
   "inviteMember.Teacher": "Invite teacher",
   "inviteMember.Student": "Invite student",
   "Loading": "Loading...",
-  "noClass": "There are currently no classes that you are participating in. Create a new class or join a class with the class code provided by the teacher"
+  "noClass": "There are currently no classes that you are participating in. Create a new class or join a class with the class code provided by the teacher",
+  "participating.success": "You have successfully joined the class",
+  "participating.fail": "Failed to join class",
+  "participating.login": "You need to login to join class"
 }

@@ -16,7 +16,7 @@ import { useAuthHeader } from 'react-auth-kit';
 import { handleAxiosReponse } from '../utils/handleReponse';
 import { GlobalContext } from '../context/GlobalContext';
 import { httpStatus } from '../constants/httpStatus';
-import { classService } from '../services/Class/ClassService';
+import { classService } from '../services/class/ClassService';
 
 function CreateClassDialog() {
   const initCreateClass: ICreateCLass = {
