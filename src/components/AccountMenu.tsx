@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteList } from '../routes/routes';
 import { useSignOut } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
+import { avatarDefault } from '../constants/globalConst';
 
 export default function AccountMenu() {
   const signOut = useSignOut();
@@ -40,12 +41,7 @@ export default function AccountMenu() {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <img
-            src={
-              'https://lh3.googleusercontent.com/ogw/ANLem4YUD68lxa_-KKaoufPpiFUzxyrjbxBWlsFUgJFx8Q=s32-c-mo'
-            }
-            className="rounded-full w-[32px] h-[32px]"
-          />
+          <img src={avatarDefault} className="rounded-full w-[32px] h-[32px]" />
         </IconButton>
       </Tooltip>
       <Menu
@@ -86,9 +82,7 @@ export default function AccountMenu() {
         <MenuItem onClick={handleClose}>
           <Avatar>
             <img
-              src={
-                'https://lh3.googleusercontent.com/ogw/ANLem4YUD68lxa_-KKaoufPpiFUzxyrjbxBWlsFUgJFx8Q=s32-c-mo'
-              }
+              src={avatarDefault}
               className="rounded-full w-[32px] h-[32px]"
             />
           </Avatar>

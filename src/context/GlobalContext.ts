@@ -5,12 +5,14 @@ interface GlobalContextType {
   classes: IClass[];
   setClasses: (classes: IClass[]) => void;
   fetchClasses: (token: string) => void;
+  isFetchingClasses: boolean;
 }
 
 export const GlobalContext = createContext<GlobalContextType>({
   classes: [],
   setClasses: () => {},
   fetchClasses: () => {},
+  isFetchingClasses: false,
 });
 
 export interface IClassContext {

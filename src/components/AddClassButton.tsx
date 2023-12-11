@@ -12,34 +12,38 @@ import { useTranslation } from 'react-i18next';
 import { BsPlusLg } from 'react-icons/bs';
 import CustomizedMenus from '../common/CustomizedMenus';
 import { ICreateCLass } from '../models/IClass';
-import { ClassService } from '../services/Class/ClassService';
 import { useAuthHeader } from 'react-auth-kit';
 import { handleAxiosReponse } from '../utils/handleReponse';
 import { GlobalContext } from '../context/GlobalContext';
 import { httpStatus } from '../constants/httpStatus';
+import { classService } from '../services/class/ClassService';
 
 function CreateClassDialog() {
+  const initCreateClass: ICreateCLass = {
+    name: '',
+    description: '',
+    subject: '',
+  };
   const auth = useAuthHeader();
   const token = auth()!.substring(7);
   const { fetchClasses } = useContext(GlobalContext);
 
   const { t } = useTranslation();
-  const [createClass, setCreateClass] = useState<ICreateCLass>({
-    name: '',
-    description: '',
-    subject: '',
-  });
+  const [createClass, setCreateClass] = useState<ICreateCLass>(initCreateClass);
+  const [joinClassId, setJoinClassId] = useState<string>('');
 
   const [isOpenCreateDialog, setIsOpenCreateDialog] = useState(false);
   const [isOpenJoinDialog, setIsOpenJoinDialog] = useState(false);
 
   const handleClickOpenCreateDialog = () => {
+    setCreateClass(initCreateClass);
     setIsOpenCreateDialog(true);
   };
   const handleCloseCreateDialog = () => {
     setIsOpenCreateDialog(false);
   };
   const handleClickOpenJoinDialog = () => {
+    setJoinClassId('');
     setIsOpenJoinDialog(true);
   };
   const handleCloseJoinDialog = () => {
@@ -56,16 +60,33 @@ function CreateClassDialog() {
   };
 
   const submitCreateClass = async () => {
-    const res = await ClassService.createClass(token, createClass);
+    const res = await classService.createClass(token, createClass);
     handleAxiosReponse(res, {
       ifSuccess: (data) => {
         if (data.status === httpStatus.CREATED) {
           fetchClasses(token);
         }
       },
-      ifFailed: () => {},
+      ifFailed: (err) => {
+        console.log(err.message);
+      },
     });
     handleCloseCreateDialog();
+  };
+
+  const submitJoinClass = async () => {
+    const res = await classService.joinClass(token, joinClassId);
+    handleAxiosReponse(res, {
+      ifSuccess: (data) => {
+        if (data.status === httpStatus.OK) {
+          fetchClasses(token);
+        }
+      },
+      ifFailed: (err) => {
+        console.log(err.message);
+      },
+    });
+    handleCloseJoinDialog();
   };
 
   return (
@@ -78,7 +99,7 @@ function CreateClassDialog() {
             onClick: handleClickOpenCreateDialog,
           },
           {
-            label: t('myClass'),
+            label: t('joinClass'),
             onClick: handleClickOpenJoinDialog,
           },
         ]}
@@ -144,17 +165,16 @@ function CreateClassDialog() {
             type="text"
             fullWidth
             margin="dense"
+            name="joinClassId"
+            value={joinClassId}
+            onChange={(e) => setJoinClassId(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseJoinDialog} color="info">
             {t('cancel')}
           </Button>
-          <Button
-            variant="contained"
-            onClick={handleCloseJoinDialog}
-            color="success"
-          >
+          <Button variant="contained" onClick={submitJoinClass} color="success">
             {t('Join')}
           </Button>
         </DialogActions>
