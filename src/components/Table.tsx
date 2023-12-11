@@ -25,7 +25,7 @@ interface TableProps {
 
 const headers: HeaderProps[] = [
   { field: 'id', headerName: 'ID', type: 'number', maxWidth: 200, minWidth: 10  },
-  { field: 'name', headerName: 'Name', type: 'string',  maxWidth: 400, minWidth: 200},
+  { field: 'name', headerName: 'Name', type: 'string',  maxWidth: 400, minWidth: 150},
   { field: 'email', headerName: 'Email', type: 'string',  maxWidth: 600, minWidth: 300 },
   { field: 'action', headerName: 'Action', type: 'ButtonDrop',  maxWidth: 200, minWidth: 10 },
 ];
@@ -44,7 +44,7 @@ const Table: React.FC<TableProps> = ({ value }) => {
       } as GridColDef;
     }
 
-    return {...header, resizable:true} as GridColDef;
+    return header as GridColDef;
   });
 
   return (
