@@ -17,9 +17,7 @@ import Navigation from '../components/Navigation';
 import LayoutLarge from '../common/Layout/MarginLarge';
 import ClassDetail from '../pages/Class/ClassDetail';
 import ClassMember from '../pages/Class/ClassMember';
-import ListUser from '../components/ListUser';
 import MiniDrawer from '../pages/Drawer/MiniDrawer';
-import AddMember from '../components/AddMember';
 import React, { useContext, useEffect } from 'react';
 import { ClassContext, GlobalContext } from '../context/GlobalContext';
 
@@ -79,11 +77,6 @@ function Routes() {
                   </LayoutLarge>
                 </Navigation>
               </ClassContext.Provider>
-              // <Navigation>
-              //   <LayoutLarge>
-              //     <Outlet />
-              //   </LayoutLarge>
-              // </Navigation>
             }
           >
             <Route path={RouteList.classDetail} element={<ClassDetail />} />

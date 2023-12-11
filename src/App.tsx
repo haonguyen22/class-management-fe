@@ -5,7 +5,7 @@ import { AuthProvider } from 'react-auth-kit';
 import { GlobalContext } from './context/GlobalContext';
 import { IClass } from './models/IClass';
 import { handleAxiosReponse } from './utils/handleReponse';
-import { classService } from './services/Class/ClassService';
+import { classService } from './services/class/ClassService';
 import LocaleContext from './context/LocaleContext';
 
 function App() {
