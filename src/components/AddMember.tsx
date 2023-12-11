@@ -1,10 +1,9 @@
-import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@mui/material';
+import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { useFormik } from 'formik';
-import React, { useContext, useState } from 'react';
+import React, {  useState } from 'react';
 import * as yup from 'yup';
 import { handleAxiosReponse } from '../utils/handleReponse';
-import { classService } from '../services/Class/ClassService';
-import { ClassContext } from '../context/GlobalContext';
+import { classService } from '../services/class/ClassService';
 import { useAuthHeader } from 'react-auth-kit';
 import { useNavigate, useParams } from 'react-router-dom';
 

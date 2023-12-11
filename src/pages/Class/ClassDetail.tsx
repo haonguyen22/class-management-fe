@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import DropdownCode from '../../components/DropdownCode';
 import { IClass } from '../../models/IClass';
 import { CircularProgress } from '@mui/material';
-import { classService } from '../../services/Class/ClassService';
+import { classService } from '../../services/class/ClassService';
 import { ClassContext } from '../../context/GlobalContext';
 
 const ClassDetail = () => {

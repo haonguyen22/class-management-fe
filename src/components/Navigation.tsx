@@ -1,8 +1,6 @@
 import { AppBar, Toolbar, Button } from '@mui/material';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useParams } from 'react-router-dom';
-import { ClassContext } from '../context/GlobalContext';
 
 const Navigation = ({ children }: { children: React.ReactNode }) => {
   const { id } = useParams<{ id: string }>();

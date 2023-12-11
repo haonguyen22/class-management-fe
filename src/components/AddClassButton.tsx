@@ -12,12 +12,11 @@ import { useTranslation } from 'react-i18next';
 import { BsPlusLg } from 'react-icons/bs';
 import CustomizedMenus from '../common/CustomizedMenus';
 import { ICreateCLass } from '../models/IClass';
-// import { classService } from '../services/Class/ClassService';
 import { useAuthHeader } from 'react-auth-kit';
 import { handleAxiosReponse } from '../utils/handleReponse';
 import { GlobalContext } from '../context/GlobalContext';
 import { httpStatus } from '../constants/httpStatus';
-import { classService } from '../services/Class/ClassService';
+import { classService } from '../services/class/ClassService';
 
 function CreateClassDialog() {
   const initCreateClass: ICreateCLass = {
