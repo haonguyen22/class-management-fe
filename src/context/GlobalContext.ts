@@ -1,15 +1,5 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 import { IClass } from '../models/IClass';
-
-export interface IClassContext {
-  id: string | undefined;
-  setId: (id: string) => void;
-}
-
-export const ClassContext = createContext<IClassContext>({
-  id: '',
-  setId: () => {},
-});
 
 interface GlobalContextType {
   classes: IClass[];
@@ -21,4 +11,14 @@ export const GlobalContext = createContext<GlobalContextType>({
   classes: [],
   setClasses: () => {},
   fetchClasses: () => {},
+});
+
+export interface IClassContext {
+  id: string | undefined;
+  setId: (id: string) => void;
+}
+
+export const ClassContext = createContext<IClassContext>({
+  id: '',
+  setId: () => {},
 });

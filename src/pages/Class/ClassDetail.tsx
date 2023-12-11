@@ -5,7 +5,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { ClassService } from '../../services/Class/ClassService';
 import { IClassDetail, IResponse } from '../../models/IAxiosResponse';
 import { useAuthHeader } from 'react-auth-kit';
-import {ClassContext} from '../../context/ClassContext';
+import {ClassContext} from '../../context/GlobalContext';
 
 const ClassDetail = () => {
   const {id} = useParams<{id: string}>();
