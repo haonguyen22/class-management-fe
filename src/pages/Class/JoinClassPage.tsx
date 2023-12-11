@@ -2,7 +2,7 @@ import { CircularProgress } from '@mui/material';
 import { useEffect } from 'react';
 import { useAuthHeader, useIsAuthenticated } from 'react-auth-kit';
 import { useCookies } from 'react-cookie';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { handleAxiosReponse } from '../../utils/handleReponse';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
@@ -13,8 +13,7 @@ function JoinClassPage() {
   const useHeader = useAuthHeader();
   const [searchParams] = useSearchParams();
   const isAuthenticate = useIsAuthenticated();
-  const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(['redirectUrl']);
+  const [, setCookie] = useCookies(['redirectUrl']);
   const location = useLocation();
 
   const token = useHeader()?.replace('Bearer ', '');
@@ -29,12 +28,14 @@ function JoinClassPage() {
           enqueueSnackbar(t('participating.success'), {
             variant: 'success',
           });
-          navigate('/');
+          window.location.href = `/class/${
+            (data.data.metadata as { id: string }).id
+          }/detail`;
         }
       },
       ifFailed: (err) => {
         enqueueSnackbar(err.response?.data.message, { variant: 'error' });
-        navigate('/');
+        window.location.href = '/';
       },
     });
   };
@@ -47,7 +48,7 @@ function JoinClassPage() {
       });
       enqueueSnackbar(t('participating.login'), { variant: 'error' });
 
-      navigate('/login');
+      window.location.href = '/login';
     } else {
       joinClass();
     }
