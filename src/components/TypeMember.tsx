@@ -5,9 +5,10 @@ import { FaUserPlus } from 'react-icons/fa';
 interface TypeMemberProps  {
   type?: string;
   memberCount?: number;
+  onclick?: ()=>void;
 }
 
-const TypeMember: React.FC<TypeMemberProps> = ({type, memberCount}) => {
+const TypeMember: React.FC<TypeMemberProps> = ({type, memberCount, onclick}) => {
   const {t} = useTranslation();
   return (
     <>
@@ -15,7 +16,9 @@ const TypeMember: React.FC<TypeMemberProps> = ({type, memberCount}) => {
         <span className='text-2xl font-bold'>{type||'Defaul member'}</span>
         <div className='flex justify-between items-center gap-5'>
           <span className='text-xl'>{`${memberCount} ${t('TypeMember.type')}`}</span>
-          <div className="text-4xl cursor-pointer">
+          <div className="text-4xl cursor-pointer"
+            onClick={onclick}
+          >
             <FaUserPlus></FaUserPlus>
           </div>
         </div>

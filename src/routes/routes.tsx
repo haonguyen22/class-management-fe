@@ -23,6 +23,7 @@ import { ClassContext, GlobalContext } from '../context/GlobalContext';
 import JoinClassPage from '../pages/Class/JoinClassPage';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Test1 from '../components/Test1';
 
 function Layout() {
   return (
@@ -105,7 +106,7 @@ function Routes() {
             <Route path={RouteList.classMembers} element={<ClassMember />} />
             <Route path={RouteList.classScores} element={<></>} />
           </Route>
-          <Route path="test" element={<></>} />
+          {/* <Route path="test" element={<Test1></Test1>} /> */}
         </Route>
         <Route
           path={RouteList.forgotPassword}

@@ -4,8 +4,11 @@ import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { useAuthHeader } from 'react-auth-kit';
 import { IMember, IResponse } from '../../models/IAxiosResponse';
-import { classService } from '../../services/class/ClassService';
+import { classService } from '../../services/Class/ClassService';
 import { useParams } from 'react-router-dom';
+import Table from '../../components/Table';
+import TypeMember from '../../components/TypeMember';
+import ListMember from '../../components/ListMember';
 
 const ClassMember = () => {
   const { t } = useTranslation();
@@ -36,13 +39,9 @@ const ClassMember = () => {
     <div>
       <LayoutSmall>
         {/* giáo viên */}
-        <div>
-          <ListUser type={t('ClassMember.Teacher')} members={teachers} />
-        </div>
+        <ListMember type={t('ClassMember.Teacher')} members={teachers}/>
         {/* học sinh */}
-        <div>
-          <ListUser type={t('ClassMember.Student')} members={students} />
-        </div>
+        <ListMember type={t('ClassMember.Student')} members={teachers}/>
       </LayoutSmall>
     </div>
   );
