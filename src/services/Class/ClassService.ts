@@ -6,6 +6,10 @@ export const classService = {
     const res = await apiService.get('/class', { token: token });
     return res;
   },
+  getClassById: async (token: string, id: string) => {
+    const res = await apiService.get(`/class/${id}`, { token: token });
+    return res;
+  },
   createClass: async (token: string, data: ICreateCLass) => {
     const res = await apiService.post('/class', { token: token, data: data });
     return res;
@@ -20,9 +24,8 @@ export const classService = {
     });
   },
   joinClass: async (token: string, classId: string) => {
-    const res = await apiService.post('/class/join', {
+    const res = await apiService.get(`/class/${classId}/join`, {
       token: token,
-      data: { classId: classId },
     });
     return res;
   },

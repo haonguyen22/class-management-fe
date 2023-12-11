@@ -1,12 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { avatarDefault } from '../constants/globalConst';
 
 interface ClassBannerProps {
   name?: string;
   description?: string;
+  avatar?: string;
 }
 
-const ClassBanner: React.FC<ClassBannerProps> = ({ name, description }) => {
+const ClassBanner: React.FC<ClassBannerProps> = ({
+  name,
+  description,
+  avatar,
+}) => {
   const { t } = useTranslation();
   return (
     <div className="mx-auto relative mt-3">
@@ -21,7 +27,7 @@ const ClassBanner: React.FC<ClassBannerProps> = ({ name, description }) => {
       <div className="absolute bottom-0 left-0 right-0 flex items-end h-24 px-5 pb-5">
         <div className="flex items-center gap-5">
           <img
-            src="https://picsum.photos/100"
+            src={avatar || avatarDefault}
             alt="avatar"
             className="w-24 h-24 rounded-full"
           />

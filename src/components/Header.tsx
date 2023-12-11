@@ -1,17 +1,19 @@
 import { useContext } from 'react';
 import localeContext from '../context/localeContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useIsAuthenticated } from 'react-auth-kit';
 import i18n from '../i18n';
 import Logo from './Logo';
 import AddClassButton from './AddClassButton';
 import AccountMenu from './AccountMenu';
+// import localeContext from '../context/LocaleContext';
 
 function Header() {
   const { locale } = useContext(localeContext);
   const { t } = useTranslation();
   const isAuthenticate = useIsAuthenticated();
+  const location = useLocation();
 
   return (
     <div>
@@ -19,7 +21,8 @@ function Header() {
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Logo />
           <div className="flex items-center lg:order-2">
-            <AddClassButton />
+            {location.pathname === '/' && <AddClassButton />}
+
             <select
               className={
                 'bg-gray-50 mx-2 border border-gray-300 text-gray-900 text-sm rounded-lg  block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  dark:focus:border-blue-500'

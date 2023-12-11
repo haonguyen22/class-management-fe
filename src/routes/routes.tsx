@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import LoginPage from '../pages/Auth/LoginPage';
 import SignUpPage from '../pages/Auth/SignUpPage';
-import { RequireAuth } from 'react-auth-kit';
+import { RequireAuth, useAuthHeader } from 'react-auth-kit';
 import HomePage from '../pages/Home/HomePage';
 import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
@@ -19,8 +19,8 @@ import ClassDetail from '../pages/Class/ClassDetail';
 import ClassMember from '../pages/Class/ClassMember';
 import ListUser from '../components/ListUser';
 import MiniDrawer from '../pages/Drawer/MiniDrawer';
-import { IClassContext, ClassContext } from '../context/GlobalContext';
-import React from 'react';
+import { useContext, useEffect } from 'react';
+import { GlobalContext } from '../context/GlobalContext';
 
 function Layout() {
   return (
@@ -45,8 +45,12 @@ export const RouteList = {
 };
 
 function Routes() {
-
-  const [id, setId] = React.useState<string>();
+  const { fetchClasses } = useContext(GlobalContext);
+  const useHeader = useAuthHeader();
+  const token = useHeader().replace('Bearer ', '');
+  useEffect(() => {
+    fetchClasses(token);
+  }, []);
 
   const router = createBrowserRouter(
     createRoutesFromElements(

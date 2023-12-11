@@ -12,6 +12,7 @@ import { classService } from './services/class/ClassService';
 function App() {
   const [locale, setLocale] = useState(i18n.language);
   const [classes, setClasses] = useState<Array<IClass>>([]);
+  const [isFetchingClasses, setIsFetchingClasses] = useState(false);
 
   useEffect(() => {
     i18n.on('languageChanged', () => {
@@ -20,6 +21,7 @@ function App() {
   }, []);
 
   const fetchClasses = async (token: string) => {
+    setIsFetchingClasses(true);
     setClasses([]);
     const res = await classService.getAllClass(token);
     handleAxiosReponse(res, {
@@ -31,11 +33,12 @@ function App() {
         console.log(err.message);
       },
     });
+    setIsFetchingClasses(false);
   };
 
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
-      <GlobalContext.Provider value={{ classes, setClasses, fetchClasses }}>
+      <GlobalContext.Provider value={{ classes, setClasses, fetchClasses, isFetchingClasses}}>
         <AuthProvider
           authName={'_auth'}
           authType={'cookie'}
