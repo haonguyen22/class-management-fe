@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import React, {  useState } from 'react';
 import * as yup from 'yup';
 import { handleAxiosReponse } from '../utils/handleReponse';
-import { classService } from '../services/class/ClassService';
+import { classService } from '../services/Class/ClassService';
 import { useAuthHeader } from 'react-auth-kit';
 import { useNavigate, useParams } from 'react-router-dom';
 
