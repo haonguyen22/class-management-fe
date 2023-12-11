@@ -20,7 +20,7 @@ export interface IMessage {
 export interface IResponse {
   data: Record<string, unknown>;
   status: number;
-  metadata: Array<unknown>;
+  metadata: unknown;
 }
 
 export interface IError<T> {

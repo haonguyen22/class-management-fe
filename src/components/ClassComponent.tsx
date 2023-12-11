@@ -61,7 +61,7 @@ function ClassComponent(props: {
             </div>
             <div className="w-full">
               <hr />
-              <div className=" text-sm text-black font-normal text-right pr-2 py-4">
+              <div className=" text-[13px] text-black font-normal text-right pr-2 py-4">
                 {t('lastUpdate', { date: props.lastUpdate })}
               </div>
             </div>

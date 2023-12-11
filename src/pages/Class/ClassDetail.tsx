@@ -38,7 +38,7 @@ const ClassDetail = () => {
         setClassDetail(data.data.metadata as IClass);
       },
       ifFailed: (err) => {
-        console.log('🐛Get detail class error :', err.message);
+        console.log('🐛 Get detail class error :', err.message);
       },
     });
     setIsLoading(false);

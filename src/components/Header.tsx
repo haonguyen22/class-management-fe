@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import localeContext from '../context/LocaleContext';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useIsAuthenticated } from 'react-auth-kit';
 import i18n from '../i18n';
@@ -31,7 +31,7 @@ function Header() {
               onChange={(e) => i18n.changeLanguage(e.target.value)}
             >
               <option value="en">English</option>
-              <option value="vi">Vietnamese</option>
+              <option value="vi">Việt nam</option>
             </select>
 
             {isAuthenticate() ? (

@@ -48,7 +48,7 @@ export default function MiniDrawer({
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" color="transparent" open={open}>
+      <AppBar position="fixed" color="inherit" open={open}>
         <Toolbar>
           <IconButton
             color="inherit"
