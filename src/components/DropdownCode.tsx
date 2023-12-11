@@ -56,7 +56,7 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
         <MenuItem
           onClick={() =>
             handleCopy(
-              `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/class/join`,
+              `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/class/join?code=${code}`,
             )
           }
         >
