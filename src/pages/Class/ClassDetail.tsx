@@ -1,36 +1,37 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ClassBanner from '../../components/ClassBanner';
 import ClassCode from '../../components/ClassCode';
-import { useLocation, useParams } from 'react-router-dom';
-import { ClassService } from '../../services/Class/ClassService';
-import { IClassDetail, IResponse } from '../../models/IAxiosResponse';
+import { useParams } from 'react-router-dom';
+import { classService } from '../../services/class/ClassService';
 import { useAuthHeader } from 'react-auth-kit';
-import {ClassContext} from '../../context/GlobalContext';
+import { handleAxiosReponse } from '../../utils/handleReponse';
 
 const ClassDetail = () => {
-  const {id} = useParams<{id: string}>();
-  const {setId} = React.useContext(ClassContext);
-  const useHeader = useAuthHeader();
-  const [classInfo, setClassInfo] = React.useState<IClassDetail>();
+  const { id } = useParams();
+  const header = useAuthHeader();
+  const token = header()!.substring(7);
 
-  const getClassInfo = async (id: string) => {
-    const token = useHeader().replace('Bearer ', '');
-    const res = await ClassService.GetClassInfo(id, token) as IResponse;
-    if (res.status === 200) {
-      setClassInfo(res.data.metadata as IClassDetail);
-      console.log(res.data.metadata);
-    }
+  const [code, setCode] = useState('');
+
+  const getClassCode = async () => {
+    const res = await classService.getClassCode(token, id!);
+    handleAxiosReponse(res, {
+      ifSuccess: (data) => {
+        setCode((data?.data?.metadata as { code: string })?.code);
+      },
+      ifFailed: () => {},
+    });
   };
 
   useEffect(() => {
-    getClassInfo(id||'');
-    setId(id||'');
-  }, [id]);
+    getClassCode();
+  }, []);
+
   return (
     <>
-      <ClassBanner name={classInfo?.name} description={classInfo?.description}></ClassBanner>
-      <div className='mt-3'>
-        <ClassCode></ClassCode>
+      <ClassBanner />
+      <div className="mt-3">
+        <ClassCode code={code} />
       </div>
     </>
   );

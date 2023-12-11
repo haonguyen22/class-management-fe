@@ -14,7 +14,6 @@ const HomePage = () => {
   useEffect(() => {
     fetchClasses(token);
   }, []);
-  console.log('classes', classes);
   return (
     <div className="flex flex-wrap items-start min-h-[400px]">
       {classes.map((item) => {

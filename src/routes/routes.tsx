@@ -38,6 +38,7 @@ export const RouteList = {
   forgotPassword: '/forgot-password',
   confirm: '/confirm',
   auth: '/auth/success',
+  class: '/class',
   classDetail: '/class/:id/detail',
   classMembers: '/class/:id/members',
   classScores: '/class/:id/scores',
@@ -62,13 +63,11 @@ function Routes() {
           <Route path={RouteList.home} element={<HomePage />} />
           <Route
             element={
-              <ClassContext.Provider value={{id, setId}}>
-                <Navigation>
-                  <LayoutLarge>
-                    <Outlet></Outlet>
-                  </LayoutLarge>
-                </Navigation>
-              </ClassContext.Provider>
+              <Navigation>
+                <LayoutLarge>
+                  <Outlet />
+                </LayoutLarge>
+              </Navigation>
             }
           >
             <Route path={RouteList.classDetail} element={<ClassDetail />} />

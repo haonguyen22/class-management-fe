@@ -1,7 +1,7 @@
 import { ICreateCLass } from '../../models/IClass';
 import { apiService } from '../generic';
 
-export const ClassService = {
+export const classService = {
   getAllClass: async (token: string) => {
     const res = await apiService.get('/class', { token: token });
     return res;
@@ -18,5 +18,18 @@ export const ClassService = {
     return await apiService.get('/class/' + id + '/teachers-and-students', {
       token,
     });
+  },
+  joinClass: async (token: string, classId: string) => {
+    const res = await apiService.post('/class/join', {
+      token: token,
+      data: { classId: classId },
+    });
+    return res;
+  },
+  getClassCode: async (token: string, classId: string) => {
+    const res = await apiService.get(`/class/${classId}/invitation-code`, {
+      token: token,
+    });
+    return res;
   },
 };
