@@ -1,6 +1,6 @@
 import ClassComponent from '../../components/ClassComponent';
 import { useContext, useEffect } from 'react';
-import { GlobalContext } from '../../context/GlobalContext';
+import { GlobalContext } from '../../context/ClassContext';
 import { useAuthHeader } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
 

@@ -3,7 +3,7 @@ import LocaleContext from './context/localeContext';
 import Routes from './routes/routes';
 import i18n from './i18n';
 import { AuthProvider } from 'react-auth-kit';
-import { GlobalContext } from './context/GlobalContext';
+import { GlobalContext } from './context/ClassContext';
 import { IClass } from './models/IClass';
 import { handleAxiosReponse } from './utils/handleReponse';
 import { ClassService } from './services/Class/ClassService';
