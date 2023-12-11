@@ -1,14 +1,20 @@
-import { MoreVert } from '@mui/icons-material';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { ContentCopy, MoreVert, Link } from '@mui/icons-material';
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AddMember from './AddMember';
 
 interface DropdownCodeProps {
   code?: string;
-};
+}
 
-const DropdownCode: React.FC<DropdownCodeProps> = ({code}) => {
+const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const {t} = useTranslation();
   const [open, setOpen] = useState(false);
@@ -22,13 +28,13 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({code}) => {
     setAnchorEl(null);
   };
 
-  const handleMenuItemClick = (code: string) => {
-    console.log(`Selected option: ${code}`);
-    navigator.clipboard.writeText(code)
+  const handleCopy = (text: string) => {
+    navigator.clipboard
+      .writeText(text)
       .then(() => {
-        console.log('Text copied to clipboard:', code);
+        console.log('Text copied to clipboard:', text);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Unable to copy text to clipboard', err);
       });
     setAnchorEl(null);
@@ -55,14 +61,35 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({code}) => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={() => handleMenuItemClick(code||'Defaul code')}>
-          {t('ClassCode.copy')}
+        <MenuItem onClick={() => handleCopy(code || 'Defaul code')}>
+          <ListItemIcon>
+            <ContentCopy fontSize="small" />
+          </ListItemIcon>
+          <ListItemText> {t('ClassCode.copy')}</ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => handleOpen('teachers')}>
-          {t('inviteMember.Teacher')}
+        <MenuItem
+          onClick={() =>
+            handleCopy(
+              `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/class/join`,
+            )
+          }
+        >
+          <ListItemIcon>
+            <Link fontSize="small" />
+          </ListItemIcon>
+          <ListItemText> {t('ClassCode.copyUrl')}</ListItemText>
         </MenuItem>
         <MenuItem onClick={() => handleOpen('students')}>
-          {t('inviteMember.Student')}
+          <ListItemIcon>
+            <ContentCopy fontSize="small" />
+          </ListItemIcon>
+          <ListItemText> student Email</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => handleOpen('teachers')}>
+          <ListItemIcon>
+            <ContentCopy fontSize="small" />
+          </ListItemIcon>
+          <ListItemText> Teacher Email </ListItemText>
         </MenuItem>
       </Menu>
       <AddMember open={open} setClose={handleClose} type={type}></AddMember>

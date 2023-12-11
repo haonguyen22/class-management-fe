@@ -1,3 +1,5 @@
+import { IUser } from './User';
+
 export interface ICreateCLass {
   name: string;
   description: string;
@@ -10,4 +12,8 @@ export interface IClass {
   description: string;
   subject: string;
   avatar: string;
+  numberOfTeachers: number;
+  numberOfStudents: number;
+  owner: IUser;
+  updatedAt: string;
 }

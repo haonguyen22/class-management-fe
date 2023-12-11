@@ -65,6 +65,7 @@
   "ClassCode.title": "Class code",
   "ClassCode.code": "Code",
   "ClassCode.copy": "Copy code",
+  "ClassCode.copyUrl": "Copy code by invite link",
   "RowUser.clear": "Clear",
   "TypeMember.type": "Members",
   "RowUser.DefaultName": "Default name",
@@ -74,5 +75,7 @@
   "PeopleInfo": "People info",
   "ScoreTable": "Score table",
   "inviteMember.Teacher": "Invite teacher",
-  "inviteMember.Student": "Invite student"
+  "inviteMember.Student": "Invite student",
+  "Loading": "Loading...",
+  "noClass": "There are currently no classes that you are participating in. Create a new class or join a class with the class code provided by the teacher"
 }

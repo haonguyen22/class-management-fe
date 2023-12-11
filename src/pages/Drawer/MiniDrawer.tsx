@@ -23,6 +23,7 @@ import Footer from '../../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../context/GlobalContext';
 import { IClass } from '../../models/IClass';
+import { avatarDefault } from '../../constants/globalConst';
 
 const drawerWidth = 240;
 
@@ -126,10 +127,7 @@ export default function MiniDrawer({
                   }}
                 >
                   <img
-                    src={
-                      item.avatar ||
-                      'https://lh3.googleusercontent.com/ogw/ANLem4YUD68lxa_-KKaoufPpiFUzxyrjbxBWlsFUgJFx8Q=s32-c-mo'
-                    }
+                    src={item.avatar || avatarDefault}
                     className="rounded-full w-[32px] h-[32px]"
                   />
                 </ListItemIcon>

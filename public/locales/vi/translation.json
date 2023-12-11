@@ -65,6 +65,7 @@
   "ClassCode.title": "Mã lớp học",
   "ClassCode.code": "Mã mặc định",
   "ClassCode.copy": "Sao chép mã",
+  "ClassCode.copyUrl": "Sao chép đường dẫn",
   "RowUser.clear": "Xóa",
   "TypeMember.type": "Thành viên",
   "RowUser.DefaultName": "Tên mặc định",
@@ -74,5 +75,7 @@
   "PeopleInfo": "Thông tin thành viên",
   "ScoreTable": "Bảng điểm",
   "inviteMember.Teacher": "Mời giáo viên",
-  "inviteMember.Student": "Mời học sinh"
+  "inviteMember.Student": "Mời học sinh",
+  "Loading": "Đang tải...",
+  "noClass": "Hiện tại chưa có lớp học nào mà bạn tham gia. Hãy tạo lớp học mới  hoặc tham gia lớp với mã lớp được giáo viên cung cấp"
 }

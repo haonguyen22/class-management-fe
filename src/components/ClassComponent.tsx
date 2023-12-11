@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { BsPeopleFill } from 'react-icons/bs';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 
 ClassComponent.propsType = {
   name: PropTypes.string.isRequired,
