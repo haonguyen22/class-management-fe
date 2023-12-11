@@ -3,9 +3,9 @@ import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { useAuthHeader } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
-import LocaleContext from '../../context/LocaleContext';
 import { avatarDefault } from '../../constants/globalConst';
 import { useTranslation } from 'react-i18next';
+import LocaleContext from '../../context/LocaleContext';
 
 const HomePage = () => {
   const { t } = useTranslation();

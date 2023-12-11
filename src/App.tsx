@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import LocaleContext from './context/localeContext';
 import Routes from './routes/routes';
 import i18n from './i18n';
 import { AuthProvider } from 'react-auth-kit';
 import { GlobalContext } from './context/GlobalContext';
 import { IClass } from './models/IClass';
 import { handleAxiosReponse } from './utils/handleReponse';
-// import LocaleContext from './context/LocaleContext';
 import { classService } from './services/class/ClassService';
+import LocaleContext from './context/LocaleContext';
 
 function App() {
   const [locale, setLocale] = useState(i18n.language);
@@ -38,7 +37,9 @@ function App() {
 
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
-      <GlobalContext.Provider value={{ classes, setClasses, fetchClasses, isFetchingClasses}}>
+      <GlobalContext.Provider
+        value={{ classes, setClasses, fetchClasses, isFetchingClasses }}
+      >
         <AuthProvider
           authName={'_auth'}
           authType={'cookie'}
