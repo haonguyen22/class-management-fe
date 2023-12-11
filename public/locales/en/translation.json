@@ -59,6 +59,18 @@
   "join": "Join",
   "cancel": "Cancel",
   "profile": "Profile",
-  "settings": "Settings"
-  
+  "settings": "Settings",
+  "ClassBanner.default": "Class banner",
+  "ClassBanner.defaultTitle": "Class banner Title",
+  "ClassCode.title": "Class code",
+  "ClassCode.code": "Code",
+  "ClassCode.copy": "Copy code",
+  "RowUser.clear": "Clear",
+  "TypeMember.type": "Members",
+  "RowUser.DefaultName": "Default name",
+  "ClassMember.Teacher": "Teacher",
+  "ClassMember.Student": "Student",
+  "ClassInfo": "Class info",
+  "PeopleInfo": "People info",
+  "ScoreTable": "Score table"
 }

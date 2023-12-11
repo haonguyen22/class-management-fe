@@ -21,7 +21,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useNavigate } from 'react-router-dom';
-import { GlobalContext } from '../../context/ClassContext';
+import { GlobalContext } from '../../context/GlobalContext';
 import { IClass } from '../../models/IClass';
 
 const drawerWidth = 240;

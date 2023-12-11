@@ -1,6 +1,7 @@
 import { MoreVert } from '@mui/icons-material';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface DropdownCodeProps {
   code?: string;
@@ -8,6 +9,7 @@ interface DropdownCodeProps {
 
 const DropdownCode: React.FC<DropdownCodeProps> = ({code}) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const {t} = useTranslation();
 
   const handleMoreClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -41,7 +43,7 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({code}) => {
         onClose={handleMenuClose}
       >
         <MenuItem onClick={() => handleMenuItemClick(code||'Defaul code')}>
-          copy code
+          {t('ClassCode.copy')}
         </MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Option 2')}>
           Option 2

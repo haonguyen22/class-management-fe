@@ -3,11 +3,10 @@ import LocaleContext from './context/localeContext';
 import Routes from './routes/routes';
 import i18n from './i18n';
 import { AuthProvider } from 'react-auth-kit';
-// import LocaleContext from './context/LocaleContext';
-import { GlobalContext } from './context/ClassContext';
+import { GlobalContext } from './context/GlobalContext';
 import { IClass } from './models/IClass';
 import { handleAxiosReponse } from './utils/handleReponse';
-import { classService } from './services/class/ClassService';
+import { ClassService } from './services/Class/ClassService';
 
 function App() {
   const [locale, setLocale] = useState(i18n.language);
@@ -21,7 +20,7 @@ function App() {
 
   const fetchClasses = async (token: string) => {
     setClasses([]);
-    const res = await classService.getAllClass(token);
+    const res = await ClassService.getAllClass(token);
     handleAxiosReponse(res, {
       ifSuccess: (data) => {
         console.log(data?.data?.metadata);

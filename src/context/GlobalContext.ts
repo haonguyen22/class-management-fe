@@ -12,3 +12,13 @@ export const GlobalContext = createContext<GlobalContextType>({
   setClasses: () => {},
   fetchClasses: () => {},
 });
+
+export interface IClassContext {
+  id: string | undefined;
+  setId: (id: string) => void;
+}
+
+export const ClassContext = createContext<IClassContext>({
+  id: '',
+  setId: () => {},
+});
