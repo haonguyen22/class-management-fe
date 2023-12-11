@@ -21,6 +21,7 @@ import ListUser from '../components/ListUser';
 import MiniDrawer from '../pages/Drawer/MiniDrawer';
 import { IClassContext, ClassContext } from '../context/GlobalContext';
 import React from 'react';
+import AddMember from '../components/AddMember';
 
 function Layout() {
   return (
@@ -37,7 +38,8 @@ export const RouteList = {
   resetPassword: '/reset-password',
   forgotPassword: '/forgot-password',
   confirm: '/confirm',
-  auth: '/auth/success',
+  authGoogle: '/auth/success',
+  authFacebook: '/auth/success',
   classDetail: '/class/:id/detail',
   classMembers: '/class/:id/members',
   classScores: '/class/:id/scores',
@@ -75,7 +77,7 @@ function Routes() {
             <Route path={RouteList.classMembers} element={<ClassMember />} />
             <Route path={RouteList.classScores} element={<></>} />
           </Route>
-          <Route path="test" element={<ListUser />} />
+          <Route path="test" element={<></>} />
         </Route>
         <Route
           path={RouteList.forgotPassword}
@@ -83,7 +85,8 @@ function Routes() {
         />
         <Route path={RouteList.resetPassword} element={<ResetPassword />} />
         <Route path={RouteList.confirm} element={<ConfirmEmailPage />} />,
-        <Route path={RouteList.auth} element={<SocialAuth />} />
+        <Route path={RouteList.authGoogle} element={<SocialAuth />} />
+        <Route path={RouteList.authFacebook} element={<SocialAuth />} />
       </Route>,
     ),
   );

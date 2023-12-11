@@ -72,5 +72,7 @@
   "ClassMember.Student": "Student",
   "ClassInfo": "Class info",
   "PeopleInfo": "People info",
-  "ScoreTable": "Score table"
+  "ScoreTable": "Score table",
+  "inviteMember.Teacher": "Invite teacher",
+  "inviteMember.Student": "Invite student"
 }

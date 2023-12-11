@@ -19,4 +19,16 @@ export const ClassService = {
       token,
     });
   },
+
+  addMember: async (
+    email: string,
+    id: string | undefined,
+    type: string,
+    token: string,
+  ) => {
+    return await apiService.post(`/class/${id}/${type}`, {
+      token,
+      data: { email },
+    });
+  },
 };

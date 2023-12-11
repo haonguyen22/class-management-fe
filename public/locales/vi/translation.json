@@ -72,5 +72,7 @@
   "ClassMember.Student": "Học sinh",
   "ClassInfo": "Thông tin lớp học",
   "PeopleInfo": "Thông tin thành viên",
-  "ScoreTable": "Bảng điểm"
+  "ScoreTable": "Bảng điểm",
+  "inviteMember.Teacher": "Mời giáo viên",
+  "inviteMember.Student": "Mời học sinh"
 }
