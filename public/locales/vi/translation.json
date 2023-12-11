@@ -74,6 +74,8 @@
   "ClassInfo": "Thông tin lớp học",
   "PeopleInfo": "Thông tin thành viên",
   "ScoreTable": "Bảng điểm",
+  "inviteMember.Teacher": "Mời giáo viên",
+  "inviteMember.Student": "Mời học sinh",
   "Loading": "Đang tải...",
   "noClass": "Hiện tại chưa có lớp học nào mà bạn tham gia. Hãy tạo lớp học mới  hoặc tham gia lớp với mã lớp được giáo viên cung cấp"
 }

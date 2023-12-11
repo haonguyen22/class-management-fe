@@ -27,6 +27,7 @@ const HomePage = () => {
     return (
       <div className="flex flex-wrap items-start min-h-[400px]">
         {classes.map((item) => {
+          console.log(item);
           return (
             <ClassComponent
               onClick={() => navigate(`/class/${item.id}/detail`)}
@@ -34,7 +35,7 @@ const HomePage = () => {
               description={item.description}
               name={item.name}
               avatar={item.avatar || avatarDefault}
-              teacherName={item.owner.name}
+              teacherName={item.owner?.name}
               numOfStudent={item.numberOfStudents}
               numOfTeacher={item.numberOfTeachers}
               lastUpdate={new Date(item.updatedAt).toLocaleString(locale)}
