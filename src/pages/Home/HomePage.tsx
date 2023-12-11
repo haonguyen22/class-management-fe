@@ -22,7 +22,9 @@ const HomePage = () => {
   }, []);
 
   if (!isFetchingClasses && classes.length === 0) {
-    return <div className="flex mt-12 justify-center h-[300px]">{t('noClass')}</div>;
+    return (
+      <div className="flex mt-12 justify-center h-[300px]">{t('noClass')}</div>
+    );
   } else {
     return (
       <div className="flex flex-wrap items-start min-h-[400px]">
@@ -34,7 +36,7 @@ const HomePage = () => {
               description={item.description}
               name={item.name}
               avatar={item.avatar || avatarDefault}
-              teacherName={item.owner.name}
+              teacherName={item.owner?.name}
               numOfStudent={item.numberOfStudents}
               numOfTeacher={item.numberOfTeachers}
               lastUpdate={new Date(item.updatedAt).toLocaleString(locale)}

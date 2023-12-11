@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 import { useAuthHeader, useIsAuthenticated } from 'react-auth-kit';
 import { useCookies } from 'react-cookie';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { classService } from '../../services/class/ClassService';
 import { handleAxiosReponse } from '../../utils/handleReponse';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
+import { classService } from '../../services/class/ClassService';
 
 function JoinClassPage() {
   const { t } = useTranslation();

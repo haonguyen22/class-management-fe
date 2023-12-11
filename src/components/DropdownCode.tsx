@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import AddMember from './AddMember';
 
 interface DropdownCodeProps {
   code?: string;
@@ -16,6 +17,9 @@ interface DropdownCodeProps {
 const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState('students');
+
   const handleMoreClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
@@ -34,6 +38,16 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
         console.error('Unable to copy text to clipboard', err);
       });
     setAnchorEl(null);
+  };
+
+  const handleOpen = (typeMember: string) => {
+    setType(typeMember);
+    setOpen(true);
+    setAnchorEl(null);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -65,7 +79,20 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
           </ListItemIcon>
           <ListItemText> {t('ClassCode.copyUrl')}</ListItemText>
         </MenuItem>
+        <MenuItem onClick={() => handleOpen('students')}>
+          <ListItemIcon>
+            <ContentCopy fontSize="small" />
+          </ListItemIcon>
+          <ListItemText> student Email</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => handleOpen('teachers')}>
+          <ListItemIcon>
+            <ContentCopy fontSize="small" />
+          </ListItemIcon>
+          <ListItemText> Teacher Email </ListItemText>
+        </MenuItem>
       </Menu>
+      <AddMember open={open} setClose={handleClose} type={type}></AddMember>
     </div>
   );
 };

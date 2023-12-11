@@ -62,6 +62,8 @@ function LoginPage() {
             if (cookies.redirectUrl) {
               navigate(RouteList.joinClass + cookies.redirectUrl);
               removeCookie('redirectUrl', { path: '/' });
+            } else {
+              navigate('/');
             }
           }
         },

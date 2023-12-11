@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink, useParams } from 'react-router-dom';
 
 const Navigation = ({ children }: { children: React.ReactNode }) => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
 
   const NavList = [
