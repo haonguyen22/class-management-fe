@@ -41,7 +41,7 @@ const ClassMember = () => {
         {/* giáo viên */}
         <ListMember type={t('ClassMember.Teacher')} members={teachers}/>
         {/* học sinh */}
-        <ListMember type={t('ClassMember.Student')} members={teachers}/>
+        <ListMember type={t('ClassMember.Student')} members={students}/>
       </LayoutSmall>
     </div>
   );
