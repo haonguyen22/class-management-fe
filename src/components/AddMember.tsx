@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { handleAxiosReponse } from '../utils/handleReponse';
 import { useAuthHeader } from 'react-auth-kit';
 import { useNavigate, useParams } from 'react-router-dom';
-import { classService } from '../services/Class/ClassService';
+import { classService } from '../services/class/ClassService';
 
 const validationSchema = yup.object({
   email: yup.string().email('Invalid email address').required('Email is required'),

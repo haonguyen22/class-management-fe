@@ -6,7 +6,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import { handleAxiosReponse } from '../../utils/handleReponse';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
-import { classService } from '../../services/Class/ClassService';
+import { classService } from '../../services/class/ClassService';
 
 function JoinClassPage() {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ function JoinClassPage() {
   const code = searchParams.get('code');
   const { enqueueSnackbar } = useSnackbar();
 
-  
+
 
   const joinClass = async () => {
     const res = await classService.joinClass(token!, code!);
