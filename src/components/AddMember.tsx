@@ -30,7 +30,8 @@ const AddMember: React.FC<AddMemberProps> = ({ open, setClose, type }) => {
     onSubmit: async (values) => {
       const token = authHeader().replace('Bearer ', '');
       console.log(values);
-      const res = await classService.addMember(values.email, id, type, token );
+      const typeTemp = (type === 'Teacher'||type ==="Giáo viên") ? 'teachers' : 'students';
+      const res = await classService.addMember(values.email, id, typeTemp, token );
       handleAxiosReponse(res, {
         ifSuccess: (data) => {
           console.log(data);
