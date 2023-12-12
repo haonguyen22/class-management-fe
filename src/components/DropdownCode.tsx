@@ -83,13 +83,13 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
           <ListItemIcon>
             <ContentCopy fontSize="small" />
           </ListItemIcon>
-          <ListItemText> student Email</ListItemText>
+          <ListItemText>{t('inviteMember.Student')}</ListItemText>
         </MenuItem>
         <MenuItem onClick={() => handleOpen('teachers')}>
           <ListItemIcon>
             <ContentCopy fontSize="small" />
           </ListItemIcon>
-          <ListItemText> Teacher Email </ListItemText>
+          <ListItemText>{t('inviteMember.Teacher')} </ListItemText>
         </MenuItem>
       </Menu>
       <AddMember open={open} setClose={handleClose} type={type}></AddMember>
