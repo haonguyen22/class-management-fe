@@ -36,14 +36,16 @@ const Nav=({children}: {children:React.ReactNode})=> {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <Tabs value={value} aria-label="disabled tabs example">
-        {NavList.map((item, index) => (
-          <Tab label={item.name} key={index} onClick={() => handleClick(index, item.path)} />
-        ))}
-      </Tabs>
+    <>
+      <div className="flex flex-col items-center">
+        <Tabs value={value} aria-label="disabled tabs example">
+          {NavList.map((item, index) => (
+            <Tab label={item.name} key={index} onClick={() => handleClick(index, item.path)} />
+            ))}
+        </Tabs>
+      </div>
       {children}
-    </div>
+    </>
   );
 };
 

@@ -19,6 +19,7 @@ const ClassDetail = () => {
   const [code, setCode] = useState('');
   const [classDetail, setClassDetail] = useState<IClass>();
   const [isLoading, setIsLoading] = useState(false);
+  const [notPermission, setNotPermission] = useState(false);
 
   const getClassCode = async () => {
     const res = await classService.getClassCode(token, id!);
@@ -26,7 +27,9 @@ const ClassDetail = () => {
       ifSuccess: (data) => {
         setCode((data?.data?.metadata as { code: string })?.code);
       },
-      ifFailed: () => {},
+      ifFailed: () => {
+        setNotPermission(true);
+      },
     });
   };
 
@@ -47,7 +50,7 @@ const ClassDetail = () => {
   useEffect(() => {
     getClassCode();
     getClassDetail();
-  }, [id]);
+  }, [id, notPermission]);
 
   if (isLoading)
     return (
@@ -63,19 +66,21 @@ const ClassDetail = () => {
           description={classDetail?.description}
           avatar={classDetail?.avatar}
         />
-        <div className="mt-3">
-          <div className="inline-block w-60 border border-gray-500 shadow-md rounded-md p-3">
-            <div className="flex items-center justify-between px-3 py-2">
-              <h1 className="text-lg font-bold">{t('ClassCode.title')}</h1>
-              <DropdownCode code={code} />
-            </div>
-            <div className="flex items-center justify-between px-3 py-2">
-              <h1 className="text-xl font-bold text-blue-500">
-                {code || <CircularProgress />}
-              </h1>
+        {!notPermission && (
+          <div className="mt-3">
+            <div className="inline-block w-60 border border-gray-500 shadow-md rounded-md p-3">
+              <div className="flex items-center justify-between px-3 py-2">
+                <h1 className="text-lg font-bold">{t('ClassCode.title')}</h1>
+                <DropdownCode code={code} />
+              </div>
+              <div className="flex items-center justify-between px-3 py-2">
+                <h1 className="text-xl font-bold text-blue-500">
+                  {code || <CircularProgress />}
+                </h1>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </>
     );
 };

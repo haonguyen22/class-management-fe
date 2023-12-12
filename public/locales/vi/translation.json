@@ -80,5 +80,6 @@
   "noClass": "Hiện tại chưa có lớp học nào mà bạn tham gia. Hãy tạo lớp học mới  hoặc tham gia lớp với mã lớp được giáo viên cung cấp",
   "participating.success": "Tham gia lớp học thành công",
   "participating.fail": "Tham gia lớp học thất bại",
-  "participating.login": "Bạn cần đăng nhập để tham gia lớp học"
+  "participating.login": "Bạn cần đăng nhập để tham gia lớp học",
+  "ActionDrop.Action": "Thao tác"
 }
