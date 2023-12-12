@@ -13,7 +13,6 @@ import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
 import ResetPassword from '../pages/Auth/ResetPassword';
 import SocialAuth from '../pages/Auth/SocialAuthPage';
-import Navigation from '../components/Navigation';
 import LayoutLarge from '../common/Layout/MarginLarge';
 import ClassDetail from '../pages/Class/ClassDetail';
 import ClassMember from '../pages/Class/ClassMember';
@@ -23,6 +22,7 @@ import { ClassContext, GlobalContext } from '../context/GlobalContext';
 import JoinClassPage from '../pages/Class/JoinClassPage';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Nav from '../components/Nav';
 
 function Layout() {
   return (
@@ -93,11 +93,11 @@ function Routes() {
           <Route
             element={
               <ClassContext.Provider value={{ id, setId }}>
-                <Navigation>
+                <Nav>
                   <LayoutLarge>
                     <Outlet></Outlet>
                   </LayoutLarge>
-                </Navigation>
+                </Nav>
               </ClassContext.Provider>
             }
           >
