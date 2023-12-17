@@ -81,5 +81,7 @@
   "participating.success": "You have successfully joined the class",
   "participating.fail": "Failed to join class",
   "participating.login": "You need to login to join class",
-  "ActionDrop.Action": "Action"
+  "ActionDrop.Action": "Action",
+  "enrolled": "Enrolled",
+  "teaching": "Teaching"
 }

@@ -81,5 +81,7 @@
   "participating.success": "Tham gia lớp học thành công",
   "participating.fail": "Tham gia lớp học thất bại",
   "participating.login": "Bạn cần đăng nhập để tham gia lớp học",
-  "ActionDrop.Action": "Thao tác"
+  "ActionDrop.Action": "Thao tác",
+  "enrolled": "Đã tham gia",
+  "teaching": "Đang dạy"
 }
