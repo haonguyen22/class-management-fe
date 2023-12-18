@@ -83,5 +83,9 @@
   "participating.login": "Bạn cần đăng nhập để tham gia lớp học",
   "ActionDrop.Action": "Thao tác",
   "enrolled": "Đã tham gia",
-  "teaching": "Đang dạy"
+  "teaching": "Đang dạy",
+  "remove": "Xóa",
+  "stream": "Bảng tin",
+  "people": "Thành viên",
+  "grade": "Điểm"
 }

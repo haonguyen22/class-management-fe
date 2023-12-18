@@ -20,9 +20,9 @@ import MiniDrawer from '../pages/Drawer/MiniDrawer';
 import React, { useContext, useEffect } from 'react';
 import { ClassContext, GlobalContext } from '../context/GlobalContext';
 import JoinClassPage from '../pages/Class/JoinClassPage';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Nav from '../components/Nav';
+import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
+import { ClassDetailNav } from '../components/ClassDetail/ClassDetailNav';
 
 function Layout() {
   return (
@@ -93,11 +93,11 @@ function Routes() {
           <Route
             element={
               <ClassContext.Provider value={{ id, setId }}>
-                <Nav>
+                <ClassDetailNav>
                   <LayoutLarge>
-                    <Outlet></Outlet>
+                    <Outlet />
                   </LayoutLarge>
-                </Nav>
+                </ClassDetailNav>
               </ClassContext.Provider>
             }
           >

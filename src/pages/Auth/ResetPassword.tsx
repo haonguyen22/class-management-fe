@@ -6,8 +6,8 @@ import { IError, IErrorResponse } from '../../models/IAxiosResponse';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useIsAuthenticated } from 'react-auth-kit';
-import { handleAxiosReponse } from '../../utils/handleReponse';
-import BackToHome from '../../components/BackToHome';
+import { apiCall } from '../../utils/apiCall';
+import BackToHome from '../../common/BackToHome';
 
 function ResetPassword() {
   const { t } = useTranslation();
@@ -49,9 +49,7 @@ function ResetPassword() {
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
   ) => {
     try {
-      const res = await authService.resetPassword(token!, value);
-
-      handleAxiosReponse(res, {
+      await apiCall( authService.resetPassword(token!, value), {
         ifSuccess: (response) => {
           if (response.status === 200) {
             setMessage(response.data.message as string);

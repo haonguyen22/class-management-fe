@@ -1,49 +1,44 @@
 import { ICreateCLass } from '../../models/IClass';
-import { apiService } from '../generic';
+import { api } from '../api';
 
-export const classService = {
-  getAllClass: async (token: string) => {
-    const res = await apiService.get('/class', { token: token });
+class ClassService {
+  async getAllClass() {
+    const res = await api.get('/class');
     return res;
-  },
-  getClassById: async (token: string, id: string) => {
-    const res = await apiService.get(`/class/${id}`, { token: token });
+  }
+  async getClassById(id: string) {
+    const res = await api.get(`/class/${id}`);
     return res;
-  },
-  createClass: async (token: string, data: ICreateCLass) => {
-    const res = await apiService.post('/class', { token: token, data: data });
-    return res;
-  },
-  GetClassInfo: async (id: string, token: string) => {
-    return await apiService.get('/class/' + id, { token });
-  },
+  }
 
-  GetListMember: async (id: string | undefined, token: string) => {
-    return await apiService.get('/class/' + id + '/teachers-and-students', {
-      token,
-    });
-  },
-  joinClass: async (token: string, classId: string) => {
-    const res = await apiService.get(`/class/${classId}/join`, {
-      token: token,
-    });
+  async createClass(data: ICreateCLass) {
+    const res = await api.post('/class', data );
     return res;
-  },
-  getClassCode: async (token: string, classId: string) => {
-    const res = await apiService.get(`/class/${classId}/invitation-code`, {
-      token: token,
-    });
+  }
+
+  async getClassInfo(id: string) {
+    return await api.get('/class/' + id);
+  }
+
+  async getListMember(id: string | undefined) {
+    return await api.get('/class/' + id + '/teachers-and-students');
+  }
+
+  async joinClass(classId: string) {
+    const res = await api.get(`/class/${classId}/join`);
     return res;
-  },
-  addMember: async (
-    email: string,
-    id: string | undefined,
-    type: string,
-    token: string,
-  ) => {
-    return await apiService.post(`/class/${id}/${type}`, {
-      token,
+  }
+
+  async getClassCode(classId: string) {
+    const res = await api.get(`/class/${classId}/invitation-code`);
+    return res;
+  }
+
+  async addMember(email: string, id: string | undefined, type: string) {
+    return await api.post(`/class/${id}/${type}`, {
       data: { email },
     });
-  },
-};
+  }
+}
+
+export const classService = new ClassService();

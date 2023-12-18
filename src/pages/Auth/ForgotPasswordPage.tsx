@@ -4,7 +4,8 @@ import * as Yup from 'yup';
 import { authService } from '../../services/auth/AuthService';
 import { IError, IErrorResponse, IResponse } from '../../models/IAxiosResponse';
 import { useEffect, useState } from 'react';
-import BackToHome from '../../components/BackToHome';
+import BackToHome from '../../common/BackToHome';
+import { apiCall } from '../../utils/apiCall';
 
 function ForgotPasswordPage() {
   const { t } = useTranslation();
@@ -41,23 +42,18 @@ function ForgotPasswordPage() {
             .required(t('email.required')),
         })}
         onSubmit={async (values, { setSubmitting }) => {
-          try {
-            const res = await authService.forgotPassword(values.email);
-            const temp = res as IResponse;
-            let response;
-            if (temp.status === undefined || temp.data === undefined) {
-              response = res as IError<IErrorResponse>;
-              setError(response?.response?.data?.message ?? response?.message);
-            } else {
-              response = temp;
-              if (response.status === 200) {
-                setMessage(response.data.message as string);
+          await apiCall(authService.forgotPassword(values.email), {
+            ifSuccess: (data) => {
+              if (data.status === 200) {
+                setMessage(data.data.message as string);
               }
-            }
-            setSubmitting(false);
-          } catch (error) {
-            console.error('Error calling API:', error);
-          }
+            },
+            ifFailed: (err) => {
+              const response = err as IError<IErrorResponse>;
+              setError(response?.response?.data?.message ?? response?.message);
+            },
+          });
+          setSubmitting(false);
         }}
       >
         {({ isSubmitting }) => (

@@ -8,17 +8,18 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import AddMember from './AddMember';
+import AddMemberButton from '../ClassMember/AddMemberDialog';
+import { RoleClass } from '../../enums/RoleClass';
 
 interface DropdownCodeProps {
   code?: string;
+  type?: string;
 }
 
-const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
+const DropdownCode: React.FC<DropdownCodeProps> = ({ code, type }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [type, setType] = useState('students');
 
   const handleMoreClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -37,12 +38,6 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
       .catch((err) => {
         console.error('Unable to copy text to clipboard', err);
       });
-    setAnchorEl(null);
-  };
-
-  const handleOpen = (typeMember: string) => {
-    setType(typeMember);
-    setOpen(true);
     setAnchorEl(null);
   };
 
@@ -79,20 +74,12 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code }) => {
           </ListItemIcon>
           <ListItemText> {t('ClassCode.copyUrl')}</ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => handleOpen('students')}>
-          <ListItemIcon>
-            <ContentCopy fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>{t('inviteMember.Student')}</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => handleOpen('teachers')}>
-          <ListItemIcon>
-            <ContentCopy fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>{t('inviteMember.Teacher')} </ListItemText>
-        </MenuItem>
       </Menu>
-      <AddMember open={open} setClose={handleClose} type={type}></AddMember>
+      <AddMemberButton
+        open={open}
+        setClose={handleClose}
+        type={type ?? RoleClass.STUDENT}
+      />
     </div>
   );
 };

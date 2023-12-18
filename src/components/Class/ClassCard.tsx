@@ -3,7 +3,7 @@ import { BsPeopleFill } from 'react-icons/bs';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 
-ClassComponent.propsType = {
+ClassCard.propsType = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   teacherName: PropTypes.string.isRequired,
@@ -13,7 +13,7 @@ ClassComponent.propsType = {
   lastUpdate: PropTypes.string.isRequired,
 };
 
-function ClassComponent(props: {
+function ClassCard(props: {
   name: string;
   description: string;
   teacherName: string;
@@ -72,4 +72,4 @@ function ClassComponent(props: {
   );
 }
 
-export default ClassComponent;
+export default ClassCard;

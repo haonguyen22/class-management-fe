@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import localeContext from '../context/LocaleContext';
+import localeContext from '../../context/LocaleContext';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useIsAuthenticated } from 'react-auth-kit';
-import i18n from '../i18n';
-import Logo from './Logo';
-import AddClassButton from './AddClassButton';
+import i18n from '../../i18n';
+import Logo from '../../common/Logo';
+import AddClassButton from '../Class/AddClassButton';
 import AccountMenu from './AccountMenu';
 // import localeContext from '../context/LocaleContext';
 

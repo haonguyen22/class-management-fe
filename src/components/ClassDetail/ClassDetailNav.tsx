@@ -2,10 +2,16 @@ import React, { useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Box } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 
-const Nav=({children}: {children:React.ReactNode})=> {
+export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
   const [value, setValue] = React.useState(0);
   const path = window.location.pathname;
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
   useEffect(() => {
     const index = path.lastIndexOf('/');
     const pathName = path.substring(index + 1);
@@ -13,42 +19,42 @@ const Nav=({children}: {children:React.ReactNode})=> {
     if (pathName === 'members') setValue(1);
     if (pathName === 'scores') setValue(2);
   }, [path]);
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const NavList = [
     {
-      name: 'Class Info',
+      name: t('stream'),
       path: `/class/${id}/detail`,
     },
     {
-      name: 'People Info',
+      name: t('people'),
       path: `/class/${id}/members`,
     },
     {
-      name: 'Score Table',
+      name: t('grade'),
       path: `/class/${id}/scores`,
     },
   ];
 
-  const handleClick = (newValue: number, path:string) => {
+  const handleClick = (newValue: number, path: string) => {
     setValue(newValue);
     navigate(path);
   };
 
   return (
     <>
-      <div className="flex flex-col items-center">
-        <Tabs value={value} aria-label="disabled tabs example">
+      <Box sx={{ borderBottom: 1, borderColor: 'gray' }}>
+        <Tabs value={value} aria-label="basic tabs example">
           {NavList.map((item, index) => (
-            <Tab label={item.name} key={index} onClick={() => handleClick(index, item.path)} />
-            ))}
+            <Tab
+              sx={{ fontWeight: '550' }}
+              label={item.name}
+              key={index}
+              onClick={() => handleClick(index, item.path)}
+            />
+          ))}
         </Tabs>
-      </div>
+      </Box>
+      <div className="mt-8" />
       {children}
     </>
   );
 };
-
-export default Nav;
-
-

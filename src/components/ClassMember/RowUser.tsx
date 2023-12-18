@@ -6,9 +6,8 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import { MoreVert} from '@mui/icons-material';
+import { MoreVert } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { truncate } from 'fs/promises';
 
 interface RowWithDropdownProps {
   name?: string;
@@ -17,9 +16,14 @@ interface RowWithDropdownProps {
   visible?: boolean;
 }
 
-const RowUser: React.FC<RowWithDropdownProps> = ({ name, isChecked, setIsChecked, visible = true }) => {
+export const RowUser: React.FC<RowWithDropdownProps> = ({
+  name,
+  isChecked,
+  setIsChecked,
+  visible = true,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const handleMoreClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -35,24 +39,29 @@ const RowUser: React.FC<RowWithDropdownProps> = ({ name, isChecked, setIsChecked
   };
 
   const handleClicked = () => {
-    if(visible)
-      setIsChecked!();
+    if (visible) setIsChecked!();
   };
 
   return (
     <>
-      <div className={`flex items-center mx-5 justify-between ${visible?'hover:bg-blue-100 hover:rounded-md cursor-pointer':''} p-2`}
+      <div
+        className={`flex items-center mx-5 justify-between ${
+          visible ? 'hover:bg-blue-100 hover:rounded-md cursor-pointer' : ''
+        } p-2`}
       >
-        <div className='flex items-center gap-5 w-full'
-          onClick={handleClicked}
-        >
-          <div className={visible?'visible':'hidden'}>
+        <div className="flex items-center gap-5 w-full" onClick={handleClicked}>
+          <div className={visible ? 'visible' : 'hidden'}>
             <Checkbox checked={isChecked} />
           </div>
-          <div className='w-10 h-10 rounded-full'>
-            <img src='https://picsum.photos/200' className='object-cover w-full h-full rounded-full'/>
+          <div className="w-10 h-10 rounded-full">
+            <img
+              src="https://picsum.photos/200"
+              className="object-cover w-full h-full rounded-full"
+            />
           </div>
-          <Typography style={{fontWeight: 'bold'}}>{name||t('RowUser.DefaultName')}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>
+            {name || t('RowUser.DefaultName')}
+          </Typography>
         </div>
         <IconButton onClick={handleMoreClick}>
           <MoreVert />
@@ -65,17 +74,9 @@ const RowUser: React.FC<RowWithDropdownProps> = ({ name, isChecked, setIsChecked
         onClose={handleMenuClose}
       >
         <MenuItem onClick={() => handleMenuItemClick('Option 1')}>
-          {t('RowUser.clear')}
-        </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Option 2')}>
-          Option 2
-        </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Option 3')}>
-          Option 3
+          {t('remove')}
         </MenuItem>
       </Menu>
     </>
   );
 };
-
-export default RowUser;

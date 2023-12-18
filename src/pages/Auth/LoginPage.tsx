@@ -9,7 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useIsAuthenticated, useSignIn } from 'react-auth-kit';
 import { useEffect, useState } from 'react';
 import { RouteList } from '../../routes/routes';
-import { handleAxiosReponse } from '../../utils/handleReponse';
+import { apiCall } from '../../utils/apiCall';
 import { useCookies } from 'react-cookie';
 
 function LoginPage() {
@@ -18,7 +18,7 @@ function LoginPage() {
   const { t } = useTranslation();
   const signIn = useSignIn();
   const isAuthenticate = useIsAuthenticated();
-  const [cookies, setCookie, removeCookie] = useCookies(['redirectUrl']);
+  const [cookies, , removeCookie] = useCookies(['redirectUrl']);
 
   useEffect(() => {
     if (isAuthenticate()) {
@@ -47,18 +47,18 @@ function LoginPage() {
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
   ) => {
     try {
-      const res = await authService.login(values);
-      handleAxiosReponse(res, {
-        ifSuccess: (response) => {
-          if (response.status === 200) {
-            const token = response.data.metadata as { token: string };
+      await apiCall(authService.login(values), {
+        ifSuccess: (data) => {
+          if (data.status === 200) {
+            const token = data.metadata as { token: string };
             signIn({
               token: token.token,
               tokenType: 'Bearer',
               expiresIn: 3600,
               authState: { email: values.email },
             });
-            // Check is have redirect url
+            localStorage.setItem('token', token.token);
+
             if (cookies.redirectUrl) {
               navigate(RouteList.joinClass + cookies.redirectUrl);
               removeCookie('redirectUrl', { path: '/' });
