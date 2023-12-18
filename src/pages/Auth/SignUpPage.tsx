@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useIsAuthenticated } from 'react-auth-kit';
 import { phoneRegrex } from '../../constants/regexConst';
-import { handleAxiosReponse } from '../../utils/handleReponse';
+import { apiCall } from '../../utils/apiCall';
 import { RouteList } from '../../routes/routes';
 
 function SignUpPage() {
@@ -41,12 +41,11 @@ function SignUpPage() {
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
   ) => {
     try {
-      const res = await authService.signup(value);
-
-      handleAxiosReponse(res, {
-        ifSuccess: (response) => {
-          if (response.status === 200) {
-            setMessage(response.data.message as string);
+      await apiCall( authService.signup(value), {
+        ifSuccess: (data) => {
+          console.log(data);
+          if (data.status === 200) {
+            setMessage(data.data.message as string);
           }
         },
         ifFailed: (err) => {

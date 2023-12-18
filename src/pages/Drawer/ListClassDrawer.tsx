@@ -67,7 +67,7 @@ function ListClassDrawer({
             {icon}
           </ListItemIcon>
           <ListItemText primary={label} sx={{ opacity: open ? 1 : 0 }} />
-          {open && (isOpenAccordion ? <ExpandLess /> : <ExpandMore />)}
+          {open && (!isOpenAccordion ? <ExpandLess /> : <ExpandMore />)}
         </ListItemButton>
       </ListItem>
       {open && (

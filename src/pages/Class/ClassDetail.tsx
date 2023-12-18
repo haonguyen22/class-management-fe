@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import ClassDetailBanner from '../../components/ClassDetail/ClassDetailBanner';
 import { useParams } from 'react-router-dom';
 
-import { useAuthHeader } from 'react-auth-kit';
-import { handleAxiosReponse } from '../../utils/handleReponse';
+import { apiCall } from '../../utils/apiCall';
 import { useTranslation } from 'react-i18next';
 import DropdownCode from '../../components/ClassDetail/DropdownCode';
 import { IClass } from '../../models/IClass';
@@ -13,8 +12,6 @@ import { classService } from '../../services/class/ClassService';
 const ClassDetail = () => {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
-  const header = useAuthHeader();
-  const token = header()!.substring(7);
 
   const [code, setCode] = useState('');
   const [classDetail, setClassDetail] = useState<IClass>();
@@ -22,10 +19,9 @@ const ClassDetail = () => {
   const [notPermission, setNotPermission] = useState(false);
 
   const getClassCode = async () => {
-    const res = await classService.getClassCode(token, id!);
-    handleAxiosReponse(res, {
+    await apiCall( classService.getClassCode(id!), {
       ifSuccess: (data) => {
-        setCode((data?.data?.metadata as { code: string })?.code);
+        setCode((data?.metadata as { code: string })?.code);
       },
       ifFailed: () => {
         setNotPermission(true);
@@ -35,15 +31,15 @@ const ClassDetail = () => {
 
   const getClassDetail = async () => {
     setIsLoading(true);
-    const res = await classService.getClassById(token, id!);
-    handleAxiosReponse(res, {
+    await apiCall( classService.getClassById(id!), {
       ifSuccess: (data) => {
-        setClassDetail(data.data.metadata as IClass);
+        setClassDetail(data.metadata as IClass);
       },
       ifFailed: (err) => {
         console.log('🐛 Get detail class error :', err.message);
       },
     });
+
     setIsLoading(false);
   };
 

@@ -4,7 +4,7 @@ import i18n from './i18n';
 import { AuthProvider } from 'react-auth-kit';
 import { GlobalContext } from './context/GlobalContext';
 import { IClass } from './models/IClass';
-import { handleAxiosReponse } from './utils/handleReponse';
+import { apiCall } from './utils/apiCall';
 import { classService } from './services/class/ClassService';
 import LocaleContext from './context/LocaleContext';
 import { SnackbarProvider } from 'notistack';
@@ -20,19 +20,20 @@ function App() {
     });
   }, []);
 
-  const fetchClasses = async (token: string) => {
+  const fetchClasses = async () => {
     setIsFetchingClasses(true);
     setClasses([]);
-    const res = await classService.getAllClass(token);
-    handleAxiosReponse(res, {
+    await apiCall(classService.getAllClass(), {
       ifSuccess: (data) => {
-        Array.isArray(data?.data?.metadata) &&
-          setClasses(data?.data?.metadata?.map((item: IClass) => item));
+        console.log(data);
+        Array.isArray(data?.metadata) &&
+          setClasses(data?.metadata?.map((item: IClass) => item));
       },
       ifFailed: (err) => {
         console.log(err.message);
       },
     });
+
     setIsFetchingClasses(false);
   };
 

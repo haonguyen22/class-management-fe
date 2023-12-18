@@ -9,7 +9,7 @@ import {
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import * as yup from 'yup';
-import { handleAxiosReponse } from '../../utils/handleReponse';
+import { apiCall } from '../../utils/apiCall';
 import { useAuthHeader } from 'react-auth-kit';
 import { useParams } from 'react-router-dom';
 import { classService } from '../../services/class/ClassService';
@@ -42,23 +42,17 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const token = authHeader().replace('Bearer ', '');
-      console.log(values);
       const typeTemp =
         type === 'Teacher' || type === 'Giáo viên'
           ? RoleClass.TEACHER
           : RoleClass.STUDENT;
-      const res = await classService.addMember(
-        values.email,
-        id,
-        typeTemp,
-        token,
-      );
-      handleAxiosReponse(res, {
+
+      await apiCall(classService.addMember(values.email, id, typeTemp), {
         ifSuccess: (data) => {
+          // TODO: handle success
           console.log(data);
           setClose();
-          window.location.reload();
+          // window.location.reload();
         },
         ifFailed: (err) => {
           setError(err.response?.data?.message);

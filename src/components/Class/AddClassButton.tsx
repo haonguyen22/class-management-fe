@@ -13,7 +13,7 @@ import { BsPlusLg } from 'react-icons/bs';
 import CustomizedMenus from '../../common/CustomizedMenus';
 import { ICreateCLass } from '../../models/IClass';
 import { useAuthHeader } from 'react-auth-kit';
-import { handleAxiosReponse } from '../../utils/handleReponse';
+import { apiCall } from '../../utils/apiCall';
 import { GlobalContext } from '../../context/GlobalContext';
 import { httpStatus } from '../../constants/httpStatus';
 import { classService } from '../../services/class/ClassService';
@@ -59,8 +59,7 @@ function CreateClassDialog() {
   };
 
   const submitCreateClass = async () => {
-    const res = await classService.createClass(token, createClass);
-    handleAxiosReponse(res, {
+    await apiCall(classService.createClass(createClass), {
       ifSuccess: (data) => {
         if (data.status === httpStatus.CREATED) {
           fetchClasses(token);
@@ -74,8 +73,7 @@ function CreateClassDialog() {
   };
 
   const submitJoinClass = async () => {
-    const res = await classService.joinClass(token, joinClassId);
-    handleAxiosReponse(res, {
+    await apiCall(classService.joinClass(joinClassId), {
       ifSuccess: (data) => {
         if (data.status === httpStatus.OK) {
           fetchClasses(token);

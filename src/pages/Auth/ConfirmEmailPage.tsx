@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { authService } from '../../services/auth/AuthService';
-import { handleAxiosReponse } from '../../utils/handleReponse';
+import { apiCall } from '../../utils/apiCall';
 import BackToHome from '../../common/BackToHome';
 import { useTranslation } from 'react-i18next';
 
@@ -15,10 +15,9 @@ function ConfirmEmailPage() {
 
   async function confirmEmail() {
     try {
-      const res = await authService.confirmEmail(token ?? '');
-      handleAxiosReponse(res, {
-        ifSuccess: (response) => {
-          setMessage(response.data.message as string);
+      await apiCall( authService.confirmEmail(token ?? ''), {
+        ifSuccess: (data) => {
+          setMessage(data.data.message as string);
         },
         ifFailed: (err) => {
           setError(err?.response?.data.message ?? err.message);

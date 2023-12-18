@@ -98,6 +98,7 @@ export default function AccountMenu() {
         <MenuItem
           onClick={() => {
             handleClose();
+            localStorage.removeItem('token');
             logOut();
           }}
         >

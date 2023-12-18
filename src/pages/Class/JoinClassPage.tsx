@@ -1,37 +1,32 @@
 import { CircularProgress } from '@mui/material';
 import { useEffect } from 'react';
-import { useAuthHeader, useIsAuthenticated } from 'react-auth-kit';
+import { useIsAuthenticated } from 'react-auth-kit';
 import { useCookies } from 'react-cookie';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { handleAxiosReponse } from '../../utils/handleReponse';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
 import { classService } from '../../services/class/ClassService';
+import { apiCall } from '../../utils/apiCall';
 
 function JoinClassPage() {
   const { t } = useTranslation();
-  const useHeader = useAuthHeader();
   const [searchParams] = useSearchParams();
   const isAuthenticate = useIsAuthenticated();
   const [, setCookie] = useCookies(['redirectUrl']);
   const location = useLocation();
 
-  const token = useHeader()?.replace('Bearer ', '');
   const code = searchParams.get('code');
   const { enqueueSnackbar } = useSnackbar();
 
-
-
   const joinClass = async () => {
-    const res = await classService.joinClass(token!, code!);
-    handleAxiosReponse(res, {
+    await apiCall(classService.joinClass(code!), {
       ifSuccess: (data) => {
         if (data.status === 200) {
           enqueueSnackbar(t('participating.success'), {
             variant: 'success',
           });
           window.location.href = `/class/${
-            (data.data.metadata as { id: string }).id
+            (data.metadata as { id: string }).id
           }/detail`;
         }
       },
