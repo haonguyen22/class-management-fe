@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { avatarDefault } from '../constants/globalConst';
+import { avatarDefault } from '../../constants/globalConst';
 
 interface ClassBannerProps {
   name?: string;
@@ -8,7 +8,7 @@ interface ClassBannerProps {
   avatar?: string;
 }
 
-const ClassBanner: React.FC<ClassBannerProps> = ({
+const ClassDetailBanner: React.FC<ClassBannerProps> = ({
   name,
   description,
   avatar,
@@ -45,4 +45,4 @@ const ClassBanner: React.FC<ClassBannerProps> = ({
   );
 };
 
-export default ClassBanner;
+export default ClassDetailBanner;

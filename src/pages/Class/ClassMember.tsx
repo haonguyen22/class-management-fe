@@ -1,4 +1,3 @@
-import ListUser from '../../components/ListUser';
 import LayoutSmall from '../../common/Layout/MarginSmall';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
@@ -6,9 +5,7 @@ import { useAuthHeader } from 'react-auth-kit';
 import { IMember, IResponse } from '../../models/IAxiosResponse';
 import { classService } from '../../services/class/ClassService';
 import { useParams } from 'react-router-dom';
-import Table from '../../components/Table';
-import TypeMember from '../../components/TypeMember';
-import ListMember from '../../components/ListMember';
+import { ListMember } from '../../components/ClassMember/ListMember';
 
 const ClassMember = () => {
   const { t } = useTranslation();
@@ -38,12 +35,8 @@ const ClassMember = () => {
   return (
     <div>
       <LayoutSmall>
-        {/* giáo viên */}
-        {/* <ListMember type={t('ClassMember.Teacher')} members={teachers}/> */}
-        <ListUser type={t('ClassMember.Teacher')} members={teachers} />
-        {/* học sinh */}
-        {/* <ListMember type={t('ClassMember.Student')} members={students}/> */}
-        <ListUser type={t('ClassMember.Student')} members={students} />
+        <ListMember type={t('ClassMember.Teacher')} members={teachers} />
+        <ListMember type={t('ClassMember.Student')} members={students} />
       </LayoutSmall>
     </div>
   );

@@ -10,13 +10,13 @@ import {
 import { Fragment, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsPlusLg } from 'react-icons/bs';
-import CustomizedMenus from '../common/CustomizedMenus';
-import { ICreateCLass } from '../models/IClass';
+import CustomizedMenus from '../../common/CustomizedMenus';
+import { ICreateCLass } from '../../models/IClass';
 import { useAuthHeader } from 'react-auth-kit';
-import { handleAxiosReponse } from '../utils/handleReponse';
-import { GlobalContext } from '../context/GlobalContext';
-import { httpStatus } from '../constants/httpStatus';
-import { classService } from '../services/class/ClassService';
+import { handleAxiosReponse } from '../../utils/handleReponse';
+import { GlobalContext } from '../../context/GlobalContext';
+import { httpStatus } from '../../constants/httpStatus';
+import { classService } from '../../services/class/ClassService';
 
 function CreateClassDialog() {
   const initCreateClass: ICreateCLass = {
@@ -51,7 +51,6 @@ function CreateClassDialog() {
   };
 
   const handleChangeClassName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(typeof e);
     const { name, value } = e.target;
     setCreateClass((prevState) => ({
       ...prevState,

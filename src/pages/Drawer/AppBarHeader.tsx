@@ -1,6 +1,6 @@
 import { IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Header from '../../components/Header';
+import Header from '../../components/Header/Header';
 import { AppBar } from './Style';
 
 function AppBarDrawer({

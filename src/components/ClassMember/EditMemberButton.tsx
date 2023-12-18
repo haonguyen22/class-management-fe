@@ -3,9 +3,9 @@ import { IconButton, Menu, MenuItem } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const ButtonDrop = ({id}: {id:string}) => {
+export const EditMemberButton = ({ id }: { id: string }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const handleMoreClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -30,18 +30,12 @@ const ButtonDrop = ({id}: {id:string}) => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={() => handleMenuItemClick('Option '+id)}>
-          {t('RowUser.clear')}
-        </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Option 2')}>
-          Option 2
-        </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Option 3')}>
-          Option 3
+        <MenuItem onClick={() => handleMenuItemClick('Option ' + id)}>
+          {t('remove')}
         </MenuItem>
       </Menu>
     </>
   );
 };
 
-export default ButtonDrop;
+

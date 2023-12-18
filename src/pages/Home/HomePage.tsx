@@ -1,4 +1,4 @@
-import ClassComponent from '../../components/ClassComponent';
+import ClassCard from '../../components/Class/ClassCard';
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { useAuthHeader } from 'react-auth-kit';
@@ -30,7 +30,7 @@ const HomePage = () => {
       <div className="flex flex-wrap items-start min-h-[400px]">
         {classes.map((item) => {
           return (
-            <ClassComponent
+            <ClassCard
               onClick={() => navigate(`/class/${item.id}/detail`)}
               key={item.id}
               description={item.description}

@@ -83,5 +83,9 @@
   "participating.login": "You need to login to join class",
   "ActionDrop.Action": "Action",
   "enrolled": "Enrolled",
-  "teaching": "Teaching"
+  "teaching": "Teaching",
+  "remove": "Remove",
+  "stream": "Stream",
+  "people": "People",
+  "grade": "Grade"
 }

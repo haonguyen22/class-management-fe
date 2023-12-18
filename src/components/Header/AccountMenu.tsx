@@ -8,10 +8,10 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { Logout, Settings } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { RouteList } from '../routes/routes';
+import { RouteList } from '../../routes/routes';
 import { useSignOut } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
-import { avatarDefault } from '../constants/globalConst';
+import { avatarDefault } from '../../constants/globalConst';
 
 export default function AccountMenu() {
   const signOut = useSignOut();

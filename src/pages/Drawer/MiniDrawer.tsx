@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-import Footer from '../../components/Footer';
+import Footer from '../../components/Footer/Footer';
 import { GlobalContext } from '../../context/GlobalContext';
 import AppBarDrawer from './AppBarHeader';
 import HomeButtonDrawer from './HomeButtonDrawer';

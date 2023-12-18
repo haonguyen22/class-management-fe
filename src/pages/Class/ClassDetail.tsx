@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import ClassBanner from '../../components/ClassBanner';
+import ClassDetailBanner from '../../components/ClassDetail/ClassDetailBanner';
 import { useParams } from 'react-router-dom';
 
 import { useAuthHeader } from 'react-auth-kit';
 import { handleAxiosReponse } from '../../utils/handleReponse';
 import { useTranslation } from 'react-i18next';
-import DropdownCode from '../../components/DropdownCode';
+import DropdownCode from '../../components/ClassDetail/DropdownCode';
 import { IClass } from '../../models/IClass';
 import { CircularProgress } from '@mui/material';
 import { classService } from '../../services/class/ClassService';
@@ -61,7 +61,7 @@ const ClassDetail = () => {
   else
     return (
       <>
-        <ClassBanner
+        <ClassDetailBanner
           name={classDetail?.name}
           description={classDetail?.description}
           avatar={classDetail?.avatar}
