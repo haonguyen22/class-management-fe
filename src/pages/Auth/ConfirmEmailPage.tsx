@@ -15,7 +15,7 @@ function ConfirmEmailPage() {
 
   async function confirmEmail() {
     try {
-      await apiCall( authService.confirmEmail(token ?? ''), {
+      await apiCall(authService.confirmEmail(token ?? ''), {
         ifSuccess: (data) => {
           setMessage(data.data.message as string);
         },

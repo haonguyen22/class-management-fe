@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { authService } from '../../services/auth/AuthService';
-import { IError, IErrorResponse, IResponse } from '../../models/IAxiosResponse';
+import { IError, IErrorResponse } from '../../models/IAxiosResponse';
 import { useEffect, useState } from 'react';
 import BackToHome from '../../common/BackToHome';
 import { apiCall } from '../../utils/apiCall';

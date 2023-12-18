@@ -10,7 +10,6 @@ import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import * as yup from 'yup';
 import { apiCall } from '../../utils/apiCall';
-import { useAuthHeader } from 'react-auth-kit';
 import { useParams } from 'react-router-dom';
 import { classService } from '../../services/class/ClassService';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +27,6 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
   type,
 }) => {
   const { id } = useParams<{ id: string }>();
-  const authHeader = useAuthHeader();
   const [error, setError] = useState<string>();
   const { t } = useTranslation();
 
