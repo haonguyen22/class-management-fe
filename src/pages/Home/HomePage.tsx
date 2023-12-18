@@ -2,7 +2,7 @@ import ClassCard from '../../components/Class/ClassCard';
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { useNavigate } from 'react-router-dom';
-import { avatarDefault } from '../../constants/globalConst';
+import { avatarDefault, backgroundDefault } from '../../constants/globalConst';
 import { useTranslation } from 'react-i18next';
 import LocaleContext from '../../context/LocaleContext';
 
@@ -32,6 +32,7 @@ const HomePage = () => {
               key={item.id}
               description={item.description}
               name={item.name}
+              backgroundUrl={item.background ?? backgroundDefault}
               avatar={item.avatar || avatarDefault}
               teacherName={item.owner?.name}
               numOfStudent={item.numberOfStudents}

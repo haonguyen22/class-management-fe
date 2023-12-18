@@ -1,3 +1,4 @@
+import { ExpandMore } from '@mui/icons-material';
 import { Button, Menu, MenuItem } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,14 +26,16 @@ const ActionStudentButton = ({ visible }: { visible: boolean }) => {
         <Button
           onClick={handleMoreClick}
           style={{
-            border: visible ? 'solid gray 1px' : 'solid 1px blue',
-            borderRadius: '8px',
+            border: visible ? 'solid 1px' : 'solid 1px blue',
+            borderRadius: '4px',
             fontSize: '12px',
             fontWeight: 'bold',
+            padding: '4px 14px',
           }}
           disabled={visible}
         >
           {t('ActionDrop.Action')}
+          <ExpandMore />
         </Button>
         <Menu
           anchorEl={anchorEl}
