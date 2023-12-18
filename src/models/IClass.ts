@@ -12,6 +12,7 @@ export interface IClass {
   description: string;
   subject: string;
   avatar: string;
+  background: string;
   numberOfTeachers: number;
   numberOfStudents: number;
   owner: IUser;

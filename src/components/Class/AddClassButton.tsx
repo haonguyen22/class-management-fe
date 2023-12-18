@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next';
 import { BsPlusLg } from 'react-icons/bs';
 import CustomizedMenus from '../../common/CustomizedMenus';
 import { ICreateCLass } from '../../models/IClass';
-import { useAuthHeader } from 'react-auth-kit';
 import { apiCall } from '../../utils/apiCall';
 import { GlobalContext } from '../../context/GlobalContext';
 import { httpStatus } from '../../constants/httpStatus';
@@ -24,8 +23,6 @@ function CreateClassDialog() {
     description: '',
     subject: '',
   };
-  const auth = useAuthHeader();
-  const token = auth()!.substring(7);
   const { fetchClasses } = useContext(GlobalContext);
 
   const { t } = useTranslation();
@@ -62,7 +59,7 @@ function CreateClassDialog() {
     await apiCall(classService.createClass(createClass), {
       ifSuccess: (data) => {
         if (data.status === httpStatus.CREATED) {
-          fetchClasses(token);
+          fetchClasses();
         }
       },
       ifFailed: (err) => {
@@ -76,7 +73,7 @@ function CreateClassDialog() {
     await apiCall(classService.joinClass(joinClassId), {
       ifSuccess: (data) => {
         if (data.status === httpStatus.OK) {
-          fetchClasses(token);
+          fetchClasses();
         }
       },
       ifFailed: (err) => {

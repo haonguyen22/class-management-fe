@@ -45,7 +45,7 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
         <Tabs value={value} aria-label="basic tabs example">
           {NavList.map((item, index) => (
             <Tab
-              sx={{ fontWeight: '550' }}
+              sx={{ fontWeight: '550', fontSize: '13px', paddingX: 4 }}
               label={item.name}
               key={index}
               onClick={() => handleClick(index, item.path)}

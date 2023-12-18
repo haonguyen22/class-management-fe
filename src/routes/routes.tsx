@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import LoginPage from '../pages/Auth/LoginPage';
 import SignUpPage from '../pages/Auth/SignUpPage';
-import { RequireAuth, useAuthHeader, useIsAuthenticated } from 'react-auth-kit';
+import { RequireAuth, useIsAuthenticated } from 'react-auth-kit';
 import HomePage from '../pages/Home/HomePage';
 import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import ConfirmEmailPage from '../pages/Auth/ConfirmEmailPage';
@@ -18,7 +18,7 @@ import ClassDetail from '../pages/Class/ClassDetail';
 import ClassMember from '../pages/Class/ClassMember';
 import MiniDrawer from '../pages/Drawer/MiniDrawer';
 import React, { useContext, useEffect } from 'react';
-import { ClassContext, GlobalContext } from '../context/GlobalContext';
+import { GlobalContext } from '../context/GlobalContext';
 import JoinClassPage from '../pages/Class/JoinClassPage';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
@@ -50,15 +50,12 @@ export const RouteList = {
 };
 
 function Routes() {
-  const [id, setId] = React.useState<string>();
   const { fetchClasses } = useContext(GlobalContext);
-  const useHeader = useAuthHeader();
-  const token = useHeader().replace('Bearer ', '');
   const isAuthenticate = useIsAuthenticated();
 
   useEffect(() => {
     if (isAuthenticate()) {
-      fetchClasses(token);
+      fetchClasses();
     }
   }, []);
 
@@ -92,20 +89,17 @@ function Routes() {
           <Route path={RouteList.home} element={<HomePage />} />
           <Route
             element={
-              <ClassContext.Provider value={{ id, setId }}>
-                <ClassDetailNav>
-                  <LayoutLarge>
-                    <Outlet />
-                  </LayoutLarge>
-                </ClassDetailNav>
-              </ClassContext.Provider>
+              <ClassDetailNav>
+                <LayoutLarge>
+                  <Outlet />
+                </LayoutLarge>
+              </ClassDetailNav>
             }
           >
             <Route path={RouteList.classDetail} element={<ClassDetail />} />
             <Route path={RouteList.classMembers} element={<ClassMember />} />
             <Route path={RouteList.classScores} element={<></>} />
           </Route>
-          <Route path="test" element={<></>} />
         </Route>
         <Route
           path={RouteList.forgotPassword}

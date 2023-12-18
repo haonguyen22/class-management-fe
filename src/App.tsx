@@ -25,7 +25,6 @@ function App() {
     setClasses([]);
     await apiCall(classService.getAllClass(), {
       ifSuccess: (data) => {
-        console.log(data);
         Array.isArray(data?.metadata) &&
           setClasses(data?.metadata?.map((item: IClass) => item));
       },

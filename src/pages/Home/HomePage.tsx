@@ -1,24 +1,21 @@
 import ClassCard from '../../components/Class/ClassCard';
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
-import { useAuthHeader } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
-import { avatarDefault } from '../../constants/globalConst';
+import { avatarDefault, backgroundDefault } from '../../constants/globalConst';
 import { useTranslation } from 'react-i18next';
 import LocaleContext from '../../context/LocaleContext';
 
 const HomePage = () => {
   const { t } = useTranslation();
   const { locale } = useContext(LocaleContext);
-  const auth = useAuthHeader();
-  const token = auth()!.substring(7);
   const navigate = useNavigate();
 
   const { classes, fetchClasses, isFetchingClasses } =
     useContext(GlobalContext);
 
   useEffect(() => {
-    fetchClasses(token);
+    fetchClasses();
   }, []);
 
   if (!isFetchingClasses && classes.length === 0) {
@@ -35,6 +32,7 @@ const HomePage = () => {
               key={item.id}
               description={item.description}
               name={item.name}
+              backgroundUrl={item.background ?? backgroundDefault}
               avatar={item.avatar || avatarDefault}
               teacherName={item.owner?.name}
               numOfStudent={item.numberOfStudents}
