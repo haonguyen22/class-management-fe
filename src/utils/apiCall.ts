@@ -2,7 +2,7 @@ import { enqueueSnackbar } from 'notistack';
 import { IError, IErrorResponse, IResponse } from '../models/IAxiosResponse.js';
 
 export async function apiCall(
-  api:  Promise<unknown>,
+  api: Promise<unknown>,
   {
     ifSuccess,
     ifFailed,

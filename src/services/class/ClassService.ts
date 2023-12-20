@@ -12,7 +12,7 @@ class ClassService {
   }
 
   async createClass(data: ICreateCLass) {
-    const res = await api.post('/class', data );
+    const res = await api.post('/class', data);
     return res;
   }
 
@@ -35,9 +35,7 @@ class ClassService {
   }
 
   async addMember(email: string, id: string | undefined, type: string) {
-    return await api.post(`/class/${id}/${type}`, {
-      data: { email },
-    });
+    return await api.post(`/class/${id}/${type}`, { email });
   }
 }
 
