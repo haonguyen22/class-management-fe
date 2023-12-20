@@ -5,6 +5,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  CircularProgress,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
@@ -14,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import { classService } from '../../services/class/ClassService';
 import { useTranslation } from 'react-i18next';
 import { RoleClass } from '../../enums/RoleClass';
+import { enqueueSnackbar } from 'notistack';
 
 interface AddMemberProps {
   open: boolean;
@@ -29,6 +31,7 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
   const { id } = useParams<{ id: string }>();
   const [error, setError] = useState<string>();
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const validationSchema = yup.object({
     email: yup.string().email(t('email.invalid')).required(t('email.required')),
@@ -40,22 +43,21 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setIsLoading(true);
       const typeTemp =
-        type === 'Teacher' || type === 'Giáo viên'
+        type === 'Teachers' || type === 'Giáo viên'
           ? RoleClass.TEACHER
           : RoleClass.STUDENT;
-
       await apiCall(classService.addMember(values.email, id, typeTemp), {
         ifSuccess: (data) => {
-          // TODO: handle success
-          console.log(data);
+          enqueueSnackbar(data.message, { variant: 'success' });
           setClose();
-          // window.location.reload();
         },
         ifFailed: (err) => {
           setError(err.response?.data?.message);
         },
       });
+      setIsLoading(false);
     },
   });
 
@@ -93,9 +95,13 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
         <Button onClick={onCancel} color="info">
           {t('cancel')}
         </Button>
-        <Button variant="contained" onClick={onAdd} color="success">
-          {t('add')}
-        </Button>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <Button variant="contained" onClick={onAdd} color="success">
+            {t('add')}
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

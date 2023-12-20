@@ -20,6 +20,7 @@ export interface IMessage {
 export interface IResponse {
   data: Record<string, unknown>;
   status: number;
+  message: string;
   metadata: unknown;
 }
 
