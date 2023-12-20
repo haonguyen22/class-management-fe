@@ -5,6 +5,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  CircularProgress,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
@@ -30,6 +31,7 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
   const { id } = useParams<{ id: string }>();
   const [error, setError] = useState<string>();
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const validationSchema = yup.object({
     email: yup.string().email(t('email.invalid')).required(t('email.required')),
@@ -41,6 +43,7 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setIsLoading(true);
       const typeTemp =
         type === 'Teachers' || type === 'Giáo viên'
           ? RoleClass.TEACHER
@@ -54,6 +57,7 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
           setError(err.response?.data?.message);
         },
       });
+      setIsLoading(false);
     },
   });
 
@@ -91,9 +95,13 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
         <Button onClick={onCancel} color="info">
           {t('cancel')}
         </Button>
-        <Button variant="contained" onClick={onAdd} color="success">
-          {t('add')}
-        </Button>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <Button variant="contained" onClick={onAdd} color="success">
+            {t('add')}
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

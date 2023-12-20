@@ -87,5 +87,8 @@
   "remove": "Remove",
   "stream": "Stream",
   "people": "People",
-  "grade": "Grade"
+  "grade": "Grade",
+  "createClassSuccess": "Create class success",
+  "createClassFail": "Create class fail",
+  "home": "Home"
 }

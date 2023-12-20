@@ -20,8 +20,10 @@ export async function apiCall(
       ifSuccess((res as { data: IResponse }).data as IResponse);
     }
   } catch (err) {
-    console.log(err);
-    enqueueSnackbar(` Get error: ${(err as Error).message}`, {
+    const message = (err as { response: { data: { message: string } } })
+      .response?.data?.message;
+
+    enqueueSnackbar(`${message || (err as Error).message}`, {
       variant: 'error',
     });
   }

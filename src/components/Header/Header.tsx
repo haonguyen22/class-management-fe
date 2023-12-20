@@ -7,7 +7,6 @@ import i18n from '../../i18n';
 import Logo from '../../common/Logo';
 import AddClassButton from '../Class/AddClassButton';
 import AccountMenu from './AccountMenu';
-// import localeContext from '../context/LocaleContext';
 
 function Header() {
   const { locale } = useContext(localeContext);

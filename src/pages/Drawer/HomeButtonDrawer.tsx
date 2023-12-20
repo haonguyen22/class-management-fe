@@ -7,9 +7,11 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
+import { useTranslation } from 'react-i18next';
 
 function HomeButtonDrawer({ open }: { open: boolean }) {
   const navigate = useNavigate();
+  const {t} = useTranslation();
   return (
     <List>
       <ListItem disablePadding sx={{ display: 'block' }}>
@@ -30,7 +32,7 @@ function HomeButtonDrawer({ open }: { open: boolean }) {
           >
             <HomeIcon />
           </ListItemIcon>
-          <ListItemText primary={'Home'} sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary={t('home')} sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </ListItem>
     </List>
