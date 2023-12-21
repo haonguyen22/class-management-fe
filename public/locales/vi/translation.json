@@ -87,5 +87,16 @@
   "remove": "Xóa",
   "stream": "Bảng tin",
   "people": "Thành viên",
-  "grade": "Điểm"
+  "grade": "Điểm",
+  "gradeComment.type": "nhập bình luận của bạn tại đây ...",
+  "gradeComment": "Bình luận",
+  "gradeReview.title": "Đánh giá điểm",
+  "gradeReviewDetail.title": "Chi tiết đánh giá điểm",
+  "gradeReviewDetail.score": "Điểm",
+  "gradeReviewDetail.confirm": "Xác nhận",
+  "gradeReviewDetail.reject": "Từ chối",
+  "gradeReviewDetail.currenScore": "Điểm hiện tại",
+  "gradeReviewDetail.expectedScore": "Điểm mong muốn",
+  "gradeReviewDetail.explanation": "Giải thích",
+  "gradeReviewDetail.commentTitle": "Bình luận"
 }

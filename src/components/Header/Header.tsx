@@ -7,6 +7,7 @@ import i18n from '../../i18n';
 import Logo from '../../common/Logo';
 import AddClassButton from '../Class/AddClassButton';
 import AccountMenu from './AccountMenu';
+import NotificationButton from '../../common/NotificationButton';
 // import localeContext from '../context/LocaleContext';
 
 function Header() {
@@ -25,7 +26,7 @@ function Header() {
 
             <select
               className={
-                'bg-gray-50 mx-2 border border-gray-300 text-gray-900 text-sm rounded-lg  block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  dark:focus:border-blue-500'
+                'bg-gray-50 mx-2 border border-gray-300 text-gray-900 text-sm rounded-lg  block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  dark:focus:border-blue-500 cursor-pointer'
               }
               value={locale}
               onChange={(e) => i18n.changeLanguage(e.target.value)}
@@ -33,6 +34,8 @@ function Header() {
               <option value="en">English</option>
               <option value="vi">Việt nam</option>
             </select>
+
+            <NotificationButton />
 
             {isAuthenticate() ? (
               <AccountMenu />

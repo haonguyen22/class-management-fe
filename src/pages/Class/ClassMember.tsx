@@ -1,4 +1,3 @@
-import LayoutSmall from '../../common/Layout/MarginSmall';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { IMember } from '../../models/IAxiosResponse';
@@ -38,10 +37,8 @@ const ClassMember = () => {
 
   return (
     <div>
-      <LayoutSmall>
-        <ListMember type={t('ClassMember.Teacher')} members={teachers} />
-        <ListMember type={t('ClassMember.Student')} members={students} />
-      </LayoutSmall>
+      <ListMember type={t('ClassMember.Teacher')} members={teachers} />
+      <ListMember type={t('ClassMember.Student')} members={students} />
     </div>
   );
 };

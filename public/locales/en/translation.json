@@ -87,5 +87,16 @@
   "remove": "Remove",
   "stream": "Stream",
   "people": "People",
-  "grade": "Grade"
+  "grade": "Grade",
+  "gradeComment.type": "Type your comment here...",
+  "gradeComment": "Comment",
+  "gradeReview.title": "Grade Review List",
+  "gradeReviewDetail.title": "Grade Review Detail",
+  "gradeReviewDetail.score": "Score",
+  "gradeReviewDetail.confirm": "Confirm",
+  "gradeReviewDetail.reject": "reject",
+  "gradeReviewDetail.currenScore": "Current score",
+  "gradeReviewDetail.expectedScore": "Expected score",
+  "gradeReviewDetail.explanation": "Explanation",
+  "gradeReviewDetail.commentTitle": "Comment"
 }

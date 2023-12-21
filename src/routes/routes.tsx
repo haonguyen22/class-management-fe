@@ -23,6 +23,8 @@ import JoinClassPage from '../pages/Class/JoinClassPage';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import { ClassDetailNav } from '../components/ClassDetail/ClassDetailNav';
+import GradleReviewList from '../pages/Grade/GradeReview';
+import GradeReviewDetail from '../pages/Grade/GradeReviewDetail';
 
 function Layout() {
   return (
@@ -47,6 +49,8 @@ export const RouteList = {
   classMembers: '/class/:id/members',
   classScores: '/class/:id/scores',
   joinClass: '/class/join',
+  gradleReview: '/gradle',
+  gradleReviewDetail: '/gradle/:id'
 };
 
 function Routes() {
@@ -99,6 +103,10 @@ function Routes() {
             <Route path={RouteList.classDetail} element={<ClassDetail />} />
             <Route path={RouteList.classMembers} element={<ClassMember />} />
             <Route path={RouteList.classScores} element={<></>} />
+          </Route>
+          <Route path={RouteList.gradleReview} >
+            <Route path='' element={<GradleReviewList></GradleReviewList>} />
+            <Route path={RouteList.gradleReviewDetail} element={<GradeReviewDetail></GradeReviewDetail>} />
           </Route>
         </Route>
         <Route
