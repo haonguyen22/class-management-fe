@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -16,6 +17,7 @@ import { apiCall } from '../../utils/apiCall';
 import { GlobalContext } from '../../context/GlobalContext';
 import { httpStatus } from '../../constants/httpStatus';
 import { classService } from '../../services/class/ClassService';
+import { enqueueSnackbar } from 'notistack';
 
 function CreateClassDialog() {
   const initCreateClass: ICreateCLass = {
@@ -31,6 +33,7 @@ function CreateClassDialog() {
 
   const [isOpenCreateDialog, setIsOpenCreateDialog] = useState(false);
   const [isOpenJoinDialog, setIsOpenJoinDialog] = useState(false);
+  const [isLoadingCreate, setIsLoadingCreate] = useState(false);
 
   const handleClickOpenCreateDialog = () => {
     setCreateClass(initCreateClass);
@@ -58,11 +61,17 @@ function CreateClassDialog() {
   const submitCreateClass = async () => {
     await apiCall(classService.createClass(createClass), {
       ifSuccess: (data) => {
-        if (data.status === httpStatus.CREATED) {
+        console.log(data);
+        if (
+          data.status === httpStatus.CREATED ||
+          data.status === httpStatus.OK
+        ) {
+          enqueueSnackbar(t('createClassSuccess'), { variant: 'success' });
           fetchClasses();
         }
       },
       ifFailed: (err) => {
+        enqueueSnackbar(t('createClassFailed'), { variant: 'error' });
         console.log(err.message);
       },
     });
@@ -70,6 +79,7 @@ function CreateClassDialog() {
   };
 
   const submitJoinClass = async () => {
+    setIsLoadingCreate(true);
     await apiCall(classService.joinClass(joinClassId), {
       ifSuccess: (data) => {
         if (data.status === httpStatus.OK) {
@@ -80,6 +90,7 @@ function CreateClassDialog() {
         console.log(err.message);
       },
     });
+    setIsLoadingCreate(false);
     handleCloseJoinDialog();
   };
 
@@ -138,13 +149,17 @@ function CreateClassDialog() {
           <Button onClick={handleCloseCreateDialog} color="info">
             {t('cancel')}
           </Button>
-          <Button
-            variant="contained"
-            onClick={submitCreateClass}
-            color="success"
-          >
-            {t('create')}
-          </Button>
+          {isLoadingCreate ? (
+            <CircularProgress />
+          ) : (
+            <Button
+              variant="contained"
+              onClick={submitCreateClass}
+              color="success"
+            >
+              {t('create')}
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
 
