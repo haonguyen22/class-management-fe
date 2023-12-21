@@ -3,12 +3,12 @@ import { GradeReviewRowProps } from '../../models/IGrade';
 import { Avatar, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const GradleReviewRow: React.FC<GradeReviewRowProps> = ({ id, imgSrc, message, student, className, checked}) => {
+const GradeReviewRow: React.FC<GradeReviewRowProps> = ({ id, imgSrc, message, student, className, checked, time}) => {
   const navigate = useNavigate();
 
   return (
-    <ListItem className={`cursor-pointer bg-gray-200 rounded-md shadow-md hover:bg-gray-300 active:transition-all relative ${checked?'':'border-l-4 border-red-500'}`}
-      onClick={()=>navigate(`/gradle/${id}`)}
+    <ListItem className={`cursor-pointer border border-gray-300 rounded-md shadow-md hover:shadow-lg active:transition-all relative ${checked?'ml-1':'border-l-4 border-l-red-500'}`}
+      onClick={()=>navigate(`/grade/${id}`)}
     >
       <div className='flex items-center w-full'>
         <ListItemAvatar>
@@ -26,10 +26,9 @@ const GradleReviewRow: React.FC<GradeReviewRowProps> = ({ id, imgSrc, message, s
           </Typography>
         } />
       </div>
-      <span className='min-w-max'> 1-1-2021 </span>
-
+      <span className='min-w-max'>{time}</span>
     </ListItem>
   );
 };
 
-export default GradleReviewRow;
+export default GradeReviewRow;

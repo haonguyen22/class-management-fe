@@ -1,6 +1,6 @@
 import React from 'react';
-import GradleReviewList from '../../components/Grade/GradeReviewList';
-import GradleReviewPagination from '../../components/Grade/GradeReviewPagination';
+import GradeReviewList from '../../components/Grade/GradeReviewList';
+import GradeReviewPagination from '../../components/Grade/GradeReviewPagination';
 import { useLocation } from 'react-router-dom';
 import { GradeReviewRowProps } from '../../models/IGrade';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A adsgasdg adgasgas awgawgawgaw',
-    checked: true
+    checked: true,
+    time: '1-1-2021'
   },
   {
     id: 2,
@@ -21,7 +22,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: true
+    checked: true,
+    time: '1-1-2021'
   },
   {
     id: 3,
@@ -29,7 +31,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: false,
+    time: '1-1-2023'
   },
   {
 
@@ -38,7 +41,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: false,
+    time: '1-1-2023'
   },
   {
     id: 5,
@@ -46,7 +50,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 6,
@@ -54,7 +59,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 7,
@@ -62,7 +68,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
 
   },
   {
@@ -71,7 +78,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 9,
@@ -79,7 +87,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 10,
@@ -87,7 +96,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 11,
@@ -95,7 +105,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 12,
@@ -103,7 +114,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 13,
@@ -111,7 +123,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 14,
@@ -119,7 +132,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 15,
@@ -127,7 +141,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 16,
@@ -135,7 +150,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 17,
@@ -143,7 +159,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 18,
@@ -151,7 +168,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 19,
@@ -159,7 +177,8 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: true,
+    time: '1-1-2023'
   },
   {
     id: 20,
@@ -167,13 +186,14 @@ const reviewList: GradeReviewRowProps[] =  [
     imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
     message: 'phúc khảo điểm toán',
     student: 'Nguyễn Văn A',
-    checked: false
+    checked: false,
+    time: '1-1-2023'
   },
 
 ];
 
 
-const GradleReview = () => {
+const GradeReview = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -188,10 +208,10 @@ const GradleReview = () => {
   return (
     <div className='sm:mx-0 md:mx-10 lg:mx-20 xl:mx-40'>
       <h1 className='text-xl font-semibold text-center mb-3'>{t('gradeReview.title')}</h1>
-      <GradleReviewList data={data}/>
-      <GradleReviewPagination totalPages={Math.ceil(sortData.length / 7)} page={page}/>
+      <GradeReviewList data={data}/>
+      <GradeReviewPagination totalPages={Math.ceil(sortData.length / 7)} page={page}/>
     </div>
   );
 };
 
-export default GradleReview;
+export default GradeReview;

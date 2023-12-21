@@ -2,12 +2,12 @@ import { Pagination, PaginationItem } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-interface GradleReviewPaginationProps {
+interface GradeReviewPaginationProps {
   totalPages: number;
   page: number;
 }
 
-const GradleReviewPagination: React.FC<GradleReviewPaginationProps> = ({totalPages, page}) => {
+const GradeReviewPagination: React.FC<GradeReviewPaginationProps> = ({totalPages, page}) => {
   return (
     <>
       {totalPages > 1 &&
@@ -19,7 +19,7 @@ const GradleReviewPagination: React.FC<GradleReviewPaginationProps> = ({totalPag
           renderItem={(item) => (
             <PaginationItem
               component={Link}
-              to={`/gradle${item.page === 1 ? '' : `?page=${item.page}`}`}
+              to={`/grade${item.page === 1 ? '' : `?page=${item.page}`}`}
               {...item}
               style={{fontSize: '1rem'}}
             />
@@ -30,4 +30,4 @@ const GradleReviewPagination: React.FC<GradleReviewPaginationProps> = ({totalPag
   );
 };
 
-export default GradleReviewPagination;
+export default GradeReviewPagination;
