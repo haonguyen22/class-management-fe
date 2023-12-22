@@ -88,7 +88,15 @@
   "stream": "Stream",
   "people": "People",
   "grade": "Grade",
-  "createClassSuccess": "Create class success",
-  "createClassFail": "Create class fail",
-  "home": "Home"
+  "gradeComment.type": "Type your comment here...",
+  "gradeComment": "Comment",
+  "gradeReview.title": "Grade Review List",
+  "gradeReviewDetail.title": "Grade Review Detail",
+  "gradeReviewDetail.score": "Score",
+  "gradeReviewDetail.confirm": "Confirm",
+  "gradeReviewDetail.reject": "reject",
+  "gradeReviewDetail.currenScore": "Current score",
+  "gradeReviewDetail.expectedScore": "Expected score",
+  "gradeReviewDetail.explanation": "Explanation",
+  "gradeReviewDetail.commentTitle": "Comment"
 }

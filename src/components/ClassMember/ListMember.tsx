@@ -50,7 +50,7 @@ export const ListMember: React.FC<ListMemberProps> = ({ type, members }) => {
 
   return (
     <>
-      <div className="w-full px-40 mb-1">
+      <div className="w-full mb-1">
         <AddMember
           type={type}
           memberCount={members?.length}

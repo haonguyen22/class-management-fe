@@ -97,7 +97,7 @@ function CreateClassDialog() {
   return (
     <Fragment>
       <CustomizedMenus
-        label={<BsPlusLg className="w-6 h-6 text-black font-bold" />}
+        label={<BsPlusLg className="w-6 h-6 text-black font-bold dark:text-white" />}
         options={[
           {
             label: t('createClass'),

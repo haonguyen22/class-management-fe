@@ -17,12 +17,14 @@ import LayoutLarge from '../common/Layout/MarginLarge';
 import ClassDetail from '../pages/Class/ClassDetail';
 import ClassMember from '../pages/Class/ClassMember';
 import MiniDrawer from '../pages/Drawer/MiniDrawer';
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../context/GlobalContext';
 import JoinClassPage from '../pages/Class/JoinClassPage';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import { ClassDetailNav } from '../components/ClassDetail/ClassDetailNav';
+import GradeReviewList from '../pages/Grade/GradeReview';
+import GradeReviewDetail from '../pages/Grade/GradeReviewDetail';
 
 function Layout() {
   return (
@@ -47,6 +49,8 @@ export const RouteList = {
   classMembers: '/class/:id/members',
   classScores: '/class/:id/scores',
   joinClass: '/class/join',
+  gradleReview: '/grade',
+  gradleReviewDetail: '/grade/:id'
 };
 
 function Routes() {
@@ -99,6 +103,10 @@ function Routes() {
             <Route path={RouteList.classDetail} element={<ClassDetail />} />
             <Route path={RouteList.classMembers} element={<ClassMember />} />
             <Route path={RouteList.classScores} element={<></>} />
+          </Route>
+          <Route path={RouteList.gradleReview} >
+            <Route path='' element={<GradeReviewList />} />
+            <Route path={RouteList.gradleReviewDetail} element={<GradeReviewDetail />} />
           </Route>
         </Route>
         <Route
