@@ -44,7 +44,7 @@ function ClassCard(props: {
       <div className=" flex flex-col ">
         <div
           className={`${!props.backgroundUrl && 'bg-green-700'} ${
-            isImageLoaded && 'animate-pulse bg-slate-700'
+            isImageLoaded && 'bg-slate-700'
           } h-[100px] w-full px-[16px] pt-[16px] pb-[12px] flex flex-row items-center justify-between`}
           style={{ backgroundImage: `url(${props.backgroundUrl})` }}
         >
