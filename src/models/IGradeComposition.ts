@@ -2,7 +2,7 @@ export interface GradeStructure {
   id: number;
   name: string;
   weight: number;
-  priotity: number;
+  priority: number;
 }
 
 export interface AddGradeStructureDTO {

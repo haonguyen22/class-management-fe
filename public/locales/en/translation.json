@@ -104,5 +104,9 @@
   "percentage": "Percentage  (%)",
   "addGradeCategory": "Add grade category",
   "createClassSuccess": "Create class successfully",
-  "noGradeCategory": "There are currently no grade categories"
+  "noGradeCategory": "There are currently no grade categories",
+  "deleteGradeCategory.success": "Delete grade category successfully",
+  "createGradeCategory.success": "Create grade category successfully",
+  "updateGradeCategory.success": "Update grade category successfully",
+  "save.success": "Save successfully"
 }

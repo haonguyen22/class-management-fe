@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { SortableList } from '../../components/ClassSettings/SortableList';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { Button, TextField } from '@mui/material';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
@@ -28,7 +28,9 @@ function GradeStructureBox() {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [grades, setGrades] = useState<GradeStructureItem[]>([]);
+  const [grades, setGrades] = useState<Array<GradeStructureItem>>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const isDragged = useRef(false);
 
   const onTextChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -38,7 +40,13 @@ function GradeStructureBox() {
     setGrades((prev) =>
       prev.map((i) =>
         i?.gradeCategory?.id === item?.gradeCategory?.id
-          ? { ...i, gradeCategory: { ...i.gradeCategory, [name]: value } }
+          ? {
+              ...i,
+              gradeCategory: {
+                ...i.gradeCategory,
+                [name]: name === 'weight' ? parseInt(value) : value,
+              },
+            }
           : i,
       ),
     );
@@ -50,7 +58,7 @@ function GradeStructureBox() {
       {
         gradeCategory: {
           id: prev.length + 1,
-          priotity: prev.length + 1,
+          priority: prev.length + 1,
           name: '',
           weight: 0,
         },
@@ -70,13 +78,41 @@ function GradeStructureBox() {
     );
   };
 
-  const removeCategory = (item: GradeStructureItem) => {
-    setGrades((prev) =>
-      prev.filter((i) => i?.gradeCategory?.id !== item?.gradeCategory?.id),
+  const removeGradeCategory = async (item: GradeStructureItem) => {
+    if (item.isCreated === false) {
+      setGrades((prev) =>
+        prev.filter(
+          (i) =>
+            i.gradeCategory.name !== item.gradeCategory.name &&
+            i.gradeCategory.weight !== item.gradeCategory.weight,
+        ),
+      );
+      return;
+    }
+    setIsLoading(true);
+    await apiCall(
+      gradeService.deleteGradeComposition(item.gradeCategory.id, parseInt(id!)),
+      {
+        ifSuccess: () => {
+          enqueueSnackbar(t('deleteGradeCategory.success'), {
+            variant: 'success',
+          });
+          setGrades((prev) =>
+            prev.filter((i) => i.gradeCategory.id !== item.gradeCategory.id),
+          );
+        },
+        ifFailed: (err) => {
+          enqueueSnackbar(err.response?.data?.message ?? err?.message, {
+            variant: 'error',
+          });
+        },
+      },
     );
+    setIsLoading(false);
   };
 
-  const getAllGraddeCategories = async () => {
+  const getAllGradeCategories = async () => {
+    setIsLoading(true);
     await apiCall(gradeService.getGradeComposition(parseInt(id!)), {
       ifSuccess: (data) => {
         setGrades(
@@ -87,21 +123,60 @@ function GradeStructureBox() {
           })),
         );
       },
+
       ifFailed: (err) => {
         enqueueSnackbar(err?.message ?? err.response?.data?.message, {
           variant: 'error',
         });
       },
     });
+    setIsLoading(false);
   };
 
   const handleAddGradeCategory = async (item: GradeComposition) => {
+    setIsLoading(true);
     await apiCall(gradeService.createGradeComposition(parseInt(id!), item), {
-      ifSuccess: (data) => {
+      ifSuccess: async () => {
+        await apiCall(gradeService.getGradeComposition(parseInt(id!)), {
+          ifSuccess: (data) => {
+            const res =
+              (data.metadata as GradeStructure[])?.find(
+                (i) => i.name === item.name && i.weight === item.weight,
+              ) ?? undefined;
+            setGrades(
+              (prev) =>
+                prev
+                  ?.map((i) =>
+                    i.gradeCategory.name === res?.name &&
+                    i.gradeCategory.weight === res?.weight &&
+                    i.isCreated === false
+                      ? {
+                          ...i,
+                          enable: !i.enable,
+                          isCreated: true,
+                          gradeCategory: {
+                            ...i.gradeCategory,
+                            id: res?.id,
+                          },
+                        }
+                      : i,
+                  )
+                  .sort(
+                    (a, b) =>
+                      a.gradeCategory.priority - b.gradeCategory.priority,
+                  ),
+            );
+          },
+          ifFailed: (err) => {
+            enqueueSnackbar(err?.message ?? err.response?.data?.message, {
+              variant: 'error',
+            });
+          },
+        });
+
         enqueueSnackbar(t('createGradeCategory.success'), {
           variant: 'success',
         });
-        getAllGraddeCategories();
       },
       ifFailed: (err) => {
         enqueueSnackbar(err.response?.data?.message ?? err?.message, {
@@ -109,20 +184,102 @@ function GradeStructureBox() {
         });
       },
     });
+    setIsLoading(false);
+  };
+
+  const onDoneEditGrade = async (item: GradeStructureItem) => {
+    setIsLoading(true);
+    await apiCall(
+      gradeService.updateGradeComposition(
+        item.gradeCategory.id,
+        parseInt(id!),
+        item.gradeCategory,
+      ),
+      {
+        ifSuccess: () => {
+          enqueueSnackbar(t('updateGradeCategory.success'), {
+            variant: 'success',
+          });
+          setGrades((prev) =>
+            prev.map((i) =>
+              i?.gradeCategory?.id === item?.gradeCategory?.id
+                ? { ...i, enable: !i.enable }
+                : i,
+            ),
+          );
+        },
+        ifFailed: (err) => {
+          enqueueSnackbar(err.response?.data?.message ?? err?.message, {
+            variant: 'error',
+          });
+        },
+      },
+    );
+    setIsLoading(false);
+  };
+
+  const arrangeGradeCategory = async () => {
+    setIsLoading(true);
+    const gradeIndexes = grades.map((i) => i.gradeCategory.id);
+    await apiCall(
+      gradeService.arrangeGradeComposition(parseInt(id!), gradeIndexes),
+      {
+        ifSuccess: () => {
+          enqueueSnackbar(t('save.success'), {
+            variant: 'success',
+          });
+          setGrades((prev) =>
+            prev.map((i) => ({
+              ...i,
+              gradeCategory: {
+                ...i.gradeCategory,
+                priority: gradeIndexes.indexOf(i.gradeCategory.id) + 1,
+              },
+            })),
+          );
+        },
+        ifFailed: (err) => {
+          enqueueSnackbar(err.response?.data?.message ?? err?.message, {
+            variant: 'error',
+          });
+        },
+      },
+    );
+    setIsLoading(false);
+    isDragged.current = false;
   };
 
   useEffect(() => {
-    getAllGraddeCategories();
+    getAllGradeCategories();
   }, []);
 
   return (
     <SettingFrameLayout
       title={t('gradeCategories')}
-      trailing={<Button variant="contained">{t('save')}</Button>}
+      trailing={
+        <div className="flex flex-row items-center ">
+          {isLoading && (
+            <CircularProgress size={20} sx={{ marginRight: '10px' }} />
+          )}
+          <Button
+            variant="contained"
+            onClick={arrangeGradeCategory}
+            disabled={isDragged.current === false}
+          >
+            {t('save')}
+          </Button>
+        </div>
+      }
     >
       {grades.length !== 0 ? (
         <SortableList
-          items={grades}
+          items={
+            isDragged.current
+              ? grades
+              : grades.sort((a, b) => {
+                  return a.gradeCategory.priority - b.gradeCategory.priority;
+                })
+          }
           getItemId={(item) => item?.gradeCategory?.id?.toString()}
           renderItem={({
             item,
@@ -172,7 +329,7 @@ function GradeStructureBox() {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     onTextChange(e, item)
                   }
-                  value={item?.gradeCategory?.weight.toString()}
+                  value={item?.gradeCategory?.weight?.toString()}
                   sx={{ padding: '0px', flex: 1, margin: '4px' }}
                 />
                 <div className="flex flex-row justify-around items-center">
@@ -191,7 +348,7 @@ function GradeStructureBox() {
                     <DoneIcon
                       component="svg"
                       sx={{ margin: '6px' }}
-                      onClick={() => onEditCategory(item)}
+                      onClick={() => onDoneEditGrade(item)}
                     />
                   ) : (
                     <EditIcon
@@ -203,7 +360,7 @@ function GradeStructureBox() {
 
                   <ClearIcon
                     sx={{ margin: '6px' }}
-                    onClick={() => removeCategory(item)}
+                    onClick={() => removeGradeCategory(item)}
                   />
                 </div>
               </div>
@@ -213,6 +370,7 @@ function GradeStructureBox() {
             const newItems = grades.slice();
             newItems.splice(newIndex, 0, newItems.splice(oldIndex, 1)[0]);
             setGrades(newItems);
+            isDragged.current = true;
           }}
         />
       ) : (
