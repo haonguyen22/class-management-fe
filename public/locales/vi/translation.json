@@ -98,5 +98,18 @@
   "gradeReviewDetail.currenScore": "Điểm hiện tại",
   "gradeReviewDetail.expectedScore": "Điểm mong muốn",
   "gradeReviewDetail.explanation": "Giải thích",
-  "gradeReviewDetail.commentTitle": "Bình luận"
+  "gradeReviewDetail.commentTitle": "Bình luận",
+  "gradeCategories": "Danh mục điểm",
+  "gradeCategory": "Danh mục điểm",
+  "percentage": "Phần trăm",
+  "addGradeCategory": "Thêm danh mục điểm",
+  "createClassSuccess": "Tạo lớp học thành công",
+  "noGradeCategory": "Hiện tại chưa có danh mục điểm nào",
+  "deleteGradeCategory.success": "Xóa danh mục điểm thành công",
+  "createGradeCategory.success": "Tạo danh mục điểm thành công",
+  "updateGradeCategory.success": "Cập nhật danh mục điểm thành công",
+  "save.success": "Lưu thành công",
+  "owner": "Chủ sở hữu",
+  "description": "Mô tả",
+  "classDetail": "Chi tiết lớp học"
 }

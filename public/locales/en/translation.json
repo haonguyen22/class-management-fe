@@ -108,5 +108,8 @@
   "deleteGradeCategory.success": "Delete grade category successfully",
   "createGradeCategory.success": "Create grade category successfully",
   "updateGradeCategory.success": "Update grade category successfully",
-  "save.success": "Save successfully"
+  "save.success": "Save successfully",
+  "owner": "Owner",
+  "description": "Description",
+  "classDetail": "Class detail"
 }
