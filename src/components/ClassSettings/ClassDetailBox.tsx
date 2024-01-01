@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 function ClassDetailBox() {
   const { t } = useTranslation();
   return (
-    <SettingFrameLayout title="Class Details">
+    <SettingFrameLayout title="Class Details"  >
       <TextField
         id="filled-basic"
         label={t('className')}

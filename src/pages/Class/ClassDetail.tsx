@@ -19,7 +19,7 @@ const ClassDetail = () => {
   const [notPermission, setNotPermission] = useState(false);
 
   const getClassCode = async () => {
-    await apiCall( classService.getClassCode(id!), {
+    await apiCall(classService.getClassCode(id!), {
       ifSuccess: (data) => {
         setCode((data?.metadata as { code: string })?.code);
       },
@@ -31,7 +31,7 @@ const ClassDetail = () => {
 
   const getClassDetail = async () => {
     setIsLoading(true);
-    await apiCall( classService.getClassById(id!), {
+    await apiCall(classService.getClassById(id!), {
       ifSuccess: (data) => {
         setClassDetail(data.metadata as IClass);
       },
