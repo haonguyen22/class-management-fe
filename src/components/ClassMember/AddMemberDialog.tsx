@@ -14,8 +14,8 @@ import { apiCall } from '../../utils/apiCall';
 import { useParams } from 'react-router-dom';
 import { classService } from '../../services/class/ClassService';
 import { useTranslation } from 'react-i18next';
-import { RoleClass } from '../../enums/RoleClass';
 import { enqueueSnackbar } from 'notistack';
+import { Role } from '../../enums/RoleClass';
 
 interface AddMemberProps {
   open: boolean;
@@ -46,8 +46,8 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
       setIsLoading(true);
       const typeTemp =
         type === 'Teachers' || type === 'Giáo viên'
-          ? RoleClass.TEACHER
-          : RoleClass.STUDENT;
+          ? Role.TEACHER
+          : Role.STUDENT;
       await apiCall(classService.addMember(values.email, id, typeTemp), {
         ifSuccess: (data) => {
           enqueueSnackbar(data.message, { variant: 'success' });

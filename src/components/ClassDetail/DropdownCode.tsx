@@ -9,7 +9,7 @@ import {
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AddMemberButton from '../ClassMember/AddMemberDialog';
-import { RoleClass } from '../../enums/RoleClass';
+import { Role } from '../../enums/RoleClass';
 
 interface DropdownCodeProps {
   code?: string;
@@ -78,7 +78,7 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code, type }) => {
       <AddMemberButton
         open={open}
         setClose={handleClose}
-        type={type ?? RoleClass.STUDENT}
+        type={type ?? Role.STUDENT}
       />
     </div>
   );
