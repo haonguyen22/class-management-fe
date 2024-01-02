@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { RouteList } from '../../routes/routes';
 import { apiCall } from '../../utils/apiCall';
 import { useCookies } from 'react-cookie';
+import { IUser } from '../../models/User';
 
 function LoginPage() {
   const [error, setError] = useState('');
@@ -50,14 +51,14 @@ function LoginPage() {
       await apiCall(authService.login(values), {
         ifSuccess: (data) => {
           if (data.status === 200) {
-            const token = data.metadata as { token: string };
+            const res = data.metadata as { token: string; user: IUser };
             signIn({
-              token: token.token,
+              token: res.token,
               tokenType: 'Bearer',
               expiresIn: 3600,
-              authState: { email: values.email },
+              authState: { user: res.user },
             });
-            localStorage.setItem('token', token.token);
+            localStorage.setItem('token', res.token);
 
             if (cookies.redirectUrl) {
               navigate(RouteList.joinClass + cookies.redirectUrl);

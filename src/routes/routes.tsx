@@ -95,21 +95,27 @@ function Routes() {
           <Route path={RouteList.home} element={<HomePage />} />
           <Route
             element={
-              <ClassDetailNav>
-                <LayoutLarge>
-                  <Outlet />
-                </LayoutLarge>
-              </ClassDetailNav>
+                <ClassDetailNav>
+                  <LayoutLarge>
+                    <Outlet />
+                  </LayoutLarge>
+                </ClassDetailNav>
             }
           >
             <Route path={RouteList.classDetail} element={<ClassDetail />} />
             <Route path={RouteList.classMembers} element={<ClassMember />} />
             <Route path={RouteList.classScores} element={<></>} />
-            <Route path={RouteList.classSettings} element={<ClassSettingsPage />} />
+            <Route
+              path={RouteList.classSettings}
+              element={<ClassSettingsPage />}
+            />
           </Route>
-          <Route path={RouteList.gradleReview} >
-            <Route path='' element={<GradeReviewList />} />
-            <Route path={RouteList.gradleReviewDetail} element={<GradeReviewDetail />} />
+          <Route path={RouteList.gradleReview}>
+            <Route path="" element={<GradeReviewList />} />
+            <Route
+              path={RouteList.gradleReviewDetail}
+              element={<GradeReviewDetail />}
+            />
           </Route>
         </Route>
         <Route

@@ -6,12 +6,14 @@ interface AddMemberProps {
   type?: string;
   memberCount?: number;
   onclick?: () => void;
+  enableAddMember: boolean;
 }
 
 export const AddMember: React.FC<AddMemberProps> = ({
   type,
   memberCount,
   onclick,
+  enableAddMember,
 }) => {
   const { t } = useTranslation();
   return (
@@ -22,9 +24,11 @@ export const AddMember: React.FC<AddMemberProps> = ({
           <span className="text-sm">{`${memberCount} ${t(
             'TypeMember.type',
           )}`}</span>
-          <div className="text-xl cursor-pointer" onClick={onclick}>
-            <FaUserPlus />
-          </div>
+          {enableAddMember && (
+            <div className="text-xl cursor-pointer" onClick={onclick}>
+              <FaUserPlus />
+            </div>
+          )}
         </div>
       </div>
       <hr className="h-0.5 bg-blue-700 mb-3" />

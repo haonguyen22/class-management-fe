@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Checkbox, IconButton } from '@mui/material';
 import { IMember } from '../../models/IAxiosResponse';
 import SortByAlphaSharpIcon from '@mui/icons-material/SortByAlphaSharp';
 import ActionStudentButton from './ActionStudentButton';
-import { RoleClass } from '../../enums/RoleClass';
 import { RowUser } from './RowUser';
 import AddMemberDialog from './AddMemberDialog';
 import { AddMember } from './AddMember';
+import { ClassContext } from '../../context/ClassContext';
+import { Role } from '../../enums/RoleClass';
 
 interface ListMemberProps {
   type?: string;
@@ -17,6 +18,7 @@ export const ListMember: React.FC<ListMemberProps> = ({ type, members }) => {
   const [checked, setChecked] = useState<number[]>([]);
   const [checkedAll, setCheckedAll] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { role } = useContext(ClassContext);
 
   const handleCheckAll = () => {
     setCheckedAll(!checkedAll);
@@ -35,11 +37,6 @@ export const ListMember: React.FC<ListMemberProps> = ({ type, members }) => {
     }
   };
 
-  const typeTemp =
-    type === 'Teacher' || type === 'Giáo viên'
-      ? RoleClass.TEACHER
-      : RoleClass.STUDENT;
-
   useEffect(() => {
     if (checked.length === members?.length && members?.length !== 0) {
       setCheckedAll(true);
@@ -47,6 +44,7 @@ export const ListMember: React.FC<ListMemberProps> = ({ type, members }) => {
       setCheckedAll(false);
     }
   }, [checked]);
+  const isTeacherRole = Role.isTeacherRole(role);
 
   return (
     <>
@@ -55,10 +53,11 @@ export const ListMember: React.FC<ListMemberProps> = ({ type, members }) => {
           type={type}
           memberCount={members?.length}
           onclick={() => setIsOpen(true)}
+          enableAddMember={isTeacherRole}
         />
         <div
           className={`px-7 ${
-            typeTemp === 'students' ? 'visible' : 'hidden'
+            isTeacherRole ? 'visible' : 'hidden'
           } mt-2 flex justify-between`}
         >
           <div className="flex gap-5">
@@ -69,6 +68,7 @@ export const ListMember: React.FC<ListMemberProps> = ({ type, members }) => {
             <SortByAlphaSharpIcon sx={{ color: 'black' }} />
           </IconButton>
         </div>
+
         {members &&
           members.map((user) => {
             let test = false;
@@ -78,7 +78,7 @@ export const ListMember: React.FC<ListMemberProps> = ({ type, members }) => {
                 key={user.id}
                 name={user.name}
                 isChecked={test}
-                visible={typeTemp === RoleClass.STUDENT}
+                visible={isTeacherRole}
                 setIsChecked={() => handleCheck(user.id)}
               />
             );

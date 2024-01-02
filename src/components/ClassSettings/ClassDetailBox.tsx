@@ -33,7 +33,9 @@ function ClassDetailBox() {
         label={t('className')}
         variant="filled"
         required
-        disabled
+        InputProps={{
+          readOnly: true,
+        }}
         name="name"
         value={data?.name ?? ''}
         sx={{ padding: '0px', margin: '8px' }}
@@ -43,7 +45,9 @@ function ClassDetailBox() {
         label={t('description')}
         variant="filled"
         required
-        disabled
+        InputProps={{
+          readOnly: true,
+        }}
         name="description"
         value={data?.description ?? ''}
         sx={{ padding: '0px', margin: '8px' }}
@@ -53,7 +57,9 @@ function ClassDetailBox() {
         label={t('owner')}
         variant="filled"
         required
-        disabled
+        InputProps={{
+          readOnly: true,
+        }}
         name="owner"
         value={data?.owner?.email ?? ''}
         sx={{ padding: '0px', margin: '8px' }}

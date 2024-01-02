@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { SortableList } from '../../components/ClassSettings/SortableList';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -16,6 +16,8 @@ import { gradeService } from '../../services/grade/GradeService';
 import { useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import { ClassContext } from '../../context/ClassContext';
+import { Role } from '../../enums/RoleClass';
 
 interface GradeStructureItem {
   gradeCategory: GradeStructure;
@@ -31,6 +33,7 @@ function GradeStructureBox() {
   const [grades, setGrades] = useState<Array<GradeStructureItem>>([]);
   const [isLoading, setIsLoading] = useState(false);
   const isDragged = useRef(false);
+  const { role } = useContext(ClassContext);
 
   useEffect(() => {
     getAllGradeCategories();
@@ -257,22 +260,27 @@ function GradeStructureBox() {
     (acc, curr) => acc + curr.gradeCategory.weight,
     0,
   );
+
+  const isTeacherRole = Role.isTeacherRole(role);
+
   return (
     <SettingFrameLayout
       title={t('gradeCategories')}
       trailing={
-        <div className="flex flex-row items-center ">
-          {isLoading && (
-            <CircularProgress size={20} sx={{ marginRight: '10px' }} />
-          )}
-          <Button
-            variant="contained"
-            onClick={arrangeGradeCategory}
-            disabled={isDragged.current === false}
-          >
-            {t('save')}
-          </Button>
-        </div>
+        isTeacherRole && (
+          <div className="flex flex-row items-center ">
+            {isLoading && (
+              <CircularProgress size={20} sx={{ marginRight: '10px' }} />
+            )}
+            <Button
+              variant="contained"
+              onClick={arrangeGradeCategory}
+              disabled={isDragged.current === false}
+            >
+              {t('save')}
+            </Button>
+          </div>
+        )
       }
     >
       {grades.length !== 0 ? (
@@ -306,17 +314,21 @@ function GradeStructureBox() {
                 key={item?.gradeCategory?.id}
                 {...props}
               >
-                <div className="handle" {...handleProps}>
-                  <DragIndicatorIcon />
-                </div>
-
+                {isTeacherRole && (
+                  <div className="handle" {...handleProps}>
+                    <DragIndicatorIcon />
+                  </div>
+                )}
                 <TextField
                   id="filled-basic"
                   label={t('gradeCategory')}
                   variant="filled"
                   required
-                  disabled={!item.enable}
+                  disabled={isTeacherRole && !item.enable}
                   name="name"
+                  InputProps={{
+                    readOnly: !isTeacherRole,
+                  }}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     onTextChange(e, item)
                   }
@@ -329,48 +341,54 @@ function GradeStructureBox() {
                   variant="filled"
                   name="weight"
                   required
-                  disabled={!item.enable}
+                  disabled={isTeacherRole && !item.enable}
+                  InputProps={{
+                    readOnly: !isTeacherRole,
+                  }}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     onTextChange(e, item)
                   }
+                  defaultValue={item?.gradeCategory?.weight?.toString()}
                   value={item?.gradeCategory?.weight?.toString()}
                   sx={{ padding: '0px', flex: 1, margin: '4px' }}
                 />
-                <div className="flex flex-row justify-around items-center">
-                  {item.isCreated === false ? (
-                    <AddBoxIcon
-                      component="svg"
-                      color="warning"
-                      sx={{ margin: '6px' }}
-                      onClick={() =>
-                        handleAddGradeCategory({
-                          name: item.gradeCategory.name,
-                          weight: item.gradeCategory.weight,
-                        })
-                      }
-                    />
-                  ) : item.enable ? (
-                    <DoneIcon
-                      component="svg"
-                      sx={{ margin: '6px' }}
-                      color="success"
-                      onClick={() => onDoneEditGrade(item)}
-                    />
-                  ) : (
-                    <EditIcon
-                      component="svg"
-                      color="primary"
-                      sx={{ margin: '6px' }}
-                      onClick={() => onEditCategory(item)}
-                    />
-                  )}
+                {isTeacherRole && (
+                  <div className="flex flex-row justify-around items-center">
+                    {item.isCreated === false ? (
+                      <AddBoxIcon
+                        component="svg"
+                        color="warning"
+                        sx={{ margin: '6px' }}
+                        onClick={() =>
+                          handleAddGradeCategory({
+                            name: item.gradeCategory.name,
+                            weight: item.gradeCategory.weight,
+                          })
+                        }
+                      />
+                    ) : item.enable ? (
+                      <DoneIcon
+                        component="svg"
+                        sx={{ margin: '6px' }}
+                        color="success"
+                        onClick={() => onDoneEditGrade(item)}
+                      />
+                    ) : (
+                      <EditIcon
+                        component="svg"
+                        color="primary"
+                        sx={{ margin: '6px' }}
+                        onClick={() => onEditCategory(item)}
+                      />
+                    )}
 
-                  <ClearIcon
-                    sx={{ margin: '6px' }}
-                    color="error"
-                    onClick={() => removeGradeCategory(item)}
-                  />
-                </div>
+                    <ClearIcon
+                      sx={{ margin: '6px' }}
+                      color="error"
+                      onClick={() => removeGradeCategory(item)}
+                    />
+                  </div>
+                )}
               </div>
             );
           }}
@@ -387,24 +405,32 @@ function GradeStructureBox() {
         </div>
       )}
       <div className="flex flex-row items-center justify-between mt-10">
-        <Button
-          sx={{ fontWeight: '500', fontSize: '14px' }}
-          onClick={addGradeCategory}
-        >
-          <AddBoxIcon sx={{ marginRight: '4px' }} />
-          {t('addGradeCategory')}
-        </Button>
+        {isTeacherRole ? (
+          <Button
+            sx={{ fontWeight: '500', fontSize: '14px' }}
+            onClick={addGradeCategory}
+          >
+            <AddBoxIcon sx={{ marginRight: '4px' }} />
+            {t('addGradeCategory')}
+          </Button>
+        ) : (
+          <div></div>
+        )}
         <div className="text-sm font-semibold">
           {t('totalPercentage')}:{' '}
           <span
             className={`${
-              totalPercentage < 100 ? 'text-red-500' : totalPercentage > 100 ? 'text-amber-600' : 'text-black'
+              totalPercentage < 100
+                ? 'text-red-500'
+                : totalPercentage > 100
+                  ? 'text-amber-600'
+                  : 'text-black'
             }`}
           >
             {totalPercentage}%
           </span>
         </div>
-      </div>  
+      </div>
     </SettingFrameLayout>
   );
 }
