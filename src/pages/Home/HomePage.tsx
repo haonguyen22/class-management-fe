@@ -32,7 +32,7 @@ const HomePage = () => {
               key={item.id}
               description={item.description}
               name={item.name}
-              backgroundUrl={item.background ?? backgroundDefault}
+              backgroundUrl={item.backgroundImage ?? backgroundDefault}
               avatar={item.avatar || avatarDefault}
               teacherName={item.owner?.name}
               numOfStudent={item.numberOfStudents}
