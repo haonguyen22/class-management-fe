@@ -43,18 +43,23 @@ function ClassCard(props: {
     >
       <div className=" flex flex-col ">
         <div
-          className={`${!props.backgroundUrl && 'bg-green-700'} ${
+          className={`${
             isImageLoaded && 'bg-slate-700'
-          } h-[100px] w-full px-[16px] pt-[16px] pb-[12px] flex flex-row items-center justify-between`}
-          style={{ backgroundImage: `url(${props.backgroundUrl})` }}
+          } h-[100px] w-full items-center justify-between`}
         >
-          <div className="text-white w-4/5 ">
-            <div className="text-lg font-medium truncate  hover:underline">
-              {props.name}
-            </div>
-            <div className="text-[14px]  truncate">{props.description}</div>
-            <div className="text-[12px] font-bold mt-1 truncate">
-              {props.teacherName}
+          <div className="relative w-full h-full ">
+            <img
+              src={props.backgroundUrl}
+              className="absolute w-full h-full opacity-90 "
+            />
+            <div className="text-white w-4/5 px-[16px] pt-[16px] pb-[12px]  flex flex-col  z-10 absolute">
+              <div className="text-lg font-medium truncate  hover:underline">
+                {props.name}
+              </div>
+              <div className="text-[14px]   truncate">{props.description}</div>
+              <div className="text-[12px] font-bold mt-1 truncate">
+                {props.teacherName}
+              </div>
             </div>
           </div>
         </div>

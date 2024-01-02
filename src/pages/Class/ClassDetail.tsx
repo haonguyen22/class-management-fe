@@ -46,6 +46,25 @@ const ClassDetail = () => {
     setIsLoading(false);
   };
 
+  async function onImageBackgroundUpload(file?: File) {
+    if (!file) return;
+    await apiCall(classService.uploadBackgroundImage(id!, file!), {
+      ifSuccess: (data) => {
+        console.log(
+          (data.metadata as { backgroundImage: string })?.backgroundImage,
+        );
+        setClassDetail({
+          ...classDetail!,
+          backgroundImage: (data.metadata as { backgroundImage: string })
+            ?.backgroundImage,
+        });
+      },
+      ifFailed: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
   useEffect(() => {
     console.log(role);
     if (role === Role.TEACHER) getClassCode();
@@ -65,6 +84,8 @@ const ClassDetail = () => {
           name={classDetail?.name}
           description={classDetail?.description}
           avatar={classDetail?.avatar}
+          backgroundImage={classDetail?.backgroundImage}
+          onImageBackgroundUpload={onImageBackgroundUpload}
         />
         {role === Role.TEACHER && (
           <div className="mt-3">

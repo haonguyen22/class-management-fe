@@ -37,6 +37,17 @@ class ClassService {
   async addMember(email: string, id: string | undefined, type: string) {
     return await api.post(`/class/${id}/${type}`, { email });
   }
+
+  async uploadBackgroundImage(classId: string, file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return await api.post('/class/{id}/upload-background', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'class-id': classId,
+      },
+    });
+  }
 }
 
 export const classService = new ClassService();

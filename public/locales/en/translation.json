@@ -112,5 +112,6 @@
   "owner": "Owner",
   "description": "Description",
   "classDetail": "Class detail",
-  "totalPercentage": "Total percentage"
+  "totalPercentage": "Total percentage",
+  "custom": "Custom"
 }
