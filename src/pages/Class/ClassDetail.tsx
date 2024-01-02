@@ -47,6 +47,7 @@ const ClassDetail = () => {
   };
 
   useEffect(() => {
+    console.log(role);
     if (role === Role.TEACHER) getClassCode();
     getClassDetail();
   }, [id, role]);
