@@ -26,6 +26,7 @@ import { ClassDetailNav } from '../components/ClassDetail/ClassDetailNav';
 import GradeReviewList from '../pages/Grade/GradeReview';
 import GradeReviewDetail from '../pages/Grade/GradeReviewDetail';
 import GradeManagementTable from '../components/Grade/GradeManagementTable';
+import ClassSettingsPage from '../pages/Class/ClassSettingsPage';
 
 function Layout() {
   return (
@@ -51,7 +52,8 @@ export const RouteList = {
   classScores: '/class/:id/scores',
   joinClass: '/class/join',
   gradleReview: '/grade',
-  gradleReviewDetail: '/grade/:id'
+  gradleReviewDetail: '/grade/:id',
+  classSettings: '/class/:id/settings',
 };
 
 function Routes() {
@@ -104,6 +106,7 @@ function Routes() {
             <Route path={RouteList.classDetail} element={<ClassDetail />} />
             <Route path={RouteList.classMembers} element={<ClassMember />} />
             <Route path={RouteList.classScores} element={<GradeManagementTable/>} />
+            <Route path={RouteList.classSettings} element={<ClassSettingsPage />} />
           </Route>
           <Route path={RouteList.gradleReview} >
             <Route path='' element={<GradeReviewList />} />
