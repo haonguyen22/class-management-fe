@@ -21,7 +21,6 @@ const ClassDetail = () => {
   const { role } = useContext(ClassContext);
 
   const getClassCode = async () => {
-    console.log(role);
     await apiCall(classService.getClassCode(id!), {
       ifSuccess: (data) => {
         setCode((data?.metadata as { code: string })?.code);
@@ -66,7 +65,6 @@ const ClassDetail = () => {
   }
 
   useEffect(() => {
-    console.log(role);
     if (role === Role.TEACHER) getClassCode();
     getClassDetail();
   }, [id, role]);

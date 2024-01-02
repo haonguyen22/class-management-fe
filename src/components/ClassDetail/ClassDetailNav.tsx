@@ -51,7 +51,6 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
         setRole(Role.NONE);
       },
     });
-    console.log(role);
   };
 
   useEffect(() => {
