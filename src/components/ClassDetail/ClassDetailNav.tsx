@@ -30,6 +30,8 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
             students: IMember[];
             teachers: IMember[];
           };
+          console.log(metadata);
+          console.log(user);
           metadata.teachers.forEach((item) => {
             if (item.id === user.id) {
               setRole(Role.TEACHER);
@@ -49,6 +51,7 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
         setRole(Role.NONE);
       },
     });
+    console.log(role);
   };
 
   useEffect(() => {
