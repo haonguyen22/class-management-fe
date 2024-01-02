@@ -63,11 +63,13 @@ export const RowUser: React.FC<RowWithDropdownProps> = ({
             {name || t('RowUser.DefaultName')}
           </Typography>
         </div>
-        <IconButton onClick={handleMoreClick}>
-          <MoreVert />
-        </IconButton>
-        {/* Drop down */}
+        {visible && (
+          <IconButton onClick={handleMoreClick}>
+            <MoreVert />
+          </IconButton>
+        )}
       </div>
+      {/* Drop down */}
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

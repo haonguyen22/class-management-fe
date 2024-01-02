@@ -4,7 +4,7 @@ import GradeStructureBox from '../../components/ClassSettings/GradeStructure';
 function ClassSettingsPage() {
   return (
     <>
-      <div className="flex flex-row w-full items-start ">
+      <div className="flex flex-col lg:flex-row  w-full items-start ">
         <GradeStructureBox />
         <ClassDetailBox />
       </div>
