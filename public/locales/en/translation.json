@@ -98,5 +98,19 @@
   "gradeReviewDetail.currenScore": "Current score",
   "gradeReviewDetail.expectedScore": "Expected score",
   "gradeReviewDetail.explanation": "Explanation",
-  "gradeReviewDetail.commentTitle": "Comment"
+  "gradeReviewDetail.commentTitle": "Comment",
+  "gradeCategories": "Grade categories",
+  "gradeCategory": "Grade category",
+  "percentage": "Percentage  (%)",
+  "addGradeCategory": "Add grade category",
+  "createClassSuccess": "Create class successfully",
+  "noGradeCategory": "There are currently no grade categories",
+  "deleteGradeCategory.success": "Delete grade category successfully",
+  "createGradeCategory.success": "Create grade category successfully",
+  "updateGradeCategory.success": "Update grade category successfully",
+  "save.success": "Save successfully",
+  "owner": "Owner",
+  "description": "Description",
+  "classDetail": "Class detail",
+  "totalPercentage": "Total percentage"
 }

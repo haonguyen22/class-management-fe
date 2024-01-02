@@ -32,6 +32,11 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
       name: t('grade'),
       path: `/class/${id}/scores`,
     },
+    
+    {
+      name: t('settings'),
+      path: `/class/${id}/settings`,
+    },
   ];
 
   const handleClick = (newValue: number, path: string) => {
@@ -42,7 +47,7 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'gray' }}>
-        <Tabs value={value} aria-label="basic tabs example">
+        <Tabs value={value} aria-label="basic tabs example" >
           {NavList.map((item, index) => (
             <Tab
               sx={{ fontWeight: '550', fontSize: '13px', paddingX: 4 }}
@@ -51,6 +56,7 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
               onClick={() => handleClick(index, item.path)}
             />
           ))}
+
         </Tabs>
       </Box>
       <div className="mt-8" />
