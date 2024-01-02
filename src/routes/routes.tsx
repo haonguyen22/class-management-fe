@@ -25,6 +25,7 @@ import Footer from '../components/Footer/Footer';
 import { ClassDetailNav } from '../components/ClassDetail/ClassDetailNav';
 import GradeReviewList from '../pages/Grade/GradeReview';
 import GradeReviewDetail from '../pages/Grade/GradeReviewDetail';
+import GradeManagementTable from '../components/Grade/GradeManagementTable';
 
 function Layout() {
   return (
@@ -102,7 +103,7 @@ function Routes() {
           >
             <Route path={RouteList.classDetail} element={<ClassDetail />} />
             <Route path={RouteList.classMembers} element={<ClassMember />} />
-            <Route path={RouteList.classScores} element={<></>} />
+            <Route path={RouteList.classScores} element={<GradeManagementTable/>} />
           </Route>
           <Route path={RouteList.gradleReview} >
             <Route path='' element={<GradeReviewList />} />
