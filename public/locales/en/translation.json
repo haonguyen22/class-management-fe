@@ -111,5 +111,6 @@
   "save.success": "Save successfully",
   "owner": "Owner",
   "description": "Description",
-  "classDetail": "Class detail"
+  "classDetail": "Class detail",
+  "totalPercentage": "Total percentage"
 }

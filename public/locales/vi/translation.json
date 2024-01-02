@@ -111,5 +111,6 @@
   "save.success": "Lưu thành công",
   "owner": "Chủ sở hữu",
   "description": "Mô tả",
-  "classDetail": "Chi tiết lớp học"
+  "classDetail": "Chi tiết lớp học",
+  "totalPercentage": "Tổng cộng"
 }

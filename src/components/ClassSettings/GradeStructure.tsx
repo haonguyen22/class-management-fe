@@ -32,6 +32,10 @@ function GradeStructureBox() {
   const [isLoading, setIsLoading] = useState(false);
   const isDragged = useRef(false);
 
+  useEffect(() => {
+    getAllGradeCategories();
+  }, []);
+
   const onTextChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     item: GradeStructureItem,
@@ -249,10 +253,10 @@ function GradeStructureBox() {
     isDragged.current = false;
   };
 
-  useEffect(() => {
-    getAllGradeCategories();
-  }, []);
-
+  const totalPercentage = grades.reduce(
+    (acc, curr) => acc + curr.gradeCategory.weight,
+    0,
+  );
   return (
     <SettingFrameLayout
       title={t('gradeCategories')}
@@ -336,6 +340,7 @@ function GradeStructureBox() {
                   {item.isCreated === false ? (
                     <AddBoxIcon
                       component="svg"
+                      color="warning"
                       sx={{ margin: '6px' }}
                       onClick={() =>
                         handleAddGradeCategory({
@@ -348,11 +353,13 @@ function GradeStructureBox() {
                     <DoneIcon
                       component="svg"
                       sx={{ margin: '6px' }}
+                      color="success"
                       onClick={() => onDoneEditGrade(item)}
                     />
                   ) : (
                     <EditIcon
                       component="svg"
+                      color="primary"
                       sx={{ margin: '6px' }}
                       onClick={() => onEditCategory(item)}
                     />
@@ -360,6 +367,7 @@ function GradeStructureBox() {
 
                   <ClearIcon
                     sx={{ margin: '6px' }}
+                    color="error"
                     onClick={() => removeGradeCategory(item)}
                   />
                 </div>
@@ -378,12 +386,25 @@ function GradeStructureBox() {
           <p className="text-lg font-semibold">{t('noGradeCategory')}</p>
         </div>
       )}
-      <Button
-        sx={{ maxWidth: '200px', marginTop: '20px', fontWeight: '500' }}
-        onClick={addGradeCategory}
-      >
-        {t('addGradeCategory')}
-      </Button>
+      <div className="flex flex-row items-center justify-between mt-10">
+        <Button
+          sx={{ fontWeight: '500', fontSize: '14px' }}
+          onClick={addGradeCategory}
+        >
+          <AddBoxIcon sx={{ marginRight: '4px' }} />
+          {t('addGradeCategory')}
+        </Button>
+        <div className="text-sm font-semibold">
+          {t('totalPercentage')}:{' '}
+          <span
+            className={`${
+              totalPercentage < 100 ? 'text-red-500' : totalPercentage > 100 ? 'text-amber-600' : 'text-black'
+            }`}
+          >
+            {totalPercentage}%
+          </span>
+        </div>
+      </div>  
     </SettingFrameLayout>
   );
 }
