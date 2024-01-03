@@ -24,8 +24,10 @@ class ClassService {
     return await api.get('/class/' + id + '/teachers-and-students');
   }
 
-  async joinClass(classId: string) {
-    const res = await api.get(`/class/${classId}/join`);
+  async joinClass(classId: string, studentId: string) {
+    const res = await api.get(`/class/${classId}/join`, {
+      params: { studentId },
+    });
     return res;
   }
 
