@@ -30,8 +30,6 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
             students: IMember[];
             teachers: IMember[];
           };
-          console.log(metadata);
-          console.log(user);
           metadata.teachers.forEach((item) => {
             if (item.id === user.id) {
               setRole(Role.TEACHER);
@@ -81,7 +79,10 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
       name: t('grade'),
       path: `/class/${id}/scores`,
     },
-
+    {
+      name: t('homeworks'),
+      path: `/class/${id}/homeworks`,
+    },
     {
       name: t('settings'),
       path: `/class/${id}/settings`,

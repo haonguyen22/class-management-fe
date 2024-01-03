@@ -27,6 +27,8 @@ import GradeReviewList from '../pages/Grade/GradeReview';
 import GradeReviewDetail from '../pages/Grade/GradeReviewDetail';
 import GradeManagementTable from '../components/Grade/GradeManagementTable';
 import ClassSettingsPage from '../pages/Class/ClassSettingsPage';
+import HomeworkList from '../pages/Homework/HomeworkList';
+import CreateHomework from '../pages/Homework/CreateHomework';
 
 function Layout() {
   return (
@@ -54,6 +56,8 @@ export const RouteList = {
   gradleReview: '/grade',
   gradleReviewDetail: '/grade/:id',
   classSettings: '/class/:id/settings',
+  classHomeworks: '/class/:id/homeworks',
+  createClassHomworks: '/class/:id/homeworks/create'
 };
 
 function Routes() {
@@ -106,6 +110,8 @@ function Routes() {
             <Route path={RouteList.classDetail} element={<ClassDetail />} />
             <Route path={RouteList.classMembers} element={<ClassMember />} />
             <Route path={RouteList.classScores} element={<GradeManagementTable/>} />
+            <Route path={RouteList.classHomeworks} element={<HomeworkList />} />
+            <Route path={RouteList.createClassHomworks} element={<CreateHomework />} />
             <Route path={RouteList.classSettings} element={<ClassSettingsPage />} />
             <Route
               path={RouteList.classSettings}

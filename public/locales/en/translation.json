@@ -113,5 +113,6 @@
   "description": "Description",
   "classDetail": "Class detail",
   "totalPercentage": "Total percentage",
-  "custom": "Custom"
+  "custom": "Custom",
+  "homeworks": "Homeworks"
 }

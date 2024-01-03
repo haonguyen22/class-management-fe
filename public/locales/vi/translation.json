@@ -113,5 +113,6 @@
   "description": "Mô tả",
   "classDetail": "Chi tiết lớp học",
   "totalPercentage": "Tổng cộng",
-  "custom": "Tùy chỉnh"
+  "custom": "Tùy chỉnh",
+  "homeworks": "Bài tập"
 }
