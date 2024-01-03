@@ -125,5 +125,7 @@
   "saveFail": "Save failed",
   "home": "Home",
   "exercises": "Exercises",
-  "maxScore": "Max score"
+  "maxScore": "Max score",
+  "gradeReview": "Grade review",
+  "accountId": "Account ID"
 }
