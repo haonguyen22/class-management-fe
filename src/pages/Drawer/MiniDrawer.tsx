@@ -10,7 +10,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Footer from '../../components/Footer/Footer';
 import { GlobalContext } from '../../context/GlobalContext';
 import AppBarDrawer from './AppBarHeader';
-import HomeButtonDrawer from './HomeButtonDrawer';
+import ListButtonDrawer from './ListButtonDrawer';
 import { useTranslation } from 'react-i18next';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SchoolIcon from '@mui/icons-material/School';
@@ -56,7 +56,7 @@ export default function MiniDrawer({
 
         <Divider />
 
-        <HomeButtonDrawer open={open} />
+        <ListButtonDrawer open={open} />
 
         <Divider />
 

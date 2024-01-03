@@ -44,8 +44,8 @@ export const RouteList = {
   classMembers: '/class/:id/members',
   classScores: '/class/:id/scores',
   joinClass: '/class/join',
-  gradleReview: '/grade',
-  gradleReviewDetail: '/grade/:id',
+  gradeReview: '/grade',
+  gradeReviewDetail: '/grade/:id',
   classSettings: '/class/:id/settings',
 };
 
@@ -107,10 +107,10 @@ function Routes() {
               element={<ClassSettingsPage />}
             />
           </Route>
-          <Route path={RouteList.gradleReview}>
+          <Route path={RouteList.gradeReview}>
             <Route path="" element={<GradeReviewList />} />
             <Route
-              path={RouteList.gradleReviewDetail}
+              path={RouteList.gradeReviewDetail}
               element={<GradeReviewDetail />}
             />
           </Route>

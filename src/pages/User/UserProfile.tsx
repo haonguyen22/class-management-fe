@@ -153,8 +153,13 @@ function UserProfilePage() {
             </Avatar>
           </div>
           <div className="flex flex-col  justify-center ml-10">
-            <div className="text-2xl font-bold mb-4">Nguyễn Văn A</div>
-            <div className="text-base font-thin">{t('studentId')}: 123456</div>
+            <div className="text-2xl font-bold mb-4">{auth()!.user.name}</div>
+            <div className="text-base font-thin text-gray-500">
+              {t('studentId')}: {auth()!.user.studentId}
+            </div>{' '}
+            <div className="text-base font-thin text-gray-500">
+              {t('accountId')}: {auth()!.user.id}
+            </div>
           </div>
         </div>
         <Divider />

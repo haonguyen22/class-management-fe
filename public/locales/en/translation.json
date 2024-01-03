@@ -122,5 +122,7 @@
   "save": "Save",
   "saveSuccess": "Save successfully",
   "saveFail": "Save failed",
-  "home": "Home"
+  "home": "Home",
+  "gradeReview": "Grade review",
+  "accountId": "Account ID"
 }
