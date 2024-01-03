@@ -19,7 +19,9 @@ export const AddMember: React.FC<AddMemberProps> = ({
   return (
     <>
       <div className="flex justify-between items-center p-3 text-blue-700">
-        <span className="text-2xl font-bold">{type || 'Defaul member'}</span>
+        <span className="text-2xl font-bold">
+          {type?.toUpperCase() || 'Default member'}
+        </span>
         <div className="flex justify-between items-center gap-5">
           <span className="text-sm">{`${memberCount} ${t(
             'TypeMember.type',
