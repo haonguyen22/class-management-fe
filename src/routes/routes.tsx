@@ -29,6 +29,8 @@ import GradeManagementTable from '../components/Grade/GradeManagementTable';
 import ClassSettingsPage from '../pages/Class/ClassSettingsPage';
 import HomeworkList from '../pages/Homework/HomeworkList';
 import CreateHomework from '../pages/Homework/CreateHomework';
+import UserProfilePage from '../pages/User/UserProfile';
+import Grade from '../pages/Grade/Grade';
 
 function Layout() {
   return (
@@ -37,7 +39,6 @@ function Layout() {
     </MiniDrawer>
   );
 }
-import UserProfilePage from '../pages/User/UserProfile';
 
 export const RouteList = {
   home: '/',
@@ -114,7 +115,7 @@ function Routes() {
           >
             <Route path={RouteList.classDetail} element={<ClassDetail />} />
             <Route path={RouteList.classMembers} element={<ClassMember />} />
-            <Route path={RouteList.classScores} element={<GradeManagementTable/>} />
+            <Route path={RouteList.classScores} element={<Grade/>} />
             <Route path={RouteList.classHomeworks} element={<HomeworkList />} />
             <Route path={RouteList.createClassHomworks} element={<CreateHomework />} />
             <Route path={RouteList.classSettings} element={<ClassSettingsPage />} />
