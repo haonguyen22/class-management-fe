@@ -17,3 +17,8 @@ export interface IClass {
   owner: IUser;
   updatedAt: string;
 }
+
+export interface ClassRole {
+  studentClass: IClass[];
+  teacherClass: IClass[];
+}

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Checkbox, IconButton } from '@mui/material';
-import { IMember } from '../../models/IAxiosResponse';
 import SortByAlphaSharpIcon from '@mui/icons-material/SortByAlphaSharp';
 import ActionStudentButton from './ActionStudentButton';
 import { RowUser } from './RowUser';
@@ -8,10 +7,11 @@ import AddMemberDialog from './AddMemberDialog';
 import { AddMember } from './AddMember';
 import { ClassContext } from '../../context/ClassContext';
 import { Role } from '../../enums/RoleClass';
+import { IUser } from '../../models/User';
 
 interface ListMemberProps {
   type?: string;
-  members?: IMember[];
+  members?: IUser[];
 }
 
 export const ListMember: React.FC<ListMemberProps> = ({ type, members }) => {
@@ -25,7 +25,7 @@ export const ListMember: React.FC<ListMemberProps> = ({ type, members }) => {
     if (checkedAll) {
       setChecked([]);
     } else {
-      setChecked(members?.map((user) => user.id) || []);
+      setChecked(members?.map((user) => user.id!) || []);
     }
   };
 
@@ -72,14 +72,15 @@ export const ListMember: React.FC<ListMemberProps> = ({ type, members }) => {
         {members &&
           members.map((user) => {
             let test = false;
-            if (checked.includes(user.id)) test = true;
+            if (checked.includes(user.id!)) test = true;
             return (
               <RowUser
                 key={user.id}
                 name={user.name}
                 isChecked={test}
+                avatar={user.avatar}
                 visible={isTeacherRole}
-                setIsChecked={() => handleCheck(user.id)}
+                setIsChecked={() => handleCheck(user.id!)}
               />
             );
           })}

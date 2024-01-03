@@ -7,9 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { ClassContext } from '../../context/ClassContext';
 import { apiCall } from '../../utils/apiCall';
 import { classService } from '../../services/class/ClassService';
-import { IMember } from '../../models/IAxiosResponse';
 import { useAuthUser } from 'react-auth-kit';
 import { Role } from '../../enums/RoleClass';
+import { IUser } from '../../models/User';
 
 export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
   const [value, setValue] = React.useState(0);
@@ -27,8 +27,8 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
       ifSuccess: (data) => {
         if (data.status === 200) {
           const metadata = data.metadata as {
-            students: IMember[];
-            teachers: IMember[];
+            students: IUser[];
+            teachers: IUser[];
           };
           metadata.teachers.forEach((item) => {
             if (item.id === user.id) {

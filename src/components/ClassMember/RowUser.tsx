@@ -8,11 +8,13 @@ import {
 } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { avatarDefault } from '../../constants/globalConst';
 
 interface RowWithDropdownProps {
   name?: string;
   isChecked?: boolean;
   setIsChecked?: () => void;
+  avatar?: string;
   visible?: boolean;
 }
 
@@ -20,6 +22,7 @@ export const RowUser: React.FC<RowWithDropdownProps> = ({
   name,
   isChecked,
   setIsChecked,
+  avatar,
   visible = true,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -55,7 +58,7 @@ export const RowUser: React.FC<RowWithDropdownProps> = ({
           </div>
           <div className="w-10 h-10 rounded-full">
             <img
-              src="https://picsum.photos/200"
+              src={avatar ?? avatarDefault}
               className="object-cover w-full h-full rounded-full"
             />
           </div>

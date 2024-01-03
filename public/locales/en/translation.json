@@ -121,5 +121,6 @@
   "address": "Address",
   "save": "Save",
   "saveSuccess": "Save successfully",
-  "saveFail": "Save failed"
+  "saveFail": "Save failed",
+  "home": "Home"
 }
