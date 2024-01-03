@@ -81,6 +81,8 @@ function UserProfilePage() {
         enqueueSnackbar(t('saveFailed'), { variant: 'error' });
       },
     });
+    await getMe();
+
     setIsLoading(false);
   };
 
@@ -114,6 +116,7 @@ function UserProfilePage() {
         console.log(error);
       },
     });
+    await getMe();
     setIsLoading(false);
   };
 

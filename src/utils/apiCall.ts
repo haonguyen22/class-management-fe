@@ -6,9 +6,11 @@ export async function apiCall(
   {
     ifSuccess,
     ifFailed,
+    ifCatch,
   }: {
     ifSuccess: (data: IResponse) => void;
     ifFailed: (err: IError<IErrorResponse>) => void;
+    ifCatch?: () => void;
   },
 ) {
   try {
@@ -20,6 +22,7 @@ export async function apiCall(
       ifSuccess((res as { data: IResponse }).data as IResponse);
     }
   } catch (err) {
+    ifCatch?.();
     const message = (err as { response: { data: { message: string } } })
       .response?.data?.message;
 

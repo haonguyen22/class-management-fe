@@ -141,6 +141,7 @@ function GradeStructureBox() {
   };
 
   const handleAddGradeCategory = async (item: GradeComposition) => {
+    if (item.name === '' || item.weight === 0) return;
     setIsLoading(true);
     await apiCall(gradeService.createGradeComposition(parseInt(id!), item), {
       ifSuccess: async () => {
@@ -324,6 +325,7 @@ function GradeStructureBox() {
                   label={t('gradeCategory')}
                   variant="filled"
                   required
+                  error={item.gradeCategory.name === ''}
                   disabled={isTeacherRole && !item.enable}
                   name="name"
                   InputProps={{
@@ -341,6 +343,7 @@ function GradeStructureBox() {
                   variant="filled"
                   name="weight"
                   required
+                  error={item.gradeCategory.weight === 0}
                   disabled={isTeacherRole && !item.enable}
                   InputProps={{
                     readOnly: !isTeacherRole,

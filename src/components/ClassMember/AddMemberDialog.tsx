@@ -44,11 +44,8 @@ const AddMemberDialog: React.FC<AddMemberProps> = ({
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setIsLoading(true);
-      const typeTemp =
-        type === 'Teachers' || type === 'Giáo viên'
-          ? Role.TEACHER
-          : Role.STUDENT;
-      await apiCall(classService.addMember(values.email, id, typeTemp), {
+      const typeTemp = type === Role.TEACHER ? Role.TEACHER : Role.STUDENT;
+      await apiCall(classService.addMember(values.email, id, typeTemp + 's'), {
         ifSuccess: (data) => {
           enqueueSnackbar(data.message, { variant: 'success' });
           setClose();

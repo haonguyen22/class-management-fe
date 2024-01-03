@@ -8,7 +8,7 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material';
-import { Fragment, useContext, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsPlusLg } from 'react-icons/bs';
 import CustomizedMenus from '../../common/CustomizedMenus';
@@ -18,6 +18,8 @@ import { GlobalContext } from '../../context/GlobalContext';
 import { httpStatus } from '../../constants/httpStatus';
 import { classService } from '../../services/class/ClassService';
 import { enqueueSnackbar } from 'notistack';
+import { useAuthUser } from 'react-auth-kit';
+import { useNavigate } from 'react-router-dom';
 
 function CreateClassDialog() {
   const initCreateClass: ICreateCLass = {
@@ -30,6 +32,13 @@ function CreateClassDialog() {
   const { t } = useTranslation();
   const [createClass, setCreateClass] = useState<ICreateCLass>(initCreateClass);
   const [joinClassId, setJoinClassId] = useState<string>('');
+  const [studentId, setStudentId] = useState<string>('');
+  const auth = useAuthUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setStudentId(auth()!.user?.studentId ?? '');
+  }, [auth]);
 
   const [isOpenCreateDialog, setIsOpenCreateDialog] = useState(false);
   const [isOpenJoinDialog, setIsOpenJoinDialog] = useState(false);
@@ -59,6 +68,12 @@ function CreateClassDialog() {
   };
 
   const submitCreateClass = async () => {
+    if (
+      createClass.name === '' ||
+      createClass.description === '' ||
+      createClass.subject === ''
+    )
+      return;
     await apiCall(classService.createClass(createClass), {
       ifSuccess: (data) => {
         console.log(data);
@@ -67,6 +82,7 @@ function CreateClassDialog() {
           data.status === httpStatus.OK
         ) {
           enqueueSnackbar(t('createClassSuccess'), { variant: 'success' });
+          navigate(`/class/${(data.metadata as { id: string }).id}/detail`);
           fetchClasses();
         }
       },
@@ -79,9 +95,12 @@ function CreateClassDialog() {
   };
 
   const submitJoinClass = async () => {
+    if (joinClassId === '' || studentId === '') return;
     setIsLoadingCreate(true);
-    await apiCall(classService.joinClass(joinClassId), {
+    await apiCall(classService.joinClass(joinClassId, studentId), {
       ifSuccess: (data) => {
+        enqueueSnackbar(t('participating.success'), { variant: 'success' });
+        navigate(`/class/${(data.metadata as { id: string }).id}/detail`);
         if (data.status === httpStatus.OK) {
           fetchClasses();
         }
@@ -97,7 +116,9 @@ function CreateClassDialog() {
   return (
     <Fragment>
       <CustomizedMenus
-        label={<BsPlusLg className="w-6 h-6 text-black font-bold dark:text-white" />}
+        label={
+          <BsPlusLg className="w-6 h-6 text-black font-bold dark:text-white" />
+        }
         options={[
           {
             label: t('createClass'),
@@ -120,7 +141,9 @@ function CreateClassDialog() {
             name={'name'}
             type="text"
             fullWidth
+            error={createClass.name === ''}
             margin="dense"
+            helperText={createClass.name === '' ? t('required') : ''}
             value={createClass.name}
             onChange={handleChangeClassName}
           />
@@ -128,8 +151,10 @@ function CreateClassDialog() {
             id="outlined-section-input"
             label={t('description')}
             type="text"
+            error={createClass.description === ''}
             fullWidth
             name="description"
+            helperText={createClass.description === '' ? t('required') : ''}
             value={createClass.description}
             onChange={handleChangeClassName}
             margin="dense"
@@ -138,8 +163,10 @@ function CreateClassDialog() {
             id="outlined-subject-input"
             label={t('subject')}
             type="text"
+            error={createClass.subject === ''}
             fullWidth
             name="subject"
+            helperText={createClass.subject === '' ? t('required') : ''}
             value={createClass.subject}
             onChange={handleChangeClassName}
             margin="dense"
@@ -173,10 +200,29 @@ function CreateClassDialog() {
             label={t('classCode')}
             type="text"
             fullWidth
+            error={joinClassId === ''}
+            helperText={joinClassId === '' ? t('required') : ''}
             margin="dense"
             name="joinClassId"
             value={joinClassId}
             onChange={(e) => setJoinClassId(e.target.value)}
+          />
+          <TextField
+            id="outlined-classCode-input"
+            label={t('studentId')}
+            type="text"
+            fullWidth
+            disabled={auth()!.user?.studentId !== ''}
+            error={studentId === ''}
+            helperText={
+              studentId === ''
+                ? t('requiredStudentId')
+                : t('updateStudentIdDescription')
+            }
+            margin="dense"
+            name="studentId"
+            value={studentId}
+            onChange={(e) => setStudentId(e.target.value)}
           />
         </DialogContent>
         <DialogActions>

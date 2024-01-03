@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { ListMember } from '../../components/ClassMember/ListMember';
 import { apiCall } from '../../utils/apiCall';
 import { IUser } from '../../models/User';
+import { Role } from '../../enums/RoleClass';
 
 const ClassMember = () => {
   const { t } = useTranslation();
@@ -37,8 +38,8 @@ const ClassMember = () => {
 
   return (
     <div>
-      <ListMember type={t('ClassMember.Teacher')} members={teachers} />
-      <ListMember type={t('ClassMember.Student')} members={students} />
+      <ListMember type={Role.TEACHER} members={teachers} />
+      <ListMember type={Role.STUDENT} members={students} />
     </div>
   );
 };
