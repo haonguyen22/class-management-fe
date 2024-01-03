@@ -22,7 +22,7 @@ export default function MiniDrawer({
 }: {
   children: React.ReactNode;
 }) {
-  const { classes } = React.useContext(GlobalContext);
+  const { classRoles } = React.useContext(GlobalContext);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const { t } = useTranslation();
@@ -61,7 +61,7 @@ export default function MiniDrawer({
         <Divider />
 
         <ListClassDrawer
-          classes={classes}
+          classes={classRoles.teacherClass}
           open={open}
           label={t('teaching')}
           handleDrawerOpen={handleDrawerOpen}
@@ -71,7 +71,7 @@ export default function MiniDrawer({
         <Divider />
 
         <ListClassDrawer
-          classes={classes}
+          classes={classRoles.studentClass}
           open={open}
           handleDrawerOpen={handleDrawerOpen}
           label={t('enrolled')}

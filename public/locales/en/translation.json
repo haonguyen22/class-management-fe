@@ -114,5 +114,16 @@
   "classDetail": "Class detail",
   "totalPercentage": "Total percentage",
   "custom": "Custom",
-  "homeworks": "Homeworks"
+  "homeworks": "Homeworks",
+  "studentId": "Student ID",
+  "name": "Name",
+  "email": "Email",
+  "phoneNumber": "Phone number",
+  "address": "Address",
+  "save": "Save",
+  "saveSuccess": "Save successfully",
+  "saveFail": "Save failed",
+  "home": "Home",
+  "exercises": "Exercises",
+  "maxScore": "Max score"
 }

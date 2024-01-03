@@ -48,6 +48,11 @@ class ClassService {
       },
     });
   }
+
+  async classWithRole() {
+    const res = await api.get('/class/context/class-with-role');
+    return res;
+  }
 }
 
 export const classService = new ClassService();

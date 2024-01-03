@@ -3,7 +3,7 @@ import Routes from './routes/routes';
 import i18n from './i18n';
 import { AuthProvider } from 'react-auth-kit';
 import { GlobalContext } from './context/GlobalContext';
-import { IClass } from './models/IClass';
+import { ClassRole, IClass } from './models/IClass';
 import { apiCall } from './utils/apiCall';
 import { classService } from './services/class/ClassService';
 import LocaleContext from './context/LocaleContext';
@@ -12,6 +12,10 @@ import { SnackbarProvider } from 'notistack';
 function App() {
   const [locale, setLocale] = useState(i18n.language);
   const [classes, setClasses] = useState<Array<IClass>>([]);
+  const [classRoles, setClassRoles] = useState<ClassRole>({
+    studentClass: [],
+    teacherClass: [],
+  });
   const [isFetchingClasses, setIsFetchingClasses] = useState(false);
 
   useEffect(() => {
@@ -33,14 +37,33 @@ function App() {
       },
     });
 
+    await fetchClassRoles();
+
     setIsFetchingClasses(false);
+  };
+
+  const fetchClassRoles = async () => {
+    await apiCall(classService.classWithRole(), {
+      ifSuccess: (data) => {
+        setClassRoles(data.metadata as ClassRole);
+      },
+      ifFailed: (err) => {
+        console.log(err.message);
+      },
+    });
   };
 
   return (
     <SnackbarProvider>
       <LocaleContext.Provider value={{ locale, setLocale }}>
         <GlobalContext.Provider
-          value={{ classes, setClasses, fetchClasses, isFetchingClasses }}
+          value={{
+            classes,
+            setClasses,
+            fetchClasses,
+            isFetchingClasses,
+            classRoles,
+          }}
         >
           <AuthProvider
             authName={'_auth'}

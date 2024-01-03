@@ -33,7 +33,7 @@ const HomePage = () => {
               description={item.description}
               name={item.name}
               backgroundUrl={item.backgroundImage ?? backgroundDefault}
-              avatar={item.avatar || avatarDefault}
+              avatar={item?.owner?.avatar || avatarDefault}
               teacherName={item.owner?.name}
               numOfStudent={item.numberOfStudents}
               numOfTeacher={item.numberOfTeachers}

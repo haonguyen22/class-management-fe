@@ -11,10 +11,14 @@ export interface IClass {
   name: string;
   description: string;
   subject: string;
-  avatar: string;
   backgroundImage: string;
   numberOfTeachers: number;
   numberOfStudents: number;
   owner: IUser;
   updatedAt: string;
+}
+
+export interface ClassRole {
+  studentClass: IClass[];
+  teacherClass: IClass[];
 }

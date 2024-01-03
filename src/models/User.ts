@@ -1,5 +1,16 @@
 export interface IUser {
-  id?: string;
+  id?: number;
   name: string;
   email: string;
+  phoneNumber?: string;
+  address?: string;
+  avatar?: string;
+  studentId?: string;
+}
+
+export interface UpdateUserDTO {
+  name?: string;
+  phoneNumber?: string;
+  address?: string;
+  studentId?: string;
 }

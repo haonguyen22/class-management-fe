@@ -41,9 +41,3 @@ export interface IClassDetail {
   name: string;
   description: string;
 }
-
-export interface IMember {
-  id: number;
-  name: string;
-  email: string;
-}

@@ -114,5 +114,16 @@
   "classDetail": "Chi tiết lớp học",
   "totalPercentage": "Tổng cộng",
   "custom": "Tùy chỉnh",
-  "homeworks": "Bài tập"
+  "homeworks": "Bài tập",
+  "studentId": "Mã học sinh",
+  "name": "Tên",
+  "email": "Email",
+  "phoneNumber": "Số điện thoại",
+  "address": "Địa chỉ",
+  "save": "Lưu",
+  "saveSuccess": "Lưu thành công",
+  "saveFail": "Lưu thất bại",
+  "home": "Trang chủ",
+  "exercises": "Bài tập",
+  "maxScore": "Điểm tối đa"
 }

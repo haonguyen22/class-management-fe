@@ -9,13 +9,15 @@ import Tooltip from '@mui/material/Tooltip';
 import { Logout, Settings } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { RouteList } from '../../routes/routes';
-import { useSignOut } from 'react-auth-kit';
+import { useAuthUser, useSignOut } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
 import { avatarDefault } from '../../constants/globalConst';
 
 export default function AccountMenu() {
   const signOut = useSignOut();
   const navigate = useNavigate();
+  const auth = useAuthUser();
+
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -41,7 +43,10 @@ export default function AccountMenu() {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <img src={avatarDefault} className="rounded-full w-[32px] h-[32px]" />
+          <img
+            src={auth()?.user?.avatar ?? avatarDefault}
+            className="rounded-full w-[32px] h-[32px]"
+          />
         </IconButton>
       </Tooltip>
       <Menu
@@ -79,10 +84,15 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            navigate(RouteList.profile);
+          }}
+        >
           <Avatar>
             <img
-              src={avatarDefault}
+              src={auth()?.user?.avatar ?? avatarDefault}
               className="rounded-full w-[32px] h-[32px]"
             />
           </Avatar>

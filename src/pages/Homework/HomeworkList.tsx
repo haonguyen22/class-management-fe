@@ -1,6 +1,7 @@
 import { List, ListItem, ListItemText, Pagination, Typography } from '@mui/material';
 import { useState } from 'react';
 import CreateHomeworkButton from '../../components/Homework/CreateHomeworkButton';
+import { useTranslation } from 'react-i18next';
 
 const homeworkData = [
   {
@@ -63,6 +64,7 @@ const homeworkData = [
 const itemsPerPage = 3;
 
 const HomeworkList = () => {
+  const {t} = useTranslation();
   const [page, setPage] = useState(1);
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -75,7 +77,7 @@ const HomeworkList = () => {
   return (
     <div className='sm:mx-0 md:mx-10 lg:mx-20 xl:mx-40'>
       <Typography variant="h5" gutterBottom className='text-center'>
-        Homework List
+        {t('exercises')}
       </Typography>
       <CreateHomeworkButton />
       <List>
