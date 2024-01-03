@@ -50,9 +50,6 @@ const ClassDetail = () => {
     if (!file) return;
     await apiCall(classService.uploadBackgroundImage(id!, file!), {
       ifSuccess: (data) => {
-        console.log(
-          (data.metadata as { backgroundImage: string })?.backgroundImage,
-        );
         setClassDetail({
           ...classDetail!,
           backgroundImage: (data.metadata as { backgroundImage: string })
@@ -82,7 +79,7 @@ const ClassDetail = () => {
         <ClassDetailBanner
           name={classDetail?.name}
           description={classDetail?.description}
-          avatar={classDetail?.avatar}
+          avatar={classDetail?.owner?.avatar}
           backgroundImage={classDetail?.backgroundImage}
           onImageBackgroundUpload={onImageBackgroundUpload}
         />

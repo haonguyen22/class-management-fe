@@ -95,7 +95,7 @@ function ListClassDrawer({
                     }}
                   >
                     <img
-                      src={item.avatar || avatarDefault}
+                      src={item?.owner?.avatar || avatarDefault}
                       className="rounded-full w-[32px] h-[32px]"
                     />
                   </ListItemIcon>

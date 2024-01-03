@@ -11,7 +11,6 @@ export interface IClass {
   name: string;
   description: string;
   subject: string;
-  avatar: string;
   backgroundImage: string;
   numberOfTeachers: number;
   numberOfStudents: number;

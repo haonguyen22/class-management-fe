@@ -26,19 +26,13 @@ import { ClassDetailNav } from '../components/ClassDetail/ClassDetailNav';
 import GradeReviewList from '../pages/Grade/GradeReview';
 import GradeReviewDetail from '../pages/Grade/GradeReviewDetail';
 import ClassSettingsPage from '../pages/Class/ClassSettingsPage';
-
-function Layout() {
-  return (
-    <MiniDrawer>
-      <Outlet />
-    </MiniDrawer>
-  );
-}
+import UserProfilePage from '../pages/User/UserProfile';
 
 export const RouteList = {
   home: '/',
   login: '/login',
   signup: '/signup',
+  profile: '/profile',
   resetPassword: '/reset-password',
   forgotPassword: '/forgot-password',
   confirm: '/confirm',
@@ -88,18 +82,21 @@ function Routes() {
         <Route
           element={
             <RequireAuth loginPath={RouteList.login}>
-              <Layout />
+              <MiniDrawer>
+                <Outlet />
+              </MiniDrawer>
             </RequireAuth>
           }
         >
+          <Route path={RouteList.profile} element={<UserProfilePage />} />
           <Route path={RouteList.home} element={<HomePage />} />
           <Route
             element={
-                <ClassDetailNav>
-                  <LayoutLarge>
-                    <Outlet />
-                  </LayoutLarge>
-                </ClassDetailNav>
+              <ClassDetailNav>
+                <LayoutLarge>
+                  <Outlet />
+                </LayoutLarge>
+              </ClassDetailNav>
             }
           >
             <Route path={RouteList.classDetail} element={<ClassDetail />} />

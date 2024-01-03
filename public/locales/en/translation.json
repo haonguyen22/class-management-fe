@@ -113,5 +113,13 @@
   "description": "Description",
   "classDetail": "Class detail",
   "totalPercentage": "Total percentage",
-  "custom": "Custom"
+  "custom": "Custom",
+  "studentId": "Student ID",
+  "name": "Name",
+  "email": "Email",
+  "phoneNumber": "Phone number",
+  "address": "Address",
+  "save": "Save",
+  "saveSuccess": "Save successfully",
+  "saveFail": "Save failed"
 }

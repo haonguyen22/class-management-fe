@@ -113,5 +113,14 @@
   "description": "Mô tả",
   "classDetail": "Chi tiết lớp học",
   "totalPercentage": "Tổng cộng",
-  "custom": "Tùy chỉnh"
+  "custom": "Tùy chỉnh",
+
+  "studentId": "Mã học sinh",
+  "name": "Tên",
+  "email": "Email",
+  "phoneNumber": "Số điện thoại",
+  "address": "Địa chỉ",
+  "save": "Lưu",
+  "saveSuccess": "Lưu thành công",
+  "saveFail": "Lưu thất bại"
 }
