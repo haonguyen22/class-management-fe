@@ -8,6 +8,7 @@ import { gradeService } from '../../services/grade/GradeService';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const GradeTab = () => {
   const { id } = useParams<{id: string}>();
@@ -52,6 +53,10 @@ const GradeTab = () => {
           }
         </Button>
         <FormUpload />
+        <Button variant="text" color="primary">
+          <ExitToAppIcon />
+          <span className="ml-2">{t('exportGradeBoard')}</span>
+        </Button>
       </div>
       <GradeManagementTable />
     </>

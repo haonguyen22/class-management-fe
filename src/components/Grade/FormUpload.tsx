@@ -20,8 +20,8 @@ import { apiCall } from '../../utils/apiCall';
 import { useParams } from 'react-router-dom';
 import { gradeService } from '../../services/grade/GradeService';
 import { useSnackbar } from 'notistack';
-import { useTranslation } from 'react-i18next';
 import PreviewFile from './PreviewFile';
+import { useTranslation } from 'react-i18next';
 
 const FormUpload = () => {
   const [open, setOpen] = useState(false);
