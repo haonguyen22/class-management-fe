@@ -8,12 +8,14 @@ interface IHomeworkDropProps {
   children: React.ReactNode;
 }
 
-const HomeworkDropdown: React.FC<IHomeworkDropProps> = ({options, label, children}) => {
+const HomeworkDropdown: React.FC<IHomeworkDropProps> = ({
+  options,
+  children,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isHover, setIsHover] = React.useState(false);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>
-    ) => {
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     setIsHover(true);
     setAnchorEl(event.currentTarget);
   };
@@ -32,9 +34,16 @@ const HomeworkDropdown: React.FC<IHomeworkDropProps> = ({options, label, childre
 
   return (
     <div>
-      <div className='flex items-center justify-between pb-1' onMouseEnter={handleHover} onMouseLeave={handleLeave}>
+      <div
+        className="flex items-center justify-between pb-1"
+        onMouseEnter={handleHover}
+        onMouseLeave={handleLeave}
+      >
         {children}
-        <div onClick={handleClick} className={`${!isHover && !anchorEl && 'invisible'}`}>
+        <div
+          onClick={handleClick}
+          className={`${!isHover && !anchorEl && 'invisible'}`}
+        >
           <MoreVertIcon className="w-6 h-6 text-black font-bold" />
         </div>
       </div>
@@ -51,7 +60,6 @@ const HomeworkDropdown: React.FC<IHomeworkDropProps> = ({options, label, childre
           <MenuItem
             key={option}
             onClick={() => {
-              console.log(option);
               setIsHover(false);
               handleClose();
             }}

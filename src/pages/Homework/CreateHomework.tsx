@@ -2,7 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Container, Box, CircularProgress } from '@mui/material';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Container,
+  Box,
+  CircularProgress,
+} from '@mui/material';
 import { gradeService } from '../../services/grade/GradeService';
 import { GradeStructure } from '../../models/IGradeComposition';
 import { apiCall } from '../../utils/apiCall';
@@ -18,7 +28,7 @@ interface GradeStructureItem {
 
 const CreateHomework = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [grades, setGrades] = useState<Array<GradeStructureItem>>([]);
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
@@ -51,7 +61,9 @@ const CreateHomework = () => {
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
     gradeCompositionId: Yup.number().required('Option is required'),
-    maxScore: Yup.number().required('Score is required').min(0, 'Score must be at least 0'),
+    maxScore: Yup.number()
+      .required('Score is required')
+      .min(0, 'Score must be at least 0'),
   });
 
   const formik = useFormik({
@@ -63,19 +75,22 @@ const CreateHomework = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log(values);
-      await apiCall(gradeService.createGradeManagementAssignment(parseInt(id!), values), {
-        ifSuccess: (data) => {
-          enqueueSnackbar(data.message, {
-            variant: 'success',
-          });
-          formik.resetForm();
+      await apiCall(
+        gradeService.createGradeManagementAssignment(parseInt(id!), values),
+        {
+          ifSuccess: (data) => {
+            enqueueSnackbar(data.message, {
+              variant: 'success',
+            });
+            formik.resetForm();
+          },
+          ifFailed: (err) => {
+            enqueueSnackbar(err?.message ?? err.response?.data?.message, {
+              variant: 'error',
+            });
+          },
         },
-        ifFailed: (err) => {
-          enqueueSnackbar(err?.message ?? err.response?.data?.message, {
-            variant: 'error',
-          });
-        },
-      });
+      );
     },
   });
 
@@ -83,10 +98,10 @@ const CreateHomework = () => {
     <Container maxWidth="md">
       <Box mt={4}>
         <form onSubmit={formik.handleSubmit}>
-          <div className='flex justify-between items-center text-[#1976d2] mb-3'>
-            <div className='flex gap-3 items-center'>
-              <FactCheckIcon className='w-6 h-6' />
-              <div className='text-xl font-semibold'>{t('exercises')}</div>
+          <div className="flex justify-between items-center text-[#1976d2] mb-3">
+            <div className="flex gap-3 items-center">
+              <FactCheckIcon className="w-6 h-6" />
+              <div className="text-xl font-semibold">{t('exercises')}</div>
             </div>
             <Button type="submit" variant="contained" color="primary">
               {t('create')}
@@ -95,7 +110,7 @@ const CreateHomework = () => {
 
           <TextField
             fullWidth
-            label= {t('name')}
+            label={t('name')}
             variant="outlined"
             margin="normal"
             name="name"
@@ -107,7 +122,9 @@ const CreateHomework = () => {
           />
 
           <FormControl fullWidth variant="outlined" margin="normal">
-            <InputLabel htmlFor="gradeCompositionId">{t('gradeCategories')}</InputLabel>
+            <InputLabel htmlFor="gradeCompositionId">
+              {t('gradeCategories')}
+            </InputLabel>
             <Select
               label={t('gradeCategories')}
               id="gradeCompositionId"
@@ -115,11 +132,19 @@ const CreateHomework = () => {
               value={formik.values.gradeCompositionId}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.gradeCompositionId && Boolean(formik.errors.gradeCompositionId)}
+              error={
+                formik.touched.gradeCompositionId &&
+                Boolean(formik.errors.gradeCompositionId)
+              }
             >
-              {isLoading && <CircularProgress size={20} sx={{ marginRight: '10px' }} />}
+              {isLoading && (
+                <CircularProgress size={20} sx={{ marginRight: '10px' }} />
+              )}
               {grades.map((item) => (
-                <MenuItem key={item.gradeCategory.id} value={item.gradeCategory.id}>
+                <MenuItem
+                  key={item.gradeCategory.id}
+                  value={item.gradeCategory.id}
+                >
                   {item.gradeCategory.name}
                 </MenuItem>
               ))}
@@ -128,7 +153,7 @@ const CreateHomework = () => {
 
           <TextField
             fullWidth
-            label= {t('maxScore')}
+            label={t('maxScore')}
             variant="outlined"
             margin="normal"
             name="maxScore"

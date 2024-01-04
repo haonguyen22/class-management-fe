@@ -43,7 +43,7 @@ const FormUpload = () => {
       const newFiles = [...prevFiles];
       newFiles.splice(index, 1);
 
-      const b = new ClipboardEvent("").clipboardData || new DataTransfer()
+      const b = new ClipboardEvent('').clipboardData || new DataTransfer();
       for (const file of newFiles) b.items.add(file);
       const input = document.getElementById('file-input') as HTMLInputElement;
       input.files = b.files;
@@ -51,7 +51,6 @@ const FormUpload = () => {
       return newFiles;
     });
   };
-
 
   const handleSubmit = () => {
     console.log(selectedFiles);
@@ -64,12 +63,16 @@ const FormUpload = () => {
         <FileUploadIcon />
         <span className="ml-2">Upload</span>
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth maxWidth="sm">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+        fullWidth
+        maxWidth="sm"
+      >
         <DialogTitle id="form-dialog-title">Upload Grade</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Upload multiple files
-          </DialogContentText>
+          <DialogContentText></DialogContentText>
           <Input
             id="file-input"
             type="file"
@@ -82,7 +85,9 @@ const FormUpload = () => {
                 <ListItem key={index}>
                   <ListItemText
                     primary={file.name}
-                    secondary={<Typography variant="body2">{file.size} bytes</Typography>}
+                    secondary={
+                      <Typography variant="body2">{file.size} bytes</Typography>
+                    }
                   />
                   <IconButton onClick={() => handleFileRemove(index)}>
                     <DeleteIcon />
