@@ -132,5 +132,13 @@
   "updateStudentIdDescription": "Bạn có thể thay đổi mã học sinh trên trang hồ sơ cá nhân.",
   "studentName": "Tên học sinh",
   "unknownError": "Lỗi không xác định. Vui lòng thử lại sau",
-  "final": "Tổng kết"
+  "final": "Tổng kết",
+  "edit": "Chỉnh sửa",
+  "erase": "Xóa",
+  "returnAll": "Trả tất cả",
+  "downloadGradeTemplate": "Tải mẫu điểm",
+  "uploadGrade": "Tải bảng điểm",
+  "exportGradeBoard": "Xuất bảng điểm",
+  "template": "Mẫu",
+  "upload": "Tải"
 }

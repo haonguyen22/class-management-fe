@@ -15,8 +15,10 @@ import {
 } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from 'react-i18next';
 
 const FormUpload = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -61,7 +63,7 @@ const FormUpload = () => {
     <div>
       <Button variant="contained" color="primary" onClick={handleOpen}>
         <FileUploadIcon />
-        <span className="ml-2">Upload</span>
+        <span className="ml-2">{t('upload')}</span>
       </Button>
       <Dialog
         open={open}
@@ -70,7 +72,7 @@ const FormUpload = () => {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle id="form-dialog-title">Upload Grade</DialogTitle>
+        <DialogTitle id="form-dialog-title">{t('uploadGrade')}</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
           <Input
@@ -99,10 +101,10 @@ const FormUpload = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            {t('cancel')}
           </Button>
           <Button onClick={handleSubmit} color="primary">
-            Upload
+            {t('upload')}
           </Button>
         </DialogActions>
       </Dialog>
