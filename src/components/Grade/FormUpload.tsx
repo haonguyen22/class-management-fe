@@ -12,14 +12,23 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  CircularProgress
 } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { apiCall } from '../../utils/apiCall';
+import { useParams } from 'react-router-dom';
+import { gradeService } from '../../services/grade/GradeService';
+import { useSnackbar } from 'notistack';
+import PreviewFile from './PreviewFile';
 import { useTranslation } from 'react-i18next';
 
 const FormUpload = () => {
-  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const {t} = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
+  const [isLoading, setIsLoading] = useState(false);
+  const { id } = useParams<{ id: string }>();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const handleOpen = () => {
@@ -32,12 +41,7 @@ const FormUpload = () => {
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFiles((prevFiles) => {
-      const newFiles = Array.from(event.target.files!).filter(
-        (file) => !prevFiles.some((f) => f.name === file.name),
-      );
-      return [...prevFiles, ...newFiles];
-    });
+    setSelectedFiles(Array.from(event.target.files!));
   };
 
   const handleFileRemove = (index: number) => {
@@ -54,8 +58,26 @@ const FormUpload = () => {
     });
   };
 
-  const handleSubmit = () => {
-    console.log(selectedFiles);
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    if(selectedFiles.length === 0) return;
+
+    const formData = new FormData();
+    formData.append('file', selectedFiles[0]);
+
+    await apiCall(gradeService.uploadStudentList(parseInt(id!), formData), {
+      ifSuccess: (data) => {
+        enqueueSnackbar(data.message, {
+          variant: 'success',
+        });
+        setIsLoading(false);
+      },
+      ifFailed(err) {
+        enqueueSnackbar(err?.message ?? err.response?.data?.message, {
+          variant: 'error',
+        });
+      },
+    });
     handleClose();
   };
 
@@ -63,7 +85,7 @@ const FormUpload = () => {
     <div>
       <Button variant="contained" color="primary" onClick={handleOpen}>
         <FileUploadIcon />
-        <span className="ml-2">{t('upload')}</span>
+        <span className="ml-2">{t('uploadStudent')}</span>
       </Button>
       <Dialog
         open={open}
@@ -72,13 +94,12 @@ const FormUpload = () => {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle id="form-dialog-title">{t('uploadGrade')}</DialogTitle>
+        <DialogTitle id="form-dialog-title">{t('FormUpload.titleStudentList')}</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
           <Input
             id="file-input"
             type="file"
-            inputProps={{ multiple: true }}
             onChange={handleFileChange}
           />
           {selectedFiles.length > 0 && (
@@ -98,13 +119,15 @@ const FormUpload = () => {
               ))}
             </List>
           )}
+          {selectedFiles.length > 0 && <PreviewFile selectedFiles={selectedFiles} />}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             {t('cancel')}
           </Button>
           <Button onClick={handleSubmit} color="primary">
-            {t('upload')}
+            {isLoading ? <CircularProgress size={20} sx={{ color: 'white' }} />
+             : t('upload')}
           </Button>
         </DialogActions>
       </Dialog>

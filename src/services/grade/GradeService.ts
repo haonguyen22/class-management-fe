@@ -52,6 +52,36 @@ class GradeService {
     });
     return res;
   }
+
+  async createGradeManagementAssignment(classId: number, data: any) {
+    const res = await api.post('/grade-management/assignment', data, {
+      headers: { 'class-id': classId },
+    });
+    return res;
+  }
+
+  async downloadStudentListTemplate(classId: number) {
+    const res = await api.get('/grade-management/student-list-template', {
+      headers: { 'class-id': classId },
+      responseType: 'blob',
+    });
+    return res;
+  }
+
+  // file: FormData
+  async uploadStudentList(classId: number, file: any) {
+    const res = await api.post(
+      '/grade-management/student-list-template',
+      file,
+      {
+        headers: {
+          'class-id': classId,
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+    return res;
+  }
 }
 
 export const gradeService = new GradeService();
