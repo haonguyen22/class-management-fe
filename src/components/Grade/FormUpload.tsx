@@ -15,9 +15,13 @@ import {
 } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { apiCall } from '../../utils/apiCall';
+import { useParams } from 'react-router-dom';
+import { gradeService } from '../../services/grade/GradeService';
 
 const FormUpload = () => {
   const [open, setOpen] = useState(false);
+  const { id } = useParams<{ id: string }>();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const handleOpen = () => {
@@ -52,8 +56,21 @@ const FormUpload = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(selectedFiles);
+    if(selectedFiles.length === 0) return;
+
+    const formData = new FormData();
+    formData.append('file', selectedFiles[0]);
+
+    await apiCall(gradeService.uploadStudentList(parseInt(id!), formData), {
+      ifSuccess: (data) => {
+        console.log(data);
+      },
+      ifFailed(err) {
+        console.log(err);
+      },
+    });
     handleClose();
   };
 
@@ -76,7 +93,6 @@ const FormUpload = () => {
           <Input
             id="file-input"
             type="file"
-            inputProps={{ multiple: true }}
             onChange={handleFileChange}
           />
           {selectedFiles.length > 0 && (
