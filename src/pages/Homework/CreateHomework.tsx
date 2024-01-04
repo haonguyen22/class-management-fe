@@ -19,6 +19,7 @@ import { apiCall } from '../../utils/apiCall';
 import { useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
+import { gradeManagementService } from '../../services/gradeManagement/GradeManagementService';
 
 interface GradeStructureItem {
   gradeCategory: GradeStructure;
@@ -76,7 +77,7 @@ const CreateHomework = () => {
     onSubmit: async (values) => {
       console.log(values);
       await apiCall(
-        gradeService.createGradeManagementAssignment(parseInt(id!), values),
+        gradeManagementService.createGradeManagementAssignment(parseInt(id!), values),
         {
           ifSuccess: (data) => {
             enqueueSnackbar(data.message, {

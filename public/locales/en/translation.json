@@ -130,5 +130,8 @@
   "accountId": "Account ID",
   "required": "Required",
   "requiredStudentId": "Student id is required . It will be used to identify you in class. Profile user will be updated with this student id",
-  "updateStudentIdDescription": "You can only update student id on user profile page."
+  "updateStudentIdDescription": "You can only update student id on user profile page.",
+  "studentName": "Student name",
+  "unknownError": "Unknown error",
+  "final": "Final"
 }

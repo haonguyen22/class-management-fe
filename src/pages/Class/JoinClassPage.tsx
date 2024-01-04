@@ -23,47 +23,7 @@ function JoinClassPage() {
     if (isAuthenticate()) {
       setStudentId(auth()!.user?.studentId ?? '');
     }
-  }, [auth]);
-
-  const code = searchParams.get('code');
-  const { enqueueSnackbar } = useSnackbar();
-
-  const joinClass = async () => {
-    if (!isAuthenticate()) {
-      return;
-    }
-
-    setIsLoading(true);
-    await apiCall(classService.joinClass(code!, studentId!), {
-      ifSuccess: (data) => {
-        if (data.status === 200) {
-          enqueueSnackbar(t('participating.success'), {
-            variant: 'success',
-          });
-          setTimeout(() => {
-            window.location.href = `/class/${
-              (data.metadata as { id: string }).id
-            }/detail`;
-          });
-          return;
-        }
-      },
-      ifFailed: (err) => {
-        enqueueSnackbar(err.response?.data.message, { variant: 'error' });
-        console.log(1);
-        setTimeout(() => {
-          window.location.href = RouteList.home;
-        }, 1000);
-        return;
-      },
-      ifCatch: () => {
-        setTimeout(() => {
-          window.location.href = RouteList.home;
-        }, 1000);
-        return;
-      },
-    });
-  };
+  }, []);
 
   useEffect(() => {
     if (!isAuthenticate()) {
@@ -78,11 +38,58 @@ function JoinClassPage() {
       }, 1000);
     } else {
       if (auth()?.user.studentId !== '') {
+        setStudentId(auth()?.user.studentId);
         joinClass();
-      } else setIsLoading(false);
+      } else {
+        setIsLoading(false);
+      }
     }
   }, [auth()?.user.studentId]);
 
+  const code = searchParams.get('code');
+  const { enqueueSnackbar } = useSnackbar();
+
+  const joinClass = async () => {
+    if (auth()?.user.studentId !== '' || studentId !== '') {
+      setIsLoading(true);
+      await apiCall(
+        classService.joinClass(code!, auth()?.user.studentId ?? studentId!),
+        {
+          ifSuccess: (data) => {
+            if (data.status === 200) {
+              enqueueSnackbar(t('participating.success'), {
+                variant: 'success',
+              });
+              setTimeout(() => {
+                window.location.href = `/class/${
+                  (data.metadata as { id: string }).id
+                }/detail`;
+              });
+              return;
+            }
+          },
+          ifFailed: (err) => {
+            enqueueSnackbar(err.response?.data.message, { variant: 'error' });
+            setTimeout(() => {
+              window.location.href = RouteList.home;
+            }, 1000);
+            return;
+          },
+          ifCatch: () => {
+            setTimeout(() => {
+              window.location.href = RouteList.home;
+            }, 1000);
+            return;
+          },
+        },
+      );
+    }
+    if (studentId === '' && auth()?.user.studentId === '') {
+      setIsLoading(false);
+      return;
+    }
+  };
+  console.log(isLoading);
   return (
     <div className="text-center flex flex-col items-center justify-center">
       {!isLoading ? (

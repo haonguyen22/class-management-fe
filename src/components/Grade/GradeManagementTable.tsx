@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,182 +9,26 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { Input } from '@mui/material';
 import GradeHeaderDropdown from './GradeHeaderDropdown';
-
-interface Column {
-  id:
-    | 'id'
-    | 'name'
-    | 'homework1'
-    | 'homework2'
-    | 'homework3'
-    | 'midterm'
-    | 'final';
-  name: string;
-  minWidth?: number;
-  width?: number;
-  align?: 'right' | 'left' | 'center';
-  totalMark?: number;
-  format?: (value: number) => string;
-}
-
-const columns: readonly Column[] = [
-  { name: 'ID', align: 'center', minWidth: 100, width: 120, id: 'id' },
-  { name: 'Name', align: 'center', minWidth: 150, width: 170, id: 'name' },
-  {
-    name: 'Homework 1',
-    align: 'center',
-    minWidth: 30,
-    width: 50,
-    id: 'homework1',
-    totalMark: 30,
-  },
-  {
-    name: 'Homework 2',
-    align: 'center',
-    minWidth: 30,
-    width: 50,
-    id: 'homework2',
-  },
-  {
-    name: 'Homework 3',
-    align: 'center',
-    minWidth: 30,
-    width: 50,
-    id: 'homework3',
-    totalMark: 10,
-  },
-  { name: 'Midterm', align: 'center', minWidth: 30, width: 50, id: 'midterm' },
-  { name: 'Final', align: 'center', minWidth: 30, width: 50, id: 'final' },
-];
-
-interface Row {
-  id: string;
-  name: string;
-  homework1: number;
-  homework2: number;
-  homework3: number;
-  midterm: number;
-  final: number;
-  [key: string]: any;
-}
-
-const initialRows: Row[] = [
-  {
-    id: '1',
-    name: 'John Doe',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '2',
-    name: 'Jane Doe',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '3',
-    name: 'John Smith',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '4',
-    name: 'Jane Smith',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '5',
-    name: 'John Doe',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '6',
-    name: 'Jane Doe',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '7',
-    name: 'John Smith',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '8',
-    name: 'Jane Smith',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '9',
-    name: 'John Doe',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '10',
-    name: 'Jane Doe',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '11',
-    name: 'John Smith',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-  {
-    id: '12',
-    name: 'Jane Smith',
-    homework1: 10,
-    homework2: 10,
-    homework3: 10,
-    midterm: 10,
-    final: 10,
-  },
-];
+import { apiCall } from '../../utils/apiCall';
+import { gradeManagementService } from '../../services/gradeManagement/GradeManagementService';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { IGradeBoardColumn, IStudentList } from '../../models/IGradeManagement';
+import { enqueueSnackbar } from 'notistack';
 
 export default function StickyHeadTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [rows, setRows] = React.useState(initialRows);
+  const { id } = useParams<{ id: string }>();
+  const { t } = useTranslation();
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [gradeBoardColumns, setGradeBoardColumns] = useState<
+    IGradeBoardColumn[]
+  >([]);
+
+  const [studentList, setStudentList] = useState<IStudentList[]>([]);
+
+  const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -195,20 +39,27 @@ export default function StickyHeadTable() {
     setPage(0);
   };
   const isEdit = true;
-  const handleInputChange = (
-    value: any,
-    columnId: string,
-    rowIndex: number,
-  ) => {
-    setRows((prevRows) => {
-      const updatedRows = [...prevRows];
-      updatedRows[rowIndex] = {
-        ...updatedRows[rowIndex],
-        [columnId]: value > 10 ? 10 : value,
-      };
-      return updatedRows;
+
+  const getTotalGradeBoard = async () => {
+    await apiCall(gradeManagementService.getTotalGradeBoard(parseInt(id!)), {
+      ifSuccess: (data) => {
+        const res = data.metadata as {
+          totalGradeBoard: IGradeBoardColumn[];
+          studentList: IStudentList[];
+        };
+        setGradeBoardColumns(res.totalGradeBoard);
+        setStudentList(res.studentList);
+      },
+      ifFailed: (error) => {
+        console.log(error);
+        enqueueSnackbar(error.message, { variant: 'error' });
+      },
     });
   };
+
+  useEffect(() => {
+    getTotalGradeBoard();
+  }, []);
 
   return (
     <Paper
@@ -217,94 +68,151 @@ export default function StickyHeadTable() {
     >
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
+          {/* ===================   Header =================== */}
           <TableHead>
             <TableRow>
-              {columns.map((column, ind) => (
-                <TableCell
-                  key={ind}
-                  align={column.align}
-                  style={{
-                    minWidth: column.minWidth,
-                    width: column.width,
-                    backgroundColor: '#f3f4f6',
-                    fontWeight: 'bold',
-                    borderRight: '1px solid #ddd',
-                  }}
-                >
-                  {ind > 1 ? (
-                    <GradeHeaderDropdown
-                      name={column.name}
-                      totalMark={column?.totalMark}
-                    />
-                  ) : (
-                    column.name
-                  )}
-                </TableCell>
-              ))}
+              <TableCell
+                align={'center'}
+                sx={{
+                  minWidth: 100,
+                  backgroundColor: '#f3f4f6',
+                  fontWeight: 'bold',
+                  borderRight: '1px solid #ddd',
+                }}
+              >
+                {t('studentId')}
+              </TableCell>
+              <TableCell
+                align={'center'}
+                sx={{
+                  minWidth: 150,
+                  backgroundColor: '#f3f4f6',
+                  fontWeight: 'bold',
+                  borderRight: '1px solid #ddd',
+                }}
+              >
+                {t('studentName')}
+              </TableCell>
+              <TableCell
+                align={'center'}
+                sx={{
+                  minWidth: 100,
+                  backgroundColor: '#f3f4f6',
+                  fontWeight: 'bold',
+                  borderRight: '1px solid #ddd',
+                }}
+              >
+                {t('final')}
+              </TableCell>
+              {gradeBoardColumns?.map(
+                (gradeColumn, i) =>
+                  gradeColumn.assignmentsBoard?.map((assignment, index) => (
+                    <TableCell
+                      key={`${i}-${index}`}
+                      align={'center'}
+                      sx={{
+                        minWidth: 150,
+                        backgroundColor: '#f3f4f6',
+                        fontWeight: 'bold',
+                        borderRight: '1px solid #ddd',
+                      }}
+                    >
+                      <GradeHeaderDropdown
+                        name={assignment?.assignmentName}
+                        totalMark={assignment?.maxScore}
+                        gradeCategory={gradeColumn?.compositionName}
+                      />
+                    </TableCell>
+                  )),
+              )}
             </TableRow>
           </TableHead>
+          {/* ============================== BODY ============================== */}
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, ind) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={ind}>
-                    {columns.map((column, index) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell
-                          key={column.name}
-                          align={column.align}
-                          style={{
-                            borderRight: '1px solid #ddd',
-                            textAlign: 'center',
-                          }}
-                        >
-                          {index > 1 && isEdit ? (
-                            <Input
-                              type="number"
-                              value={value}
-                              inputProps={{
-                                min: 0,
-                                max: 10,
-                              }}
-                              onChange={(e) =>
-                                handleInputChange(
-                                  e.target.value,
-                                  column.id,
-                                  ind,
-                                )
-                              }
-                              style={{
-                                textAlign: 'center',
-                                marginLeft: 'auto',
-                                marginRight: 'auto',
-                                width: '60px',
-                              }}
-                              endAdornment={
-                                column.totalMark && (
-                                  <span className="text-gray-500 font-semibold">
-                                    /{column.totalMark}
-                                  </span>
-                                )
-                              }
-                            />
-                          ) : (
-                            value
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            {studentList
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              ?.map((student, studentIdx) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={studentIdx}>
+                  <TableCell
+                    align={'center'}
+                    sx={{
+                      borderRight: '1px solid #ddd',
+                      textAlign: 'center',
+                    }}
+                  >
+                    {student.studentId}
+                  </TableCell>
+                  <TableCell
+                    align={'center'}
+                    sx={{
+                      borderRight: '1px solid #ddd',
+                      textAlign: 'center',
+                    }}
+                  >
+                    {student.fullName}
+                  </TableCell>
+                  <TableCell
+                    align={'center'}
+                    sx={{
+                      borderRight: '1px solid #ddd',
+                      textAlign: 'center',
+                    }}
+                  >
+                    0
+                  </TableCell>
+                  {gradeBoardColumns?.map(
+                    (gradeColumn, gradeColumnIdx) =>
+                      gradeColumn.assignmentsBoard?.map(
+                        (assignment, assignmentIdx) => (
+                          <TableCell
+                            key={`${studentIdx}${gradeColumnIdx}${assignmentIdx}`}
+                            align={'center'}
+                            sx={{
+                              borderRight: '1px solid #ddd',
+                              textAlign: 'center',
+                            }}
+                          >
+                            {isEdit ? (
+                              <Input
+                                type="number"
+                                value={
+                                  assignment?.gradesBoard?.[studentIdx] ?? '0'
+                                }
+                                inputProps={{
+                                  min: 0,
+                                  max: 10,
+                                }}
+                                onChange={() => {}}
+                                sx={{
+                                  textAlign: 'center',
+                                  marginLeft: 'auto',
+                                  marginRight: 'auto',
+                                  width: '60px',
+                                }}
+                                endAdornment={
+                                  assignment.maxScore && (
+                                    <span className="text-gray-500 font-semibold">
+                                      /{assignment.maxScore}
+                                    </span>
+                                  )
+                                }
+                              />
+                            ) : (
+                              assignment.gradesBoard[studentIdx].value
+                            )}
+                          </TableCell>
+                        ),
+                      ),
+                  )}
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={studentList.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

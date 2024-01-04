@@ -6,13 +6,14 @@ const LabelButton = ['Edit', 'Erase', 'Return all'];
 
 interface IGradeHeaderDropdown {
   name: string;
-  mark?: number;
   totalMark?: number;
+  gradeCategory?: string;
 }
 
 const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
   name,
   totalMark,
+  gradeCategory,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isHover, setIsHover] = React.useState(false);
@@ -36,7 +37,7 @@ const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
 
   return (
     <div>
-      <div className="flex flex-col mx-4">
+      <div className="flex flex-col  mx-4">
         <div
           className="flex items-center justify-between pb-1"
           onMouseEnter={handleHover}
@@ -50,7 +51,13 @@ const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
             <MoreVertIcon className="w-6 h-6 text-black font-bold" />
           </div>
         </div>
-        <div className="h-5 pt-2 text-left text-sm font-normal text-gray-700 border-t-2">
+        <hr className='h-[1.5px] w-full  bg-gray-300' />
+        {gradeCategory && (
+          <div className="h-5 py-2 text-left text-xs text-gray-500 font-thin">
+            {gradeCategory}
+          </div>
+        )}
+        <div className="h-5 py-2  text-left text-xs text-gray-500  font-thin">
           {totalMark && `out of ${totalMark}`}
         </div>
       </div>
