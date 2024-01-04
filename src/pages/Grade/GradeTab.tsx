@@ -7,11 +7,13 @@ import { apiCall } from '../../utils/apiCall';
 import { gradeService } from '../../services/grade/GradeService';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const GradeTab = () => {
   const { id } = useParams<{id: string}>();
   const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const {t} = useTranslation();
   const handleStudenListTemplate = async () => {
     setIsLoading(true);
     await apiCall(gradeService.downloadStudentListTemplate(parseInt(id!)), {
@@ -45,7 +47,7 @@ const GradeTab = () => {
           {isLoading ? <CircularProgress size={20} sx={{ color: 'white' }} />:
             <>
               <DownloadIcon />
-              <span className="ml-2">Template</span>
+              <span className="ml-2">{t('studentTemplate')}</span>
             </>
           }
         </Button>

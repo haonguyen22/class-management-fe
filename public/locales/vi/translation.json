@@ -129,5 +129,9 @@
   "accountId": "Mã tài khoản",
   "required": "Bắt buộc",
   "requiredStudentId": "Mã học sinh là bắt buộc. Bạn có thể thay đổi mã học sinh trên trang hồ sơ cá nhân.",
-  "updateStudentIdDescription": "Bạn có thể thay đổi mã học sinh trên trang hồ sơ cá nhân."
+  "updateStudentIdDescription": "Bạn có thể thay đổi mã học sinh trên trang hồ sơ cá nhân.",
+  "FormUpload.titleStudentList": "Tải lên danh sách học sinh",
+  "studentTemplate": "Mẫu danh sách học sinh",
+  "uploadStudent": "danh sách học sinh",
+  "upload": "Tải lên"
 }

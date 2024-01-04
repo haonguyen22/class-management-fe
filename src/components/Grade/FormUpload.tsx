@@ -12,15 +12,21 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  CircularProgress
 } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { apiCall } from '../../utils/apiCall';
 import { useParams } from 'react-router-dom';
 import { gradeService } from '../../services/grade/GradeService';
+import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 
 const FormUpload = () => {
   const [open, setOpen] = useState(false);
+  const {t} = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams<{ id: string }>();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -57,6 +63,7 @@ const FormUpload = () => {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     console.log(selectedFiles);
     if(selectedFiles.length === 0) return;
 
@@ -65,10 +72,15 @@ const FormUpload = () => {
 
     await apiCall(gradeService.uploadStudentList(parseInt(id!), formData), {
       ifSuccess: (data) => {
-        console.log(data);
+        enqueueSnackbar(data.message, {
+          variant: 'success',
+        });
+        setIsLoading(false);
       },
       ifFailed(err) {
-        console.log(err);
+        enqueueSnackbar(err?.message ?? err.response?.data?.message, {
+          variant: 'error',
+        });
       },
     });
     handleClose();
@@ -78,7 +90,7 @@ const FormUpload = () => {
     <div>
       <Button variant="contained" color="primary" onClick={handleOpen}>
         <FileUploadIcon />
-        <span className="ml-2">Upload</span>
+        <span className="ml-2">{t('uploadStudent')}</span>
       </Button>
       <Dialog
         open={open}
@@ -87,7 +99,7 @@ const FormUpload = () => {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle id="form-dialog-title">Upload Grade</DialogTitle>
+        <DialogTitle id="form-dialog-title">{t('FormUpload.titleStudentList')}</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
           <Input
@@ -115,10 +127,11 @@ const FormUpload = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            {t('cancel')}
           </Button>
           <Button onClick={handleSubmit} color="primary">
-            Upload
+            {isLoading ? <CircularProgress size={20} sx={{ color: 'white' }} />
+             : t('upload')}
           </Button>
         </DialogActions>
       </Dialog>
