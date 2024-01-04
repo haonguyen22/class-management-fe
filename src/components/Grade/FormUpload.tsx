@@ -21,6 +21,7 @@ import { useParams } from 'react-router-dom';
 import { gradeService } from '../../services/grade/GradeService';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
+import PreviewFile from './PreviewFile';
 
 const FormUpload = () => {
   const [open, setOpen] = useState(false);
@@ -40,12 +41,7 @@ const FormUpload = () => {
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFiles((prevFiles) => {
-      const newFiles = Array.from(event.target.files!).filter(
-        (file) => !prevFiles.some((f) => f.name === file.name),
-      );
-      return [...prevFiles, ...newFiles];
-    });
+    setSelectedFiles(Array.from(event.target.files!));
   };
 
   const handleFileRemove = (index: number) => {
@@ -64,7 +60,6 @@ const FormUpload = () => {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    console.log(selectedFiles);
     if(selectedFiles.length === 0) return;
 
     const formData = new FormData();
@@ -124,6 +119,7 @@ const FormUpload = () => {
               ))}
             </List>
           )}
+          {selectedFiles.length > 0 && <PreviewFile selectedFiles={selectedFiles} />}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
