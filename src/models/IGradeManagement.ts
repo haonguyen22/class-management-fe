@@ -13,7 +13,7 @@ export interface IGradeAssignment {
 }
 
 export interface IGrade {
-  studentId: number;
+  indexStudent: number;
 
   value: number;
 }

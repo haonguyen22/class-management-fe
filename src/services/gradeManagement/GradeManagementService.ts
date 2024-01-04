@@ -18,6 +18,7 @@ class GradeManagementService {
   async downloadTemplateGradeAssignment(classId: number, assignmentId: number) {
     const res = await api.get('/grade-management/grade-assignment-template', {
       headers: { 'class-id': classId },
+      responseType: 'blob',
       params: { 'assignment-id': assignmentId },
     });
     return res;

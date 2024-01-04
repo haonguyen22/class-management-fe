@@ -12,12 +12,22 @@ interface IGradeHeaderDropdown {
   name: string;
   totalMark?: number;
   gradeCategory?: string;
+  onDownloadGradeTemplate?: () => void;
+  onUploadGrade?: () => void;
+  onReturnAll?: () => void;
+  onEdit?: () => void;
+  onErase?: () => void;
 }
 
 const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
   name,
   totalMark,
   gradeCategory,
+  onDownloadGradeTemplate,
+  onUploadGrade,
+  onReturnAll,
+  onEdit,
+  onErase,
 }) => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -44,27 +54,27 @@ const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
     {
       title: t('edit'),
       icon: <EditIcon fontSize="small" />,
-      onClick: () => {},
+      onClick: onEdit,
     },
     {
       title: t('erase'),
       icon: <DeleteIcon fontSize="small" />,
-      onClick: () => {},
+      onClick: onErase,
     },
     {
       title: t('returnAll'),
       icon: <PersonAdd fontSize="small" />,
-      onClick: () => {},
+      onClick: onReturnAll,
     },
     {
       title: t('downloadGradeTemplate'),
       icon: <DownloadIcon fontSize="small" />,
-      onClick: () => {},
+      onClick: onDownloadGradeTemplate,
     },
     {
       title: t('uploadGrade'),
       icon: <UploadIcon fontSize="small" />,
-      onClick: () => {},
+      onClick: onUploadGrade,
     },
   ];
 
@@ -107,7 +117,7 @@ const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
             key={option.title}
             onClick={() => {
               setIsHover(false);
-              option.onClick();
+              option?.onClick?.();
               handleClose();
             }}
           >

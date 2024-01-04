@@ -1,30 +1,12 @@
 import { TextField } from '@mui/material';
 import SettingFrameLayout from './SettingFrameLayout';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
-import { IClass } from '../../models/IClass';
-import { apiCall } from '../../utils/apiCall';
-import { classService } from '../../services/class/ClassService';
-import { useParams } from 'react-router-dom';
+import { useContext } from 'react';
+import { ClassContext } from '../../context/ClassContext';
 
 function ClassDetailBox() {
-  const { id } = useParams<{ id: string }>();
-
+  const { classDetail } = useContext(ClassContext);
   const { t } = useTranslation();
-  const [data, setData] = useState<IClass>();
-
-  const getClassDetail = async () => {
-    await apiCall(classService.getClassInfo(id!), {
-      ifSuccess: (data) => {
-        setData(data.metadata as IClass);
-      },
-      ifFailed: () => {},
-    });
-  };
-
-  useEffect(() => {
-    getClassDetail();
-  }, []);
 
   return (
     <SettingFrameLayout title={t('classDetail')}>
@@ -37,7 +19,7 @@ function ClassDetailBox() {
           readOnly: true,
         }}
         name="name"
-        value={data?.name ?? ''}
+        value={classDetail?.name ?? ''}
         sx={{ padding: '0px', margin: '8px' }}
       />
       <TextField
@@ -49,7 +31,7 @@ function ClassDetailBox() {
           readOnly: true,
         }}
         name="description"
-        value={data?.description ?? ''}
+        value={classDetail?.description ?? ''}
         sx={{ padding: '0px', margin: '8px' }}
       />
       <TextField
@@ -61,7 +43,7 @@ function ClassDetailBox() {
           readOnly: true,
         }}
         name="owner"
-        value={data?.owner?.email ?? ''}
+        value={classDetail?.owner?.email ?? ''}
         sx={{ padding: '0px', margin: '8px' }}
       />
     </SettingFrameLayout>
