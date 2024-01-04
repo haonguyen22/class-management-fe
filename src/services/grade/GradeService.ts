@@ -52,13 +52,6 @@ class GradeService {
     });
     return res;
   }
-
-  async createGradeManagementAssignment(classId: number, data: any) {
-    const res = await api.post('/grade-management/assignment', data, {
-      headers: { 'class-id': classId },
-    });
-    return res;
-  }
 }
 
 export const gradeService = new GradeService();
