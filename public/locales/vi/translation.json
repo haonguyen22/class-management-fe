@@ -114,7 +114,7 @@
   "classDetail": "Chi tiết lớp học",
   "totalPercentage": "Tổng cộng",
   "custom": "Tùy chỉnh",
-
+  "homeworks": "Bài tập",
   "studentId": "Mã học sinh",
   "name": "Tên",
   "email": "Email",
@@ -124,6 +124,8 @@
   "saveSuccess": "Lưu thành công",
   "saveFail": "Lưu thất bại",
   "home": "Trang chủ",
+  "exercises": "Bài tập",
+  "maxScore": "Điểm tối đa",
   "accountId": "Mã tài khoản",
   "required": "Bắt buộc",
   "requiredStudentId": "Mã học sinh là bắt buộc. Bạn có thể thay đổi mã học sinh trên trang hồ sơ cá nhân.",

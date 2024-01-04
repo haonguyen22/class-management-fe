@@ -26,7 +26,10 @@ import { ClassDetailNav } from '../components/ClassDetail/ClassDetailNav';
 import GradeReviewList from '../pages/Grade/GradeReview';
 import GradeReviewDetail from '../pages/Grade/GradeReviewDetail';
 import ClassSettingsPage from '../pages/Class/ClassSettingsPage';
+import HomeworkList from '../pages/Homework/HomeworkList';
+import CreateHomework from '../pages/Homework/CreateHomework';
 import UserProfilePage from '../pages/User/UserProfile';
+import GradeTab from '../pages/Grade/GradeTab';
 
 export const RouteList = {
   home: '/',
@@ -47,6 +50,8 @@ export const RouteList = {
   gradeReview: '/grade',
   gradeReviewDetail: '/grade/:id',
   classSettings: '/class/:id/settings',
+  classHomeworks: '/class/:id/homeworks',
+  createClassHomworks: '/class/:id/homeworks/create',
 };
 
 function Routes() {
@@ -101,7 +106,16 @@ function Routes() {
           >
             <Route path={RouteList.classDetail} element={<ClassDetail />} />
             <Route path={RouteList.classMembers} element={<ClassMember />} />
-            <Route path={RouteList.classScores} element={<></>} />
+            <Route path={RouteList.classScores} element={<GradeTab />} />
+            <Route path={RouteList.classHomeworks} element={<HomeworkList />} />
+            <Route
+              path={RouteList.createClassHomworks}
+              element={<CreateHomework />}
+            />
+            <Route
+              path={RouteList.classSettings}
+              element={<ClassSettingsPage />}
+            />
             <Route
               path={RouteList.classSettings}
               element={<ClassSettingsPage />}

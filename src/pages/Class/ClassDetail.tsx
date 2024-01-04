@@ -21,7 +21,6 @@ const ClassDetail = () => {
   const { role } = useContext(ClassContext);
 
   const getClassCode = async () => {
-    console.log(role);
     await apiCall(classService.getClassCode(id!), {
       ifSuccess: (data) => {
         setCode((data?.metadata as { code: string })?.code);

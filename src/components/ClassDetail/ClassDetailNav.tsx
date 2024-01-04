@@ -63,7 +63,8 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
     if (pathName === 'detail') setValue(0);
     if (pathName === 'members') setValue(1);
     if (pathName === 'scores') setValue(2);
-    if (pathName === 'settings') setValue(3);
+    if (pathName === 'homeworks') setValue(3);
+    if (pathName === 'settings') setValue(4);
   }, [path]);
 
   const NavList = [
@@ -79,7 +80,10 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
       name: t('grade'),
       path: `/class/${id}/scores`,
     },
-
+    {
+      name: t('homeworks'),
+      path: `/class/${id}/homeworks`,
+    },
     {
       name: t('settings'),
       path: `/class/${id}/settings`,
