@@ -15,6 +15,8 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { IGradeBoardColumn, IStudentList } from '../../models/IGradeManagement';
 import { enqueueSnackbar } from 'notistack';
+import { debounce } from 'lodash';
+import { gradeService } from '../../services/grade/GradeService';
 
 export default function StickyHeadTable() {
   const { id } = useParams<{ id: string }>();
@@ -43,6 +45,7 @@ export default function StickyHeadTable() {
   const getTotalGradeBoard = async () => {
     await apiCall(gradeManagementService.getTotalGradeBoard(parseInt(id!)), {
       ifSuccess: (data) => {
+        console.log(data);
         const res = data.metadata as {
           totalGradeBoard: IGradeBoardColumn[];
           studentList: IStudentList[];
@@ -57,8 +60,23 @@ export default function StickyHeadTable() {
     });
   };
 
+  const handleUpdateGrade = async (studentId: string, score: number, assignmentId: number) => {
+    console.log(studentId, score, assignmentId);
+    await apiCall(gradeService.updateGradeOfStudent(parseInt(id!),{studentId, assignmentId, score}), {
+      ifSuccess: (data) => {
+        console.log(data);
+        enqueueSnackbar(data.message, { variant: 'success' });
+      },
+      ifFailed: (error) => {
+        console.log(error);
+        enqueueSnackbar(error.message, { variant: 'error' });
+      },
+    });
+  };
+
   useEffect(() => {
     getTotalGradeBoard();
+    console.log(studentList);
   }, []);
 
   return (
@@ -176,13 +194,19 @@ export default function StickyHeadTable() {
                               <Input
                                 type="number"
                                 value={
-                                  assignment?.gradesBoard?.[studentIdx] ?? '0'
+                                  assignment?.gradesBoard?.[studentIdx]
                                 }
                                 inputProps={{
                                   min: 0,
-                                  max: 10,
                                 }}
-                                onChange={() => {}}
+                                onChange={
+                                  debounce(async (e: any) => {
+                                   assignment.gradesBoard[studentIdx] = e.target.value;
+                                   // call api update grade
+                                   const score = parseInt(e.target.value)||0;
+                                   handleUpdateGrade(student.studentId, score, assignment.assignmentId);
+                                  }, 3000)
+                                }
                                 sx={{
                                   textAlign: 'center',
                                   marginLeft: 'auto',
