@@ -81,6 +81,18 @@ class GradeService {
     );
     return res;
   }
+
+  async updateGradeOfStudent(classId: number, data: any) {
+    console.log(data);
+    const res = await api.post(
+      '/grade-management/input-grade-student-assignment',
+      data,
+      {
+        headers: { 'class-id': classId },
+      },
+    );
+    return res;
+  }
 }
 
 export const gradeService = new GradeService();

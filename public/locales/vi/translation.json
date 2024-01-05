@@ -145,6 +145,7 @@
   "exportGradeBoard": "Xuất bảng điểm",
   "template": "Mẫu",
   "notAFile": "Vui lòng tải lên tệp chỉ có đuôi .xlsx!",
+  "saving": "Đang lưu...",
   "uploadGradeAssignment": "Tải bảng điểm bài tập",
   "outOf": "trên",
   "markAsFinalized": "Đánh dấu là đã tổng kết",

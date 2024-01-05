@@ -20,6 +20,8 @@ import {
   IStudentList,
 } from '../../models/IGradeManagement';
 import { enqueueSnackbar } from 'notistack';
+import { debounce } from 'lodash';
+import { gradeService } from '../../services/grade/GradeService';
 import { ClassContext } from '../../context/ClassContext';
 import { downloadFileXlsx } from '../../utils/xlsx';
 import FormUpload from './FormUpload';
@@ -39,6 +41,8 @@ export default function StickyHeadTable({
 
   const { classDetail } = useContext(ClassContext);
   const [dataBoard, setDataBoard] = useState<string[][]>([[], []]); // Data export to grade board excel
+
+  const [localLoading, setLocalLoading] = useState<string>();
 
   const [openUpload, setOpenUpload] = useState(false);
   const [page, setPage] = useState(0);
@@ -68,6 +72,7 @@ export default function StickyHeadTable({
   const getTotalGradeBoard = async () => {
     await apiCall(gradeManagementService.getTotalGradeBoard(parseInt(id!)), {
       ifSuccess: (data) => {
+        console.log(data);
         const res = data.metadata as {
           totalGradeBoard: IGradeBoardColumn[];
           studentList: IStudentList[];
@@ -76,6 +81,20 @@ export default function StickyHeadTable({
         setStudentList(res.studentList);
       },
       ifFailed: (error) => {
+        enqueueSnackbar(error.message, { variant: 'error' });
+      },
+    });
+  };
+
+  const handleUpdateGrade = async (studentId: string, score: number, assignmentId: number) => {
+    console.log(studentId, score, assignmentId);
+    await apiCall(gradeService.updateGradeOfStudent(parseInt(id!),{studentId, assignmentId, score}), {
+      ifSuccess: (data) => {
+        console.log(data);
+        enqueueSnackbar(data.message, { variant: 'success' });
+      },
+      ifFailed: (error) => {
+        console.log(error);
         enqueueSnackbar(error.message, { variant: 'error' });
       },
     });
@@ -92,7 +111,7 @@ export default function StickyHeadTable({
         ifSuccess: (data) => {
           downloadFileXlsx({
             data: data as unknown as Blob,
-            fileName: `[${classDetail?.name}]-${assignment.assignmentName}.xlsx`,
+            fileName: `[${classDetail?.name}]-${assignment.assignmentName}`,
           });
           enqueueSnackbar('Download success', {
             variant: 'success',
@@ -443,38 +462,57 @@ export default function StickyHeadTable({
                                 textAlign: 'center',
                               }}
                             >
-                              {isEdit ? (
-                                <Input
-                                  type="number"
-                                  value={
-                                    assignment?.gradesBoard?.find(
-                                      (item) =>
-                                        item.indexStudent === studentIdx,
-                                    )?.value ?? '0'
-                                  }
-                                  inputProps={{
-                                    min: 0,
-                                    max: assignment.maxScore,
-                                  }}
-                                  onChange={() => {}}
-                                  sx={{
-                                    textAlign: 'center',
-                                    marginLeft: 'auto',
-                                    marginRight: 'auto',
-                                    width: 'fit-content',
-                                  }}
-                                  endAdornment={
-                                    assignment.maxScore && (
-                                      <span className="text-gray-500 font-semibold">
-                                        /{assignment.maxScore}
-                                      </span>
-                                    )
-                                  }
-                                />
-                              ) : (
+                              {isEdit ?
+                                <div className='flex flex-col items-center'>
+                                  <Input
+                                    type="text"
+                                    value={
+                                      assignment?.gradesBoard?.find(
+                                        (item) =>
+                                          item.indexStudent === studentIdx,
+                                      )?.value
+                                    }
+
+                                    onChange={async (e) => {
+                                      const newGradeBoardColumns = [...gradeBoardColumns];
+                                      newGradeBoardColumns[gradeColumnIdx].assignmentsBoard[assignmentIdx].gradesBoard.forEach((item) => {
+                                        if (item.indexStudent === studentIdx) {
+                                          item.value = parseInt(e.target.value)||0;
+                                        }
+                                      });
+                                      setGradeBoardColumns(newGradeBoardColumns);
+                                    }}
+
+                                    onBlur={debounce(async (e) => {
+                                      setLocalLoading(`${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}`);
+                                      await handleUpdateGrade(student.studentId, parseInt(e.target.value) || 0, assignment.assignmentId);
+                                      setLocalLoading('');
+                                    }, 3000)}
+
+                                    sx={{
+                                      textAlign: 'center',
+                                      marginLeft: 'auto',
+                                      marginRight: 'auto',
+                                      marginBottom: '4px',
+                                      width: 'fit-content',
+                                      fontSize: `${localLoading === `${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}` ? '12px' : '16px'}`,
+                                      height: `${localLoading === `${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}` ? '14px' : '28px'}`
+                                    }}
+                                    endAdornment={
+                                      assignment.maxScore && (
+                                        <span className="text-gray-500 font-semibold">
+                                          /{assignment.maxScore}
+                                        </span>
+                                      )
+                                    }
+                                  />
+                                  { localLoading === `${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}` && <span className='text-sm text-green-600'> {t('saving')}</span>}
+                                </div>
+                               : (
                                 assignment.gradesBoard[studentIdx].value
                               )}
                             </TableCell>
+
                           ),
                         );
                       })}
