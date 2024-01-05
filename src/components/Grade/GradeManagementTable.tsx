@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { CircularProgress, Input } from '@mui/material';
+import { Input } from '@mui/material';
 import GradeHeaderDropdown from './GradeHeaderDropdown';
 import { apiCall } from '../../utils/apiCall';
 import { gradeManagementService } from '../../services/gradeManagement/GradeManagementService';
@@ -314,7 +314,7 @@ export default function StickyHeadTable({
                                       )
                                     }
                                   />
-                                  { localLoading === `${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}` && <span className='text-sm text-green-600'> saving...</span>}
+                                  { localLoading === `${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}` && <span className='text-sm text-green-600'> {t('saving')}</span>}
                                 </div>
                                : (
                                 assignment.gradesBoard[studentIdx].value
