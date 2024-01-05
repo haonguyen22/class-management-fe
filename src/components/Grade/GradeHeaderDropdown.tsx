@@ -3,7 +3,6 @@ import React from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import DownloadIcon from '@mui/icons-material/Download';
 import UploadIcon from '@mui/icons-material/Upload';
 import { useTranslation } from 'react-i18next';
@@ -11,13 +10,19 @@ import { useTranslation } from 'react-i18next';
 interface IGradeHeaderDropdown {
   name: string;
   totalMark?: number;
-  gradeCategory?: string;
+  onDownloadGradeTemplate?: () => void;
+  onUploadGrade?: () => void;
+  onEdit?: () => void;
+  onErase?: () => void;
 }
 
 const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
   name,
   totalMark,
-  gradeCategory,
+  onDownloadGradeTemplate,
+  onUploadGrade,
+  onEdit,
+  onErase,
 }) => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -44,27 +49,22 @@ const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
     {
       title: t('edit'),
       icon: <EditIcon fontSize="small" />,
-      onClick: () => {},
+      onClick: onEdit,
     },
     {
       title: t('erase'),
       icon: <DeleteIcon fontSize="small" />,
-      onClick: () => {},
-    },
-    {
-      title: t('returnAll'),
-      icon: <PersonAdd fontSize="small" />,
-      onClick: () => {},
+      onClick: onErase,
     },
     {
       title: t('downloadGradeTemplate'),
       icon: <DownloadIcon fontSize="small" />,
-      onClick: () => {},
+      onClick: onDownloadGradeTemplate,
     },
     {
       title: t('uploadGrade'),
       icon: <UploadIcon fontSize="small" />,
-      onClick: () => {},
+      onClick: onUploadGrade,
     },
   ];
 
@@ -87,13 +87,8 @@ const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
           </div>
         </div>
         <hr className="h-[1.5px] w-full  bg-gray-300" />
-        {gradeCategory && (
-          <div className="h-5 py-2 text-left text-xs text-gray-500 font-thin">
-            {gradeCategory}
-          </div>
-        )}
         <div className="h-5 py-2  text-left text-xs text-gray-500  font-thin">
-          {totalMark && `out of ${totalMark}`}
+          {totalMark && `${t('outOf')} ${totalMark}`}
         </div>
       </div>
       <Menu
@@ -107,7 +102,7 @@ const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
             key={option.title}
             onClick={() => {
               setIsHover(false);
-              option.onClick();
+              option?.onClick?.();
               handleClose();
             }}
           >

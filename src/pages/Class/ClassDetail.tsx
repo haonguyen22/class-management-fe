@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import { apiCall } from '../../utils/apiCall';
 import { useTranslation } from 'react-i18next';
 import DropdownCode from '../../components/ClassDetail/DropdownCode';
-import { IClass } from '../../models/IClass';
 import { CircularProgress } from '@mui/material';
 import { classService } from '../../services/class/ClassService';
 import { ClassContext } from '../../context/ClassContext';
@@ -14,10 +13,9 @@ import { Role } from '../../enums/RoleClass';
 const ClassDetail = () => {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
+  const { classDetail, setClassDetail, isLoading } = useContext(ClassContext);
 
   const [code, setCode] = useState('');
-  const [classDetail, setClassDetail] = useState<IClass>();
-  const [isLoading, setIsLoading] = useState(false);
   const { role } = useContext(ClassContext);
 
   const getClassCode = async () => {
@@ -29,20 +27,6 @@ const ClassDetail = () => {
         console.log('🐛 Get class code error');
       },
     });
-  };
-
-  const getClassDetail = async () => {
-    setIsLoading(true);
-    await apiCall(classService.getClassById(id!), {
-      ifSuccess: (data) => {
-        setClassDetail(data.metadata as IClass);
-      },
-      ifFailed: (err) => {
-        console.log('🐛 Get detail class error :', err.message);
-      },
-    });
-
-    setIsLoading(false);
   };
 
   async function onImageBackgroundUpload(file?: File) {
@@ -63,7 +47,6 @@ const ClassDetail = () => {
 
   useEffect(() => {
     if (role === Role.TEACHER) getClassCode();
-    getClassDetail();
   }, [id, role]);
 
   if (isLoading)

@@ -10,6 +10,7 @@ import { classService } from '../../services/class/ClassService';
 import { useAuthUser } from 'react-auth-kit';
 import { Role } from '../../enums/RoleClass';
 import { IUser } from '../../models/User';
+import { IClass } from '../../models/IClass';
 
 export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
   const [value, setValue] = React.useState(0);
@@ -19,6 +20,8 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
   const { t } = useTranslation();
   const auth = useAuthUser();
   const [role, setRole] = useState(Role.NONE);
+  const [classDetail, setClassDetail] = useState<IClass>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const checkRoleAccount = async () => {
     setRole(Role.NONE);
@@ -51,9 +54,20 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  const getClassDetail = async () => {
+    setIsLoading(true);
+    await apiCall(classService.getClassInfo(id!), {
+      ifSuccess: (data) => {
+        setClassDetail(data.metadata as IClass);
+      },
+      ifFailed: () => {},
+    });
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     setRole(Role.NONE);
-
+    getClassDetail();
     checkRoleAccount();
   }, []);
 
@@ -96,7 +110,9 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <ClassContext.Provider value={{ role, setRole }}>
+    <ClassContext.Provider
+      value={{ role, setRole, classDetail, setClassDetail, isLoading }}
+    >
       <Box sx={{ borderBottom: 1, borderColor: 'gray' }}>
         <Tabs value={value} aria-label="basic tabs example">
           {NavList.map((item, index) => (

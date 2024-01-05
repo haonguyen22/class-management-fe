@@ -18,6 +18,7 @@ class GradeManagementService {
   async downloadTemplateGradeAssignment(classId: number, assignmentId: number) {
     const res = await api.get('/grade-management/grade-assignment-template', {
       headers: { 'class-id': classId },
+      responseType: 'blob',
       params: { 'assignment-id': assignmentId },
     });
     return res;
@@ -41,10 +42,23 @@ class GradeManagementService {
     return res;
   }
 
-  async getTotalGradeBoard(classId: number) {
+   async getTotalGradeBoard(classId: number) {
     const res = await api.get('/grade-management/total-grade-board', {
       headers: { 'class-id': classId },
     });
+    return res;
+  }
+
+  async markViewableGrade(classId: number, gradeCompositionId: number) {
+    const res = await api.post(
+      '/grade-management/mark-viewable-grade',
+      {
+        gradeCompositionId: gradeCompositionId,
+      },
+      {
+        headers: { 'class-id': classId },
+      },
+    );
     return res;
   }
 }

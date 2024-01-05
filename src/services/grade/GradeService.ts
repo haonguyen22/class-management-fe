@@ -68,7 +68,6 @@ class GradeService {
     return res;
   }
 
-  // file: FormData
   async uploadStudentList(classId: number, file: any) {
     const res = await api.post(
       '/grade-management/student-list-template',

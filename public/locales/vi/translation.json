@@ -143,5 +143,10 @@
   "downloadGradeTemplate": "Tải mẫu điểm",
   "uploadGrade": "Tải bảng điểm",
   "exportGradeBoard": "Xuất bảng điểm",
-  "template": "Mẫu"
+  "template": "Mẫu",
+  "notAFile": "Vui lòng tải lên tệp chỉ có đuôi .xlsx!",
+  "uploadGradeAssignment": "Tải bảng điểm bài tập",
+  "outOf": "trên",
+  "markAsFinalized": "Đánh dấu là đã tổng kết",
+  "returnGradeAssignment": "Trả bảng điểm bài tập"
 }
