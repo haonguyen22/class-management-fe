@@ -3,7 +3,6 @@ import React from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import DownloadIcon from '@mui/icons-material/Download';
 import UploadIcon from '@mui/icons-material/Upload';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +10,8 @@ import { useTranslation } from 'react-i18next';
 interface IGradeHeaderDropdown {
   name: string;
   totalMark?: number;
-  gradeCategory?: string;
   onDownloadGradeTemplate?: () => void;
   onUploadGrade?: () => void;
-  onReturnAll?: () => void;
   onEdit?: () => void;
   onErase?: () => void;
 }
@@ -22,10 +19,8 @@ interface IGradeHeaderDropdown {
 const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
   name,
   totalMark,
-  gradeCategory,
   onDownloadGradeTemplate,
   onUploadGrade,
-  onReturnAll,
   onEdit,
   onErase,
 }) => {
@@ -62,11 +57,6 @@ const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
       onClick: onErase,
     },
     {
-      title: t('returnAll'),
-      icon: <PersonAdd fontSize="small" />,
-      onClick: onReturnAll,
-    },
-    {
       title: t('downloadGradeTemplate'),
       icon: <DownloadIcon fontSize="small" />,
       onClick: onDownloadGradeTemplate,
@@ -97,13 +87,8 @@ const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
           </div>
         </div>
         <hr className="h-[1.5px] w-full  bg-gray-300" />
-        {gradeCategory && (
-          <div className="h-5 py-2 text-left text-xs text-gray-500 font-thin">
-            {gradeCategory}
-          </div>
-        )}
         <div className="h-5 py-2  text-left text-xs text-gray-500  font-thin">
-          {totalMark && `out of ${totalMark}`}
+          {totalMark && `${t('outOf')} ${totalMark}`}
         </div>
       </div>
       <Menu

@@ -7,12 +7,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Input } from '@mui/material';
+import { Input, Tooltip } from '@mui/material';
 import GradeHeaderDropdown from './GradeHeaderDropdown';
 import { apiCall } from '../../utils/apiCall';
 import { gradeManagementService } from '../../services/gradeManagement/GradeManagementService';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import {
   IGradeAssignment,
   IGradeBoardColumn,
@@ -24,6 +25,7 @@ import { gradeService } from '../../services/grade/GradeService';
 import { ClassContext } from '../../context/ClassContext';
 import { downloadFileXlsx } from '../../utils/xlsx';
 import FormUpload from './FormUpload';
+import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
 
 export default function StickyHeadTable({
   setLoading,
@@ -141,6 +143,25 @@ export default function StickyHeadTable({
     setLoading(false);
   };
 
+  const onReturnGradeAssignment = async (gradeCompositionId: number) => {
+    setLoading(true);
+    await apiCall(
+      gradeManagementService.markViewableGrade(
+        parseInt(id!),
+        gradeCompositionId,
+      ),
+      {
+        ifSuccess: (data) => {
+          enqueueSnackbar(data.message, { variant: 'success' });
+          getTotalGradeBoard();
+        },
+        ifFailed: (error) => {
+          enqueueSnackbar(error.message, { variant: 'error' });
+        },
+      },
+    );
+    setLoading(false);
+  };
 
   useEffect(() => {
     getTotalGradeBoard();
@@ -159,6 +180,7 @@ export default function StickyHeadTable({
               <TableRow>
                 <TableCell
                   align={'center'}
+                  rowSpan={2}
                   sx={{
                     minWidth: 100,
                     backgroundColor: '#f3f4f6',
@@ -170,6 +192,7 @@ export default function StickyHeadTable({
                 </TableCell>
                 <TableCell
                   align={'center'}
+                  rowSpan={2}
                   sx={{
                     minWidth: 150,
                     backgroundColor: '#f3f4f6',
@@ -181,6 +204,7 @@ export default function StickyHeadTable({
                 </TableCell>
                 <TableCell
                   align={'center'}
+                  rowSpan={2}
                   sx={{
                     minWidth: 100,
                     backgroundColor: '#f3f4f6',
@@ -190,6 +214,63 @@ export default function StickyHeadTable({
                 >
                   {t('final')}
                 </TableCell>
+                {gradeBoardColumns?.map(
+                  (gradeColumn, i) =>
+                    gradeColumn.assignmentsBoard?.length > 1 && (
+                      <TableCell
+                        key={`${i}`}
+                        align={'center'}
+                        colSpan={gradeColumn.assignmentsBoard.length}
+                        sx={{
+                          minWidth: 120,
+                          backgroundColor: '#f3f4f6',
+                          fontWeight: 'bold',
+                          borderRight: '1px solid #ddd',
+                        }}
+                      >
+                        <div className="flex flex-row items-center justify-between">
+                          <div></div>
+                          <div>
+                            {gradeColumn.viewable && (
+                              <Tooltip
+                                title={t('markAsFinalized')}
+                                placement="bottom"
+                              >
+                                <TaskAltIcon fontSize="small" color="success" />
+                              </Tooltip>
+                            )}
+                            <span className="ml-3">
+                              {gradeColumn.compositionName}
+                            </span>
+                          </div>
+                          <div>
+                            {gradeColumn.viewable === false && (
+                              <Tooltip
+                                title={t('returnGradeAssignment')}
+                                placement="bottom"
+                              >
+                                <AssignmentReturnedIcon
+                                  fontSize="small"
+                                  color="primary"
+                                  sx={{ cursor: 'pointer' }}
+                                  onClick={() =>
+                                    onReturnGradeAssignment(
+                                      gradeColumn.compositionId,
+                                    )
+                                  }
+                                />
+                              </Tooltip>
+                            )}
+                          </div>
+                        </div>
+                        <div className="py-1  text-center text-xs text-gray-500 font-thin">
+                          {gradeColumn.compositionWeight}%
+                        </div>
+                      </TableCell>
+                    ),
+                )}
+              </TableRow>
+              <TableRow>
                 {gradeBoardColumns?.map(
                   (gradeColumn, i) =>
                     gradeColumn.assignmentsBoard?.map((assignment, index) => (
@@ -206,7 +287,6 @@ export default function StickyHeadTable({
                         <GradeHeaderDropdown
                           name={assignment?.assignmentName}
                           totalMark={assignment?.maxScore}
-                          gradeCategory={gradeColumn?.compositionName}
                           onDownloadGradeTemplate={() =>
                             onDownloadGradeTemplate(assignment)
                           }
@@ -224,43 +304,82 @@ export default function StickyHeadTable({
             <TableBody>
               {studentList
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                ?.map((student, studentIdx) => (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={studentIdx}
-                  >
-                    <TableCell
-                      align={'center'}
-                      sx={{
-                        borderRight: '1px solid #ddd',
-                        textAlign: 'center',
-                      }}
+                ?.map((student, studentIdx) => {
+                  // ======================  Calculate total grade of student  ======================
+                  const allCompositions = new Array<number>();
+                  gradeBoardColumns?.forEach((gradeColumn) => {
+                    allCompositions.push(gradeColumn.compositionId);
+                  });
+
+                  const totalGradeComposition = allCompositions.map((id) => {
+                    const allGradeBoard = gradeBoardColumns?.find(
+                      (item) => item.compositionId === id,
+                    );
+
+                    let totalScore = 0;
+                    const total =
+                      allGradeBoard?.assignmentsBoard.reduce((prev, curr) => {
+                        totalScore += curr.maxScore;
+                        return (
+                          prev +
+                          (curr.gradesBoard?.find(
+                            (i) => i.indexStudent === studentIdx,
+                          )?.value ?? 0)
+                        );
+                      }, 0) ?? 0;
+
+                    return totalScore === 0
+                      ? 0
+                      : (total / totalScore) *
+                          allGradeBoard!.compositionWeight!;
+                  });
+
+                  const finalScore = Math.min(
+                    totalGradeComposition.reduce(
+                      (prev, curr) => prev + curr,
+                      0,
+                    ),
+                    100,
+                  );
+
+                  // ======================  Render  ======================
+
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={studentIdx}
                     >
-                      {student.studentId}
-                    </TableCell>
-                    <TableCell
-                      align={'center'}
-                      sx={{
-                        borderRight: '1px solid #ddd',
-                        textAlign: 'center',
-                      }}
-                    >
-                      {student.fullName}
-                    </TableCell>
-                    <TableCell
-                      align={'center'}
-                      sx={{
-                        borderRight: '1px solid #ddd',
-                        textAlign: 'center',
-                      }}
-                    >
-                      0
-                    </TableCell>
-                    {gradeBoardColumns?.map(
-                      (gradeColumn, gradeColumnIdx) =>
-                        gradeColumn.assignmentsBoard?.map(
+                      <TableCell
+                        align={'center'}
+                        sx={{
+                          borderRight: '1px solid #ddd',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {student.studentId}
+                      </TableCell>
+                      <TableCell
+                        align={'center'}
+                        sx={{
+                          borderRight: '1px solid #ddd',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {student.fullName}
+                      </TableCell>
+                      <TableCell
+                        align={'center'}
+                        sx={{
+                          borderRight: '1px solid #ddd',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {finalScore.toFixed(2)}%
+                      </TableCell>
+                      {gradeBoardColumns?.map((gradeColumn, gradeColumnIdx) => {
+                        return gradeColumn.assignmentsBoard?.map(
                           (assignment, assignmentIdx) => (
                             <TableCell
                               key={`${studentIdx}${gradeColumnIdx}${assignmentIdx}`}
@@ -322,10 +441,11 @@ export default function StickyHeadTable({
                             </TableCell>
 
                           ),
-                        ),
-                    )}
-                  </TableRow>
-                ))}
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -343,7 +463,7 @@ export default function StickyHeadTable({
       {/* Form when upload file grade assignment */}
       <FormUpload
         handleSubmit={(file) => onSubmitUploadGrade(assignmentId.current, file)}
-        titleForm={t('FormUpload.titleStudentList')}
+        titleForm={t('uploadGradeAssignment')}
         open={openUpload}
         setOpen={setOpenUpload}
       />
