@@ -42,7 +42,7 @@ class GradeManagementService {
     return res;
   }
 
-   async getTotalGradeBoard(classId: number) {
+  async getTotalGradeBoard(classId: number) {
     const res = await api.get('/grade-management/total-grade-board', {
       headers: { 'class-id': classId },
     });
@@ -55,6 +55,39 @@ class GradeManagementService {
       {
         gradeCompositionId: gradeCompositionId,
       },
+      {
+        headers: { 'class-id': classId },
+      },
+    );
+    return res;
+  }
+
+  async downloadStudentListTemplate(classId: number) {
+    const res = await api.get('/grade-management/student-list-template', {
+      headers: { 'class-id': classId },
+      responseType: 'blob',
+    });
+    return res;
+  }
+
+  async uploadStudentList(classId: number, data: FormData) {
+    const res = await api.post(
+      '/grade-management/student-list-template',
+      data,
+      {
+        headers: {
+          'class-id': classId,
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+    return res;
+  }
+
+  async updateGradeOfStudent(classId: number, data: any) {
+    const res = await api.post(
+      '/grade-management/input-grade-student-assignment',
+      data,
       {
         headers: { 'class-id': classId },
       },
