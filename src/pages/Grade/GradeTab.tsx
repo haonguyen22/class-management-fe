@@ -31,7 +31,7 @@ const GradeTab = () => {
       ifSuccess: (data) => {
         downloadFileXlsx({
           data: data as unknown as Blob,
-          fileName: `${classDetail?.name}-student-list-template.xlsx`,
+          fileName: `${classDetail?.name}-student-list-template`,
         });
 
         enqueueSnackbar('Download success', {

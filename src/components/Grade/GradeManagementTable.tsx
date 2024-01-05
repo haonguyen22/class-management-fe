@@ -106,7 +106,7 @@ export default function StickyHeadTable({
         ifSuccess: (data) => {
           downloadFileXlsx({
             data: data as unknown as Blob,
-            fileName: `[${classDetail?.name}]-${assignment.assignmentName}.xlsx`,
+            fileName: `[${classDetail?.name}]-${assignment.assignmentName}`,
           });
           enqueueSnackbar('Download success', {
             variant: 'success',
