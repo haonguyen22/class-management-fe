@@ -1,7 +1,7 @@
 export interface IGradeBoardColumn {
   compositionId: number;
   compositionName: string;
-  compositionWeight: string;
+  compositionWeight: number;
   assignmentsBoard: IGradeAssignment[];
 }
 

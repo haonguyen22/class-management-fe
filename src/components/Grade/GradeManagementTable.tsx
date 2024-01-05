@@ -204,43 +204,82 @@ export default function StickyHeadTable({
             <TableBody>
               {studentList
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                ?.map((student, studentIdx) => (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={studentIdx}
-                  >
-                    <TableCell
-                      align={'center'}
-                      sx={{
-                        borderRight: '1px solid #ddd',
-                        textAlign: 'center',
-                      }}
+                ?.map((student, studentIdx) => {
+                  // ======================  Calculate total grade of student  ======================
+                  const allCompositions = new Array<number>();
+                  gradeBoardColumns?.forEach((gradeColumn) => {
+                    allCompositions.push(gradeColumn.compositionId);
+                  });
+
+                  const totalGradeComposition = allCompositions.map((id) => {
+                    const allGradeBoard = gradeBoardColumns?.find(
+                      (item) => item.compositionId === id,
+                    );
+
+                    let totalScore = 0;
+                    const total =
+                      allGradeBoard?.assignmentsBoard.reduce((prev, curr) => {
+                        totalScore += curr.maxScore;
+                        return (
+                          prev +
+                          (curr.gradesBoard?.find(
+                            (i) => i.indexStudent === studentIdx,
+                          )?.value ?? 0)
+                        );
+                      }, 0) ?? 0;
+
+                    return totalScore === 0
+                      ? 0
+                      : (total / totalScore) *
+                          allGradeBoard!.compositionWeight!;
+                  });
+
+                  const finalScore = Math.min(
+                    totalGradeComposition.reduce(
+                      (prev, curr) => prev + curr,
+                      0,
+                    ),
+                    100,
+                  );
+
+                  // ======================  Render  ======================
+
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={studentIdx}
                     >
-                      {student.studentId}
-                    </TableCell>
-                    <TableCell
-                      align={'center'}
-                      sx={{
-                        borderRight: '1px solid #ddd',
-                        textAlign: 'center',
-                      }}
-                    >
-                      {student.fullName}
-                    </TableCell>
-                    <TableCell
-                      align={'center'}
-                      sx={{
-                        borderRight: '1px solid #ddd',
-                        textAlign: 'center',
-                      }}
-                    >
-                      0
-                    </TableCell>
-                    {gradeBoardColumns?.map(
-                      (gradeColumn, gradeColumnIdx) =>
-                        gradeColumn.assignmentsBoard?.map(
+                      <TableCell
+                        align={'center'}
+                        sx={{
+                          borderRight: '1px solid #ddd',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {student.studentId}
+                      </TableCell>
+                      <TableCell
+                        align={'center'}
+                        sx={{
+                          borderRight: '1px solid #ddd',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {student.fullName}
+                      </TableCell>
+                      <TableCell
+                        align={'center'}
+                        sx={{
+                          borderRight: '1px solid #ddd',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {finalScore.toFixed(2)}%
+                      </TableCell>
+                      {gradeBoardColumns?.map((gradeColumn, gradeColumnIdx) => {
+                        return gradeColumn.assignmentsBoard?.map(
                           (assignment, assignmentIdx) => (
                             <TableCell
                               key={`${studentIdx}${gradeColumnIdx}${assignmentIdx}`}
@@ -252,7 +291,6 @@ export default function StickyHeadTable({
                             >
                               {isEdit ? (
                                 <Input
-
                                   type="number"
                                   value={
                                     assignment?.gradesBoard?.find(
@@ -284,10 +322,11 @@ export default function StickyHeadTable({
                               )}
                             </TableCell>
                           ),
-                        ),
-                    )}
-                  </TableRow>
-                ))}
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -305,7 +344,7 @@ export default function StickyHeadTable({
       {/* Form when upload file grade assignment */}
       <FormUpload
         handleSubmit={(file) => onSubmitUploadGrade(assignmentId.current, file)}
-        titleForm={t('FormUpload.titleStudentList')}
+        titleForm={t('uploadGradeAssignment')}
         open={openUpload}
         setOpen={setOpenUpload}
       />

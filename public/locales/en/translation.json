@@ -146,5 +146,6 @@
   "uploadGrade": "Upload grade assignment",
   "exportGradeBoard": "Export grade board",
   "template": "Template",
-  "notAFile": "Please upload a file with .xlsx extension only !"
+  "notAFile": "Please upload a file with .xlsx extension only !",
+  "uploadGradeAssignment": "Upload grade assignment"
 }

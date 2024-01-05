@@ -144,5 +144,6 @@
   "uploadGrade": "Tải bảng điểm",
   "exportGradeBoard": "Xuất bảng điểm",
   "template": "Mẫu",
-  "notAFile": "Vui lòng tải lên tệp chỉ có đuôi .xlsx!"
+  "notAFile": "Vui lòng tải lên tệp chỉ có đuôi .xlsx!",
+  "uploadGradeAssignment": "Tải bảng điểm bài tập"
 }
