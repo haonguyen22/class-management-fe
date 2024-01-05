@@ -20,6 +20,7 @@ const GradeTab = () => {
   const { classDetail } = useContext(ClassContext);
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [flag, setFlag] = useState(0);
 
   const handleOpen = () => {
     setOpen(true);
@@ -90,7 +91,11 @@ const GradeTab = () => {
             <FileUploadIcon />
             <span className="ml-2">{t('uploadStudent')}</span>
           </Button>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setFlag(flag + 1)}
+          >
             <ExitToAppIcon />
             <span className="ml-2">{t('exportGradeBoard')}</span>
           </Button>
@@ -104,7 +109,7 @@ const GradeTab = () => {
         {/* Loading */}
         {isLoading && <CircularProgress size={30} />}
       </div>
-      <GradeManagementTable setLoading={setIsLoading} />
+      <GradeManagementTable setLoading={setIsLoading} flag={flag} />
     </>
   );
 };
