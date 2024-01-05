@@ -65,11 +65,7 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code, type }) => {
         <MenuItem
           onClick={() =>
             handleCopy(
-              `${
-                process.env?.REACT_APP_CLIENT_URL !== '' ?? false
-                  ? process.env?.REACT_APP_CLIENT_URL
-                  : `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}`
-              }/class/join?code=${code}`,
+              `https://class-management-fe.vercel.app/class/join?code=${code}`,
             )
           }
         >
