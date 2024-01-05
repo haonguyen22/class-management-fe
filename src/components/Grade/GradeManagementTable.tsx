@@ -81,18 +81,29 @@ export default function StickyHeadTable({
     });
   };
 
-  const handleUpdateGrade = async (studentId: string, score: number, assignmentId: number) => {
+  const handleUpdateGrade = async (
+    studentId: string,
+    score: number,
+    assignmentId: number,
+  ) => {
     console.log(studentId, score, assignmentId);
-    await apiCall(gradeService.updateGradeOfStudent(parseInt(id!),{studentId, assignmentId, score}), {
-      ifSuccess: (data) => {
-        console.log(data);
-        enqueueSnackbar(data.message, { variant: 'success' });
+    await apiCall(
+      gradeManagementService.updateGradeOfStudent(parseInt(id!), {
+        studentId,
+        assignmentId,
+        score,
+      }),
+      {
+        ifSuccess: (data) => {
+          console.log(data);
+          enqueueSnackbar(data.message, { variant: 'success' });
+        },
+        ifFailed: (error) => {
+          console.log(error);
+          enqueueSnackbar(error.message, { variant: 'error' });
+        },
       },
-      ifFailed: (error) => {
-        console.log(error);
-        enqueueSnackbar(error.message, { variant: 'error' });
-      },
-    });
+    );
   };
 
   const onDownloadGradeTemplate = async (assignment: IGradeAssignment) => {
@@ -160,6 +171,68 @@ export default function StickyHeadTable({
         },
       },
     );
+    setLoading(false);
+  };
+
+  const calcFinalScore = (studentIdx: number) => {
+    const allCompositions = new Array<number>();
+    gradeBoardColumns?.forEach((gradeColumn) => {
+      allCompositions.push(gradeColumn.compositionId);
+    });
+
+    const totalGradeComposition = allCompositions.map((id) => {
+      const allGradeBoard = gradeBoardColumns?.find(
+        (item) => item.compositionId === id,
+      );
+
+      let totalScore = 0;
+      const total =
+        allGradeBoard?.assignmentsBoard.reduce((prev, curr) => {
+          totalScore += curr.maxScore;
+          return (
+            prev +
+            (curr.gradesBoard?.find((i) => i.indexStudent === studentIdx)
+              ?.value ?? 0)
+          );
+        }, 0) ?? 0;
+
+      return totalScore === 0
+        ? 0
+        : (total / totalScore) * allGradeBoard!.compositionWeight!;
+    });
+
+    return Math.min(
+      totalGradeComposition.reduce((prev, curr) => prev + curr, 0),
+      100,
+    );
+  };
+
+  const onChangeInputGrade = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    {
+      assignment,
+      studentIdx,
+      gradeColumnIdx,
+      assignmentIdx,
+    }: {
+      assignment: IGradeAssignment;
+      studentIdx: number;
+      gradeColumnIdx: number;
+      assignmentIdx: number;
+    },
+  ) => {
+    const value = parseInt(e.target.value);
+    const maxScore = value > assignment.maxScore ? assignment.maxScore : value;
+    setLoading(true);
+    const newGradeBoardColumns = [...gradeBoardColumns];
+    newGradeBoardColumns[gradeColumnIdx].assignmentsBoard[
+      assignmentIdx
+    ].gradesBoard.forEach((item) => {
+      if (item.indexStudent === studentIdx) {
+        item.value = maxScore || 0;
+      }
+    });
+    setGradeBoardColumns(newGradeBoardColumns);
     setLoading(false);
   };
 
@@ -305,45 +378,6 @@ export default function StickyHeadTable({
               {studentList
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 ?.map((student, studentIdx) => {
-                  // ======================  Calculate total grade of student  ======================
-                  const allCompositions = new Array<number>();
-                  gradeBoardColumns?.forEach((gradeColumn) => {
-                    allCompositions.push(gradeColumn.compositionId);
-                  });
-
-                  const totalGradeComposition = allCompositions.map((id) => {
-                    const allGradeBoard = gradeBoardColumns?.find(
-                      (item) => item.compositionId === id,
-                    );
-
-                    let totalScore = 0;
-                    const total =
-                      allGradeBoard?.assignmentsBoard.reduce((prev, curr) => {
-                        totalScore += curr.maxScore;
-                        return (
-                          prev +
-                          (curr.gradesBoard?.find(
-                            (i) => i.indexStudent === studentIdx,
-                          )?.value ?? 0)
-                        );
-                      }, 0) ?? 0;
-
-                    return totalScore === 0
-                      ? 0
-                      : (total / totalScore) *
-                          allGradeBoard!.compositionWeight!;
-                  });
-
-                  const finalScore = Math.min(
-                    totalGradeComposition.reduce(
-                      (prev, curr) => prev + curr,
-                      0,
-                    ),
-                    100,
-                  );
-
-                  // ======================  Render  ======================
-
                   return (
                     <TableRow
                       hover
@@ -376,71 +410,87 @@ export default function StickyHeadTable({
                           textAlign: 'center',
                         }}
                       >
-                        {finalScore.toFixed(2)}%
+                        {calcFinalScore(studentIdx).toFixed(2)}%
                       </TableCell>
                       {gradeBoardColumns?.map((gradeColumn, gradeColumnIdx) => {
                         return gradeColumn.assignmentsBoard?.map(
-                          (assignment, assignmentIdx) => (
-                            <TableCell
-                              key={`${studentIdx}${gradeColumnIdx}${assignmentIdx}`}
-                              align={'center'}
-                              sx={{
-                                borderRight: '1px solid #ddd',
-                                textAlign: 'center',
-                              }}
-                            >
-                              {isEdit ?
-                                <div className='flex flex-col items-center'>
-                                  <Input
-                                    type="text"
-                                    value={
-                                      assignment?.gradesBoard?.find(
-                                        (item) =>
-                                          item.indexStudent === studentIdx,
-                                      )?.value
-                                    }
-
-                                    onChange={async (e) => {
-                                      const newGradeBoardColumns = [...gradeBoardColumns];
-                                      newGradeBoardColumns[gradeColumnIdx].assignmentsBoard[assignmentIdx].gradesBoard.forEach((item) => {
-                                        if (item.indexStudent === studentIdx) {
-                                          item.value = parseInt(e.target.value)||0;
-                                        }
-                                      });
-                                      setGradeBoardColumns(newGradeBoardColumns);
-                                    }}
-
-                                    onBlur={debounce(async (e) => {
-                                      setLocalLoading(`${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}`);
-                                      await handleUpdateGrade(student.studentId, parseInt(e.target.value) || 0, assignment.assignmentId);
-                                      setLocalLoading('');
-                                    }, 3000)}
-
-                                    sx={{
-                                      textAlign: 'center',
-                                      marginLeft: 'auto',
-                                      marginRight: 'auto',
-                                      marginBottom: '4px',
-                                      width: 'fit-content',
-                                      fontSize: `${localLoading === `${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}` ? '12px' : '16px'}`,
-                                      height: `${localLoading === `${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}` ? '14px' : '28px'}`
-                                    }}
-                                    endAdornment={
-                                      assignment.maxScore && (
-                                        <span className="text-gray-500 font-semibold">
-                                          /{assignment.maxScore}
-                                        </span>
-                                      )
-                                    }
-                                  />
-                                  { localLoading === `${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}` && <span className='text-sm text-green-600'> {t('saving')}</span>}
-                                </div>
-                               : (
-                                assignment.gradesBoard[studentIdx].value
-                              )}
-                            </TableCell>
-
-                          ),
+                          (assignment, assignmentIdx) => {
+                            const isLocalLoading =
+                              localLoading ===
+                              `${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}`;
+                            return (
+                              <TableCell
+                                key={`${studentIdx}${gradeColumnIdx}${assignmentIdx}`}
+                                align={'center'}
+                                sx={{
+                                  borderRight: '1px solid #ddd',
+                                  textAlign: 'center',
+                                }}
+                              >
+                                {isEdit ? (
+                                  <div className="flex flex-col items-center">
+                                    <Input
+                                      type="number"
+                                      value={
+                                        assignment?.gradesBoard?.find(
+                                          (item) =>
+                                            item.indexStudent === studentIdx,
+                                        )?.value
+                                      }
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>,
+                                      ) =>
+                                        onChangeInputGrade(e, {
+                                          assignment,
+                                          studentIdx,
+                                          gradeColumnIdx,
+                                          assignmentIdx,
+                                        })
+                                      }
+                                      onBlur={debounce(async (e) => {
+                                        setLocalLoading(
+                                          `${studentIdx} - ${gradeColumnIdx} - ${assignmentIdx}`,
+                                        );
+                                        await handleUpdateGrade(
+                                          student.studentId,
+                                          parseInt(e.target.value) || 0,
+                                          assignment.assignmentId,
+                                        );
+                                        setLocalLoading('');
+                                      }, 3000)}
+                                      sx={{
+                                        textAlign: 'center',
+                                        marginLeft: 'auto',
+                                        marginRight: 'auto',
+                                        marginBottom: '4px',
+                                        width: 'fit-content',
+                                        fontSize: `${
+                                          isLocalLoading ? '12px' : '16px'
+                                        }`,
+                                        height: `${
+                                          isLocalLoading ? '14px' : '28px'
+                                        }`,
+                                      }}
+                                      endAdornment={
+                                        assignment.maxScore && (
+                                          <span className="text-gray-500 font-semibold">
+                                            /{assignment.maxScore}
+                                          </span>
+                                        )
+                                      }
+                                    />
+                                    {isLocalLoading && (
+                                      <span className="text-sm text-green-600">
+                                        {t('saving')}
+                                      </span>
+                                    )}
+                                  </div>
+                                ) : (
+                                  assignment.gradesBoard[studentIdx].value
+                                )}
+                              </TableCell>
+                            );
+                          },
                         );
                       })}
                     </TableRow>
