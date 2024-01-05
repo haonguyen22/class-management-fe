@@ -12,28 +12,26 @@ import {
   ListItem,
   ListItemText,
   Typography,
-  CircularProgress
+  CircularProgress,
 } from '@mui/material';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { apiCall } from '../../utils/apiCall';
-import { useParams } from 'react-router-dom';
-import { gradeService } from '../../services/grade/GradeService';
-import { useSnackbar } from 'notistack';
 import PreviewFile from './PreviewFile';
 import { useTranslation } from 'react-i18next';
 
-const FormUpload = () => {
-  const [open, setOpen] = useState(false);
-  const {t} = useTranslation();
-  const { enqueueSnackbar } = useSnackbar();
+const FormUpload = ({
+  handleSubmit,
+  titleForm,
+  open,
+  setOpen,
+}: {
+  handleSubmit: (file: File) => void;
+  titleForm: string;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
-  const { id } = useParams<{ id: string }>();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setSelectedFiles([]);
@@ -58,35 +56,8 @@ const FormUpload = () => {
     });
   };
 
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    if(selectedFiles.length === 0) return;
-
-    const formData = new FormData();
-    formData.append('file', selectedFiles[0]);
-
-    await apiCall(gradeService.uploadStudentList(parseInt(id!), formData), {
-      ifSuccess: (data) => {
-        enqueueSnackbar(data.message, {
-          variant: 'success',
-        });
-        setIsLoading(false);
-      },
-      ifFailed(err) {
-        enqueueSnackbar(err?.message ?? err.response?.data?.message, {
-          variant: 'error',
-        });
-      },
-    });
-    handleClose();
-  };
-
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        <FileUploadIcon />
-        <span className="ml-2">{t('uploadStudent')}</span>
-      </Button>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -94,14 +65,10 @@ const FormUpload = () => {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle id="form-dialog-title">{t('FormUpload.titleStudentList')}</DialogTitle>
+        <DialogTitle id="form-dialog-title">{titleForm}</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
-          <Input
-            id="file-input"
-            type="file"
-            onChange={handleFileChange}
-          />
+          <Input id="file-input" type="file" onChange={handleFileChange} />
           {selectedFiles.length > 0 && (
             <List dense>
               {selectedFiles.map((file, index) => (
@@ -119,15 +86,37 @@ const FormUpload = () => {
               ))}
             </List>
           )}
-          {selectedFiles.length > 0 && <PreviewFile selectedFiles={selectedFiles} />}
+          {selectedFiles.length > 0 && (
+            <PreviewFile selectedFiles={selectedFiles} />
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             {t('cancel')}
           </Button>
-          <Button onClick={handleSubmit} color="primary">
-            {isLoading ? <CircularProgress size={20} sx={{ color: 'white' }} />
-             : t('upload')}
+          <Button
+            variant="contained"
+            disabled={
+              selectedFiles[0]?.type !==
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ??
+              true
+            }
+            onClick={() => {
+              setIsLoading(true);
+              if (selectedFiles.length === 0) return;
+
+              handleSubmit(selectedFiles[0]);
+
+              setIsLoading(false);
+              handleClose();
+            }}
+            color="primary"
+          >
+            {isLoading ? (
+              <CircularProgress size={20} sx={{ color: 'white' }} />
+            ) : (
+              t('upload')
+            )}
           </Button>
         </DialogActions>
       </Dialog>
