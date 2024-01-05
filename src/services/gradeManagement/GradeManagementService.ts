@@ -42,10 +42,23 @@ class GradeManagementService {
     return res;
   }
 
-  async getTotalGradeBoard(classId: number) {
+   async getTotalGradeBoard(classId: number) {
     const res = await api.get('/grade-management/total-grade-board', {
       headers: { 'class-id': classId },
     });
+    return res;
+  }
+
+  async markViewableGrade(classId: number, gradeCompositionId: number) {
+    const res = await api.post(
+      '/grade-management/mark-viewable-grade',
+      {
+        gradeCompositionId: gradeCompositionId,
+      },
+      {
+        headers: { 'class-id': classId },
+      },
+    );
     return res;
   }
 }

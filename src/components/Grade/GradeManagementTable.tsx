@@ -7,12 +7,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Input } from '@mui/material';
+import { Input, Tooltip } from '@mui/material';
 import GradeHeaderDropdown from './GradeHeaderDropdown';
 import { apiCall } from '../../utils/apiCall';
 import { gradeManagementService } from '../../services/gradeManagement/GradeManagementService';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import {
   IGradeAssignment,
   IGradeBoardColumn,
@@ -22,6 +23,7 @@ import { enqueueSnackbar } from 'notistack';
 import { ClassContext } from '../../context/ClassContext';
 import { downloadFileXlsx } from '../../utils/xlsx';
 import FormUpload from './FormUpload';
+import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
 
 export default function StickyHeadTable({
   setLoading,
@@ -122,6 +124,26 @@ export default function StickyHeadTable({
     setLoading(false);
   };
 
+  const onReturnGradeAssignment = async (gradeCompositionId: number) => {
+    setLoading(true);
+    await apiCall(
+      gradeManagementService.markViewableGrade(
+        parseInt(id!),
+        gradeCompositionId,
+      ),
+      {
+        ifSuccess: (data) => {
+          enqueueSnackbar(data.message, { variant: 'success' });
+          getTotalGradeBoard();
+        },
+        ifFailed: (error) => {
+          enqueueSnackbar(error.message, { variant: 'error' });
+        },
+      },
+    );
+    setLoading(false);
+  };
+
   useEffect(() => {
     getTotalGradeBoard();
   }, []);
@@ -139,6 +161,7 @@ export default function StickyHeadTable({
               <TableRow>
                 <TableCell
                   align={'center'}
+                  rowSpan={2}
                   sx={{
                     minWidth: 100,
                     backgroundColor: '#f3f4f6',
@@ -150,6 +173,7 @@ export default function StickyHeadTable({
                 </TableCell>
                 <TableCell
                   align={'center'}
+                  rowSpan={2}
                   sx={{
                     minWidth: 150,
                     backgroundColor: '#f3f4f6',
@@ -161,6 +185,7 @@ export default function StickyHeadTable({
                 </TableCell>
                 <TableCell
                   align={'center'}
+                  rowSpan={2}
                   sx={{
                     minWidth: 100,
                     backgroundColor: '#f3f4f6',
@@ -170,6 +195,63 @@ export default function StickyHeadTable({
                 >
                   {t('final')}
                 </TableCell>
+                {gradeBoardColumns?.map(
+                  (gradeColumn, i) =>
+                    gradeColumn.assignmentsBoard?.length > 1 && (
+                      <TableCell
+                        key={`${i}`}
+                        align={'center'}
+                        colSpan={gradeColumn.assignmentsBoard.length}
+                        sx={{
+                          minWidth: 120,
+                          backgroundColor: '#f3f4f6',
+                          fontWeight: 'bold',
+                          borderRight: '1px solid #ddd',
+                        }}
+                      >
+                        <div className="flex flex-row items-center justify-between">
+                          <div></div>
+                          <div>
+                            {gradeColumn.viewable && (
+                              <Tooltip
+                                title={t('markAsFinalized')}
+                                placement="bottom"
+                              >
+                                <TaskAltIcon fontSize="small" color="success" />
+                              </Tooltip>
+                            )}
+                            <span className="ml-3">
+                              {gradeColumn.compositionName}
+                            </span>
+                          </div>
+                          <div>
+                            {gradeColumn.viewable === false && (
+                              <Tooltip
+                                title={t('returnGradeAssignment')}
+                                placement="bottom"
+                              >
+                                <AssignmentReturnedIcon
+                                  fontSize="small"
+                                  color="primary"
+                                  sx={{ cursor: 'pointer' }}
+                                  onClick={() =>
+                                    onReturnGradeAssignment(
+                                      gradeColumn.compositionId,
+                                    )
+                                  }
+                                />
+                              </Tooltip>
+                            )}
+                          </div>
+                        </div>
+                        <div className="py-1  text-center text-xs text-gray-500 font-thin">
+                          {gradeColumn.compositionWeight}%
+                        </div>
+                      </TableCell>
+                    ),
+                )}
+              </TableRow>
+              <TableRow>
                 {gradeBoardColumns?.map(
                   (gradeColumn, i) =>
                     gradeColumn.assignmentsBoard?.map((assignment, index) => (
@@ -186,7 +268,6 @@ export default function StickyHeadTable({
                         <GradeHeaderDropdown
                           name={assignment?.assignmentName}
                           totalMark={assignment?.maxScore}
-                          gradeCategory={gradeColumn?.compositionName}
                           onDownloadGradeTemplate={() =>
                             onDownloadGradeTemplate(assignment)
                           }
