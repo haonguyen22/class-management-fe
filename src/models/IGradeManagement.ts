@@ -20,6 +20,7 @@ export interface IGrade {
 }
 
 export interface IStudentList {
-  studentId: number;
+  studentId: string;
   fullName: string;
+  grade: number;
 }
