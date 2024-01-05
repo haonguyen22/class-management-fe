@@ -21,15 +21,17 @@ import {
 } from '../../models/IGradeManagement';
 import { enqueueSnackbar } from 'notistack';
 import { debounce } from 'lodash';
-import { gradeService } from '../../services/grade/GradeService';
 import { ClassContext } from '../../context/ClassContext';
 import { downloadFileXlsx } from '../../utils/xlsx';
 import FormUpload from './FormUpload';
 import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
+import * as XLSX from 'xlsx';
 
 export default function StickyHeadTable({
   setLoading,
+  flag,
 }: {
+  flag: number;
   setLoading: (isLoading: boolean) => void;
 }) {
   const { id } = useParams<{ id: string }>();
@@ -37,6 +39,7 @@ export default function StickyHeadTable({
   const { t } = useTranslation();
 
   const { classDetail } = useContext(ClassContext);
+  const [dataBoard, setDataBoard] = useState<string[][]>([[], []]); // Data export to grade board excel
 
   const [localLoading, setLocalLoading] = useState<string>();
 
@@ -46,6 +49,8 @@ export default function StickyHeadTable({
   const [gradeBoardColumns, setGradeBoardColumns] = useState<
     IGradeBoardColumn[]
   >([]);
+
+  const [finalGrade] = useState<number[]>([]);
 
   const [studentList, setStudentList] = useState<IStudentList[]>([]);
 
@@ -75,7 +80,6 @@ export default function StickyHeadTable({
         setStudentList(res.studentList);
       },
       ifFailed: (error) => {
-        console.log(error);
         enqueueSnackbar(error.message, { variant: 'error' });
       },
     });
@@ -174,6 +178,67 @@ export default function StickyHeadTable({
     setLoading(false);
   };
 
+  const exportGradeBoard = async () => {
+    setLoading(true);
+    setDataBoard([[], []]);
+    dataBoard[0].push('');
+    dataBoard[0].push('');
+    dataBoard[0].push('');
+    dataBoard[1].push('StudentId');
+    dataBoard[1].push('StudentName');
+    dataBoard[1].push('Final');
+    const mergeCell = new Array<string>();
+    let startCol = 3;
+    // Add assignment name to data board
+    gradeBoardColumns?.forEach((gradeColumn) => {
+      if (gradeColumn.assignmentsBoard?.length > 0 ?? false) {
+        mergeCell.push(
+          `${XLSX.utils.encode_cell({
+            c: startCol,
+            r: 0,
+          })}:${XLSX.utils.encode_cell({
+            c: startCol + gradeColumn.assignmentsBoard!.length - 1,
+            r: 0,
+          })}`,
+        );
+        dataBoard[0].push(
+          `${gradeColumn.compositionName} (${gradeColumn.compositionWeight}%)`,
+        );
+        startCol += gradeColumn.assignmentsBoard!.length;
+        dataBoard[0].push(gradeColumn.compositionWeight.toString() + '%');
+        gradeColumn.assignmentsBoard?.forEach((assignment) => {
+          dataBoard[1].push(
+            `${assignment.assignmentName} (${assignment.maxScore})`,
+          );
+        });
+      }
+    });
+
+    // Add student data to data board
+
+    studentList?.forEach((student, studentIdx) => {
+      const studentData = new Array<string>();
+      studentData.push(student.studentId.toString());
+      studentData.push(student.fullName);
+      studentData.push(`${finalGrade[studentIdx].toFixed(2)}%`);
+      gradeBoardColumns?.forEach((gradeColumn) => {
+        gradeColumn.assignmentsBoard?.forEach((assignment) => {
+          studentData.push(`${assignment.gradesBoard[studentIdx].value}`);
+        });
+      });
+      dataBoard.push(studentData);
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet(dataBoard);
+    ws['!merges'] = mergeCell.map((merge) => XLSX.utils.decode_range(merge));
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, classDetail?.name);
+    XLSX.writeFile(wb, `[${classDetail?.name}]-GradeBoard.xlsx`);
+
+    setLoading(false);
+  };
+
   const calcFinalScore = (studentIdx: number) => {
     const allCompositions = new Array<number>();
     gradeBoardColumns?.forEach((gradeColumn) => {
@@ -201,10 +266,16 @@ export default function StickyHeadTable({
         : (total / totalScore) * allGradeBoard!.compositionWeight!;
     });
 
-    return Math.min(
+    const finalScore = Math.min(
       totalGradeComposition.reduce((prev, curr) => prev + curr, 0),
       100,
     );
+    if (finalGrade.length > studentIdx) {
+      finalGrade[studentIdx] = finalScore;
+    } else {
+      finalGrade.push(finalScore);
+    }
+    return finalScore;
   };
 
   const onChangeInputGrade = async (
@@ -239,6 +310,10 @@ export default function StickyHeadTable({
   useEffect(() => {
     getTotalGradeBoard();
   }, []);
+
+  useEffect(() => {
+    if (flag !== 0) exportGradeBoard();
+  }, [flag]);
 
   return (
     <>
@@ -303,7 +378,7 @@ export default function StickyHeadTable({
                       >
                         <div className="flex flex-row items-center justify-between">
                           <div></div>
-                          <div>
+                          <div className="flex flex-row items-center justify-center">
                             {gradeColumn.viewable && (
                               <Tooltip
                                 title={t('markAsFinalized')}
@@ -312,12 +387,13 @@ export default function StickyHeadTable({
                                 <TaskAltIcon fontSize="small" color="success" />
                               </Tooltip>
                             )}
-                            <span className="ml-3">
+                            <span className="ml-2">
                               {gradeColumn.compositionName}
                             </span>
                           </div>
                           <div>
                             {gradeColumn.viewable === false && (
+                              // === false
                               <Tooltip
                                 title={t('returnGradeAssignment')}
                                 placement="bottom"
@@ -410,7 +486,7 @@ export default function StickyHeadTable({
                           textAlign: 'center',
                         }}
                       >
-                        {calcFinalScore(studentIdx).toFixed(2)}%
+                        {calcFinalScore(studentIdx)?.toFixed(2) ?? 0}%
                       </TableCell>
                       {gradeBoardColumns?.map((gradeColumn, gradeColumnIdx) => {
                         return gradeColumn.assignmentsBoard?.map(
