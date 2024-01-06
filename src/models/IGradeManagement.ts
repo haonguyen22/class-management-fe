@@ -10,6 +10,7 @@ export interface IGradeAssignment {
   assignmentId: number;
   assignmentName: string;
   maxScore: number;
+  value?: unknown;
   gradesBoard: IGrade[];
 }
 

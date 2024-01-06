@@ -16,6 +16,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 const GradeTab = () => {
   const { id } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(false);
+  const {role} = useContext(ClassContext);
   const { enqueueSnackbar } = useSnackbar();
   const { classDetail } = useContext(ClassContext);
   const { t } = useTranslation();
@@ -67,37 +68,39 @@ const GradeTab = () => {
 
   return (
     <>
-      <div className="flex flex-row items-center justify-between">
-        <div className="flex gap-3 mb-3">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={!isLoading ? handleStudenListTemplate : undefined}
-          >
-            <>
-              <DownloadIcon />
-              <span className="ml-2">{t('studentTemplate')}</span>
-            </>
-          </Button>
+      { role && role !== 'student' &&
+        <div className="flex flex-row items-center justify-between">
+          <div className="flex gap-3 mb-3">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={!isLoading ? handleStudenListTemplate : undefined}
+            >
+              <>
+                <DownloadIcon />
+                <span className="ml-2">{t('studentTemplate')}</span>
+              </>
+            </Button>
 
-          <Button variant="contained" color="primary" onClick={handleOpen}>
-            <FileUploadIcon />
-            <span className="ml-2">{t('uploadStudent')}</span>
-          </Button>
-          <Button variant="contained" color="primary">
-            <ExitToAppIcon />
-            <span className="ml-2">{t('exportGradeBoard')}</span>
-          </Button>
-          <FormUpload
-            handleSubmit={onSubmitStudentListFile}
-            titleForm={t('FormUpload.titleStudentList')}
-            open={open}
-            setOpen={setOpen}
-          />
+            <Button variant="contained" color="primary" onClick={handleOpen}>
+              <FileUploadIcon />
+              <span className="ml-2">{t('uploadStudent')}</span>
+            </Button>
+            <Button variant="contained" color="primary">
+              <ExitToAppIcon />
+              <span className="ml-2">{t('exportGradeBoard')}</span>
+            </Button>
+            <FormUpload
+              handleSubmit={onSubmitStudentListFile}
+              titleForm={t('FormUpload.titleStudentList')}
+              open={open}
+              setOpen={setOpen}
+            />
+          </div>
+          {/* Loading */}
+          {isLoading && <CircularProgress size={30} />}
         </div>
-        {/* Loading */}
-        {isLoading && <CircularProgress size={30} />}
-      </div>
+      }
       <GradeManagementTable setLoading={setIsLoading} />
     </>
   );

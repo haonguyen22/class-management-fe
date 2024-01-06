@@ -109,20 +109,26 @@ export const ClassDetailNav = ({ children }: { children: React.ReactNode }) => {
     navigate(path);
   };
 
+  const checkRole = (role: string) => {
+    if (role === Role.STUDENT || role === Role.NONE) return true;
+    return false;
+  };
+
   return (
     <ClassContext.Provider
       value={{ role, setRole, classDetail, setClassDetail, isLoading }}
     >
       <Box sx={{ borderBottom: 1, borderColor: 'gray' }}>
         <Tabs value={value} aria-label="basic tabs example">
-          {NavList.map((item, index) => (
+          {NavList.map((item, index) =>
+          checkRole(role) && [t('settings'), t('homeworks')].indexOf(item.name)!==-1 ? null :
             <Tab
               sx={{ fontWeight: '550', fontSize: '13px', paddingX: 4 }}
               label={item.name}
               key={index}
               onClick={() => handleClick(index, item.path)}
             />
-          ))}
+          )}
         </Tabs>
       </Box>
       <div className="mt-8" />

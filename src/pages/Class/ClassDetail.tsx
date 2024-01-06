@@ -9,6 +9,7 @@ import { CircularProgress } from '@mui/material';
 import { classService } from '../../services/class/ClassService';
 import { ClassContext } from '../../context/ClassContext';
 import { Role } from '../../enums/RoleClass';
+import { IClass } from '../../models/IClass';
 
 const ClassDetail = () => {
   const { t } = useTranslation();
@@ -45,8 +46,21 @@ const ClassDetail = () => {
     });
   }
 
+  const getClassDetail = async () => {
+    await apiCall(classService.getClassInfo(id!), {
+      ifSuccess: (data) => {
+        const classDetail = data.metadata as IClass;
+        setClassDetail(classDetail);
+      },
+      ifFailed: () => {
+        console.log('🐛 Get class detail error');
+      },
+    });
+  };
+
   useEffect(() => {
     if (role === Role.TEACHER) getClassCode();
+    getClassDetail();
   }, [id, role]);
 
   if (isLoading)
