@@ -25,6 +25,7 @@ import { ClassContext } from '../../context/ClassContext';
 import { downloadFileXlsx } from '../../utils/xlsx';
 import FormUpload from './FormUpload';
 import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
+import { Role } from '../../enums/RoleClass';
 import * as XLSX from 'xlsx';
 
 export default function StickyHeadTable({
@@ -42,6 +43,8 @@ export default function StickyHeadTable({
   const [dataBoard, setDataBoard] = useState<string[][]>([[], []]); // Data export to grade board excel
 
   const [localLoading, setLocalLoading] = useState<string>();
+
+  const { role } = useContext(ClassContext);
 
   const [openUpload, setOpenUpload] = useState(false);
   const [page, setPage] = useState(0);
@@ -80,6 +83,25 @@ export default function StickyHeadTable({
         setStudentList(res.studentList);
       },
       ifFailed: (error) => {
+        enqueueSnackbar(error.message, { variant: 'error' });
+      },
+    });
+  };
+
+  const getGradeStudentBoard = async () => {
+    await apiCall(gradeManagementService.getGradeStudentBoard(parseInt(id!)), {
+      ifSuccess: (data) => {
+        console.log(data);
+        const res = data.metadata as {
+          totalGradeBoard: IGradeBoardColumn[];
+          student: IStudentList[];
+        };
+        console.log(res);
+        setGradeBoardColumns(res.totalGradeBoard);
+        setStudentList(res.student);
+      },
+      ifFailed: (error) => {
+        console.log(error);
         enqueueSnackbar(error.message, { variant: 'error' });
       },
     });
@@ -308,8 +330,9 @@ export default function StickyHeadTable({
   };
 
   useEffect(() => {
-    getTotalGradeBoard();
-  }, []);
+    role === Role.TEACHER && getTotalGradeBoard();
+    role === Role.STUDENT && getGradeStudentBoard();
+  }, [role]);
 
   useEffect(() => {
     if (flag !== 0) exportGradeBoard();
@@ -364,7 +387,7 @@ export default function StickyHeadTable({
                 </TableCell>
                 {gradeBoardColumns?.map(
                   (gradeColumn, i) =>
-                    gradeColumn.assignmentsBoard?.length > 1 && (
+                    gradeColumn.assignmentsBoard?.length >= 1 && (
                       <TableCell
                         key={`${i}`}
                         align={'center'}
@@ -434,6 +457,7 @@ export default function StickyHeadTable({
                         }}
                       >
                         <GradeHeaderDropdown
+                          role={role}
                           name={assignment?.assignmentName}
                           totalMark={assignment?.maxScore}
                           onDownloadGradeTemplate={() =>
@@ -503,7 +527,7 @@ export default function StickyHeadTable({
                                   textAlign: 'center',
                                 }}
                               >
-                                {isEdit ? (
+                                {role !== Role.NONE && role !== Role.STUDENT ? (
                                   <div className="flex flex-col items-center">
                                     <Input
                                       type="number"
@@ -562,7 +586,7 @@ export default function StickyHeadTable({
                                     )}
                                   </div>
                                 ) : (
-                                  assignment.gradesBoard[studentIdx].value
+                                  `${assignment.value != false && assignment.value ? assignment.value+'/'+assignment.maxScore:''}`
                                 )}
                               </TableCell>
                             );

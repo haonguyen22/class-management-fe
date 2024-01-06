@@ -62,6 +62,13 @@ class GradeManagementService {
     return res;
   }
 
+  async getGradeStudentBoard(classId: number) {
+    const res = await api.get('/grade-management/view-grade-board', {
+      headers: { 'class-id': classId },
+    });
+    return res;
+  }
+
   async downloadStudentListTemplate(classId: number) {
     const res = await api.get('/grade-management/student-list-template', {
       headers: { 'class-id': classId },

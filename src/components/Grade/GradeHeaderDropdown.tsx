@@ -6,10 +6,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import UploadIcon from '@mui/icons-material/Upload';
 import { useTranslation } from 'react-i18next';
+import { Role } from '../../enums/RoleClass';
 
 interface IGradeHeaderDropdown {
   name: string;
   totalMark?: number;
+  role?: string;
   onDownloadGradeTemplate?: () => void;
   onUploadGrade?: () => void;
   onEdit?: () => void;
@@ -19,6 +21,7 @@ interface IGradeHeaderDropdown {
 const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
   name,
   totalMark,
+  role,
   onDownloadGradeTemplate,
   onUploadGrade,
   onEdit,
@@ -38,11 +41,11 @@ const GradeHeaderDropdown: React.FC<IGradeHeaderDropdown> = ({
   };
 
   const handleHover = () => {
-    setIsHover(true);
+    role !== Role.NONE && role !== 'student' && setIsHover(true);
   };
 
   const handleLeave = () => {
-    setIsHover(false);
+    role !== Role.NONE && role !== 'student' && setIsHover(false);
   };
 
   const LabelButton = [
