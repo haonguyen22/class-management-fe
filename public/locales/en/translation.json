@@ -151,5 +151,10 @@
   "uploadGradeAssignment": "Upload grade assignment",
   "outOf": "out of",
   "markAsFinalized": "Mark as finalized",
-  "returnGradeAssignment": "Return grade assignment"
+  "returnGradeAssignment": "Return grade assignment",
+  "gradeReview.ExpectedValueLabel": "Expected value",
+  "expectedValue": "Expected value",
+  "gradeReview.AssignmentLabel": "Assignment",
+  "assignment": "Assignment",
+  "gradeReview.messageLabel": "Message"
 }
