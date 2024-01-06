@@ -27,6 +27,7 @@ import FormUpload from './FormUpload';
 import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
 import { Role } from '../../enums/RoleClass';
 import * as XLSX from 'xlsx';
+import GradeReviewButton from '../../pages/Grade/GradeReviewButton';
 
 export default function StickyHeadTable({
   setLoading,
@@ -69,7 +70,6 @@ export default function StickyHeadTable({
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const isEdit = true;
 
   const getTotalGradeBoard = async () => {
     await apiCall(gradeManagementService.getTotalGradeBoard(parseInt(id!)), {
@@ -586,7 +586,14 @@ export default function StickyHeadTable({
                                     )}
                                   </div>
                                 ) : (
-                                  `${assignment.value != false && assignment.value ? assignment.value+'/'+assignment.maxScore:''}`
+                                  assignment.value != false && assignment.value
+                                  ? <GradeReviewButton
+                                    value={assignment.value}
+                                    maxScore={assignment.maxScore}
+                                    classId={parseInt(id!)}
+                                    assignmentName={assignment.assignmentName}
+                                    assignmentId={assignment.assignmentId}/>
+                                  : ''
                                 )}
                               </TableCell>
                             );

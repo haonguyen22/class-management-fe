@@ -149,5 +149,10 @@
   "uploadGradeAssignment": "Tải bảng điểm bài tập",
   "outOf": "trên",
   "markAsFinalized": "Đánh dấu là đã tổng kết",
-  "returnGradeAssignment": "Trả bảng điểm bài tập"
+  "returnGradeAssignment": "Trả bảng điểm bài tập",
+  "gradeReview.ExpectedValueLabel": "Điểm mong muốn",
+  "expectedValue": "Điểm mong muốn",
+  "gradeReview.AssignmentLabel": "Bài tập",
+  "assignment": "Bài tập",
+  "gradeReview.messageLabel": "Lời nhắn"
 }
