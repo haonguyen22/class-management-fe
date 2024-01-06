@@ -4,7 +4,6 @@ import DownloadIcon from '@mui/icons-material/Download';
 import FormUpload from '../../components/Grade/FormUpload';
 import { useParams } from 'react-router-dom';
 import { apiCall } from '../../utils/apiCall';
-import { gradeService } from '../../services/grade/GradeService';
 import { useSnackbar } from 'notistack';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +11,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { downloadFileXlsx } from '../../utils/xlsx';
 import { ClassContext } from '../../context/ClassContext';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import { gradeManagementService } from '../../services/gradeManagement/GradeManagementService';
 
 const GradeTab = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,6 +21,7 @@ const GradeTab = () => {
   const { classDetail } = useContext(ClassContext);
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [flag, setFlag] = useState(0);
 
   const handleOpen = () => {
     setOpen(true);
@@ -28,42 +29,48 @@ const GradeTab = () => {
 
   const handleStudenListTemplate = async () => {
     setIsLoading(true);
-    await apiCall(gradeService.downloadStudentListTemplate(parseInt(id!)), {
-      ifSuccess: (data) => {
-        downloadFileXlsx({
-          data: data as unknown as Blob,
-          fileName: `${classDetail?.name}-student-list-template`,
-        });
+    await apiCall(
+      gradeManagementService.downloadStudentListTemplate(parseInt(id!)),
+      {
+        ifSuccess: (data) => {
+          downloadFileXlsx({
+            data: data as unknown as Blob,
+            fileName: `${classDetail?.name}-student-list-template`,
+          });
 
-        enqueueSnackbar('Download success', {
-          variant: 'success',
-        });
-        setIsLoading(false);
+          enqueueSnackbar('Download success', {
+            variant: 'success',
+          });
+          setIsLoading(false);
+        },
+        ifFailed: (err) => {
+          enqueueSnackbar(err?.message ?? err.response?.data?.message, {
+            variant: 'error',
+          });
+        },
       },
-      ifFailed: (err) => {
-        enqueueSnackbar(err?.message ?? err.response?.data?.message, {
-          variant: 'error',
-        });
-      },
-    });
+    );
   };
 
   const onSubmitStudentListFile = async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
 
-    await apiCall(gradeService.uploadStudentList(parseInt(id!), formData), {
-      ifSuccess: (data) => {
-        enqueueSnackbar(data.message, {
-          variant: 'success',
-        });
+    await apiCall(
+      gradeManagementService.uploadStudentList(parseInt(id!), formData),
+      {
+        ifSuccess: (data) => {
+          enqueueSnackbar(data.message, {
+            variant: 'success',
+          });
+        },
+        ifFailed(err) {
+          enqueueSnackbar(err?.message ?? err.response?.data?.message, {
+            variant: 'error',
+          });
+        },
       },
-      ifFailed(err) {
-        enqueueSnackbar(err?.message ?? err.response?.data?.message, {
-          variant: 'error',
-        });
-      },
-    });
+    );
   };
 
   return (
@@ -86,7 +93,11 @@ const GradeTab = () => {
               <FileUploadIcon />
               <span className="ml-2">{t('uploadStudent')}</span>
             </Button>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setFlag(flag + 1)}
+            >
               <ExitToAppIcon />
               <span className="ml-2">{t('exportGradeBoard')}</span>
             </Button>
@@ -101,7 +112,7 @@ const GradeTab = () => {
           {isLoading && <CircularProgress size={30} />}
         </div>
       }
-      <GradeManagementTable setLoading={setIsLoading} />
+      <GradeManagementTable setLoading={setIsLoading} flag={flag} />
     </>
   );
 };
