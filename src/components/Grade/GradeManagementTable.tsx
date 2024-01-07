@@ -89,6 +89,7 @@ export default function StickyHeadTable({
   };
 
   const getGradeStudentBoard = async () => {
+    setLoading(true);
     await apiCall(gradeManagementService.getGradeStudentBoard(parseInt(id!)), {
       ifSuccess: (data) => {
         console.log(data);
@@ -105,6 +106,7 @@ export default function StickyHeadTable({
         enqueueSnackbar(error.message, { variant: 'error' });
       },
     });
+    setLoading(false);
   };
 
   const handleUpdateGrade = async (
@@ -133,7 +135,7 @@ export default function StickyHeadTable({
   };
 
   const onDownloadGradeTemplate = async (assignment: IGradeAssignment) => {
-    setLoading;
+    setLoading(true);
     await apiCall(
       gradeManagementService.downloadTemplateGradeAssignment(
         parseInt(id!),
@@ -190,7 +192,13 @@ export default function StickyHeadTable({
       {
         ifSuccess: (data) => {
           enqueueSnackbar(data.message, { variant: 'success' });
-          getTotalGradeBoard();
+          setGradeBoardColumns((prev) =>
+            prev.map((item) =>
+              item.compositionId === gradeCompositionId
+                ? { ...item, viewable: true }
+                : item,
+            ),
+          );
         },
         ifFailed: (error) => {
           enqueueSnackbar(error.message, { variant: 'error' });
@@ -205,7 +213,7 @@ export default function StickyHeadTable({
     setDataBoard([[], []]);
     dataBoard[0].push('');
     dataBoard[0].push('');
-    dataBoard[0].push('');
+    dataBoard[0].push('100%');
     dataBoard[1].push('StudentId');
     dataBoard[1].push('StudentName');
     dataBoard[1].push('Final');
@@ -564,6 +572,7 @@ export default function StickyHeadTable({
                                         marginRight: 'auto',
                                         marginBottom: '4px',
                                         width: 'fit-content',
+                                        maxWidth: '100px',
                                         fontSize: `${
                                           isLocalLoading ? '12px' : '16px'
                                         }`,
@@ -585,15 +594,17 @@ export default function StickyHeadTable({
                                       </span>
                                     )}
                                   </div>
-                                ) : (
-                                  assignment.value != false && assignment.value
-                                  ? <GradeReviewButton
+                                ) : assignment.value != false &&
+                                  assignment.value ? (
+                                  <GradeReviewButton
                                     value={assignment.value}
                                     maxScore={assignment.maxScore}
                                     classId={parseInt(id!)}
                                     assignmentName={assignment.assignmentName}
-                                    assignmentId={assignment.assignmentId}/>
-                                  : ''
+                                    assignmentId={assignment.assignmentId}
+                                  />
+                                ) : (
+                                  ''
                                 )}
                               </TableCell>
                             );

@@ -154,5 +154,6 @@
   "expectedValue": "Điểm mong muốn",
   "gradeReview.AssignmentLabel": "Bài tập",
   "assignment": "Bài tập",
-  "gradeReview.messageLabel": "Lời nhắn"
+  "gradeReview.messageLabel": "Lời nhắn",
+  "admin": "Quản trị viên"
 }

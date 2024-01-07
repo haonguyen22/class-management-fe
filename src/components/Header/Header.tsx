@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import localeContext from '../../context/LocaleContext';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -8,12 +8,18 @@ import Logo from '../../common/Logo';
 import AddClassButton from '../Class/AddClassButton';
 import AccountMenu from './AccountMenu';
 import NotificationButton from '../../common/NotificationButton';
+import { GlobalContext } from '../../context/GlobalContext';
 
 function Header() {
   const { locale } = useContext(localeContext);
   const { t } = useTranslation();
   const isAuthenticate = useIsAuthenticated();
   const location = useLocation();
+  const { fetchNotifications } = useContext(GlobalContext);
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
 
   return (
     <div>

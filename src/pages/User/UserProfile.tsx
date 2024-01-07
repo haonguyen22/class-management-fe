@@ -104,10 +104,10 @@ function UserProfilePage() {
     setIsLoading(true);
     await apiCall(userService.updateAvatar(file!), {
       ifSuccess: (data) => {
-        const res = data.metadata as { backgroundImage: string };
+        const res = data.metadata as { avatar: string };
         setProfile({
           ...profile,
-          avatar: res.backgroundImage,
+          avatar: res.avatar,
         });
         enqueueSnackbar(t('saveSuccess'), { variant: 'success' });
       },

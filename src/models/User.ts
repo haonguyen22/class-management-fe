@@ -14,3 +14,10 @@ export interface UpdateUserDTO {
   address?: string;
   studentId?: string;
 }
+
+export interface INotification {
+  id: number;
+  title: string;
+  notificationType: string;
+  link: string;
+}

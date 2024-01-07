@@ -156,5 +156,6 @@
   "expectedValue": "Expected value",
   "gradeReview.AssignmentLabel": "Assignment",
   "assignment": "Assignment",
-  "gradeReview.messageLabel": "Message"
+  "gradeReview.messageLabel": "Message",
+  "admin": "Admin"
 }

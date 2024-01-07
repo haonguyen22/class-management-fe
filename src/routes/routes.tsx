@@ -30,6 +30,7 @@ import HomeworkList from '../pages/Homework/HomeworkList';
 import CreateHomework from '../pages/Homework/CreateHomework';
 import UserProfilePage from '../pages/User/UserProfile';
 import GradeTab from '../pages/Grade/GradeTab';
+import AdminPage from '../pages/Admin';
 
 export const RouteList = {
   home: '/',
@@ -52,6 +53,8 @@ export const RouteList = {
   classSettings: '/class/:id/settings',
   classHomeworks: '/class/:id/homeworks',
   createClassHomworks: '/class/:id/homeworks/create',
+
+  admin: '/admin',
 };
 
 function Routes() {
@@ -76,6 +79,9 @@ function Routes() {
             </>
           }
         >
+          <Route path={RouteList.admin}>
+            <Route path="" element={<AdminPage />} />
+          </Route>
           <Route path={RouteList.login} element={<LoginPage />} />,
           <Route path={RouteList.signup} element={<SignUpPage />} />,
           <Route path={RouteList.resetPassword} element={<ResetPassword />} />
