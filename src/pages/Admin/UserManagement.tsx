@@ -22,14 +22,13 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   TextField,
   Tooltip,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import { set } from 'lodash';
+import { avatarDefault } from '../../constants/globalConst';
 
 interface Column {
   id:
@@ -78,12 +77,12 @@ export default function UserManagementPage() {
 
   const columns: Column[] = [
     { id: 'userId', label: t('userId'), minWidth: 100 },
-    { id: 'studentId', label: t('studentId'), minWidth: 100 },
     {
       id: 'email',
       label: t('email'),
       minWidth: 250,
     },
+    { id: 'studentId', label: t('studentId'), minWidth: 100 },
     {
       id: 'name',
       label: t('name'),
@@ -125,7 +124,11 @@ export default function UserManagementPage() {
         user?.id?.toString() ?? '',
         user?.studentId ?? '',
         <div className="flex items-center">
-          <Avatar alt={user?.name} src={user?.avatar} className="mr-4" />
+          <Avatar
+            alt={user?.name}
+            src={user?.avatar ?? avatarDefault}
+            className="mr-4"
+          />
           {user?.email ?? ''}
         </div>,
         user?.name ?? '',

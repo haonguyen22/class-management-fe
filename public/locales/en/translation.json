@@ -167,5 +167,12 @@
   "editUser": "Edit user",
   "blockSuccess": "Block user successfully",
   "deleteSuccess": "Delete user successfully",
-  "editSuccess": "Edit user successfully"
+  "editSuccess": "Edit user successfully",
+  "delete": "Delete",
+  "classId": "Class ID",
+  "numOfStudent/numOfTeacher": "Number of student / teacher",
+  "status": "Status",
+  "inactive": "Inactive",
+  "inactiveClass": "Inactive class",
+  "activeClass": "Active class"
 }

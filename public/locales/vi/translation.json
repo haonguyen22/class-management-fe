@@ -165,5 +165,13 @@
   "editUser": "Chỉnh sửa người dùng",
   "blockSuccess": "Khóa tài khoản thành công",
   "deleteSuccess": "Xóa tài khoản thành công",
-  "editSuccess": "Chỉnh sửa tài khoản thành công"
+  "editSuccess": "Chỉnh sửa tài khoản thành công",
+  "delete": "Xóa",
+
+  "classId": "Mã lớp học",
+  "numOfStudent/numOfTeacher": "Số lượng học sinh/giáo viên",
+  "status": "Trạng thái",
+  "inactive": "Không hoạt động",
+  "inactiveClass": "Chuyển sang không hoạt động?",
+  "activeClass": "Kích hoạt lớp học?"
 }
