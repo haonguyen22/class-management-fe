@@ -174,5 +174,11 @@
   "status": "Status",
   "inactive": "Inactive",
   "inactiveClass": "Inactive class",
-  "activeClass": "Active class"
+  "activeClass": "Active class",
+  "filter": "Filter",
+  "none": "None",
+  "searchByClassName": "Search by class name",
+  "createdAt": "Created at",
+  "asc": "Ascending",
+  "desc": "Descending"
 }

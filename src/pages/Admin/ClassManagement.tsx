@@ -17,11 +17,15 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
 } from '@mui/material';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { set } from 'lodash';
+import { debounce } from 'lodash';
 
 interface Column {
   id:
@@ -38,6 +42,12 @@ interface Column {
   align?: 'center';
 }
 
+interface FilterClass {
+  sortField?: string;
+  order?: string;
+  search?: string;
+}
+
 interface Data {
   name: string;
   id: string;
@@ -46,6 +56,8 @@ interface Data {
   quantity: React.ReactNode;
   activted: React.ReactNode;
 }
+
+
 
 export default function StickyHeadTable() {
   const { t } = useTranslation();
@@ -78,12 +90,23 @@ export default function StickyHeadTable() {
     },
   ];
 
+  const SortField = [
+    { value: 'name', label: t('name') },
+    { value: 'createdAt', label: t('createdAt') },
+  ];
+
+  const Order = [
+    { value: 'asc', label: t('asc') },
+    { value: 'desc', label: t('desc')},
+  ];
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [classes, setClasses] = React.useState<IClass[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedClass, setSelectedClass] = React.useState<IClass | null>(null);
+  const [filter, setFilter] = React.useState<FilterClass>({});
   const total = React.useRef(0);
 
   const open = Boolean(anchorEl);
@@ -102,7 +125,7 @@ export default function StickyHeadTable() {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setRowsPerPage(+event.target.value);
-    setPage(0);
+    setPage(1);
   };
 
   const rows: Data[] =
@@ -203,18 +226,131 @@ export default function StickyHeadTable() {
     });
   };
 
+  const debounceFetchClass = React.useCallback(
+    debounce((nextValue) => {
+      setPage(1);
+      fetchClasses(nextValue);
+    }, 1000),
+    [],
+  );
+
+  const onFilterChange = (e: SelectChangeEvent<string>) => {
+    const { name, value } = e.target;
+    const filterValue = {
+      ...filter,
+      [name]: value,
+    };
+    setFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+    if (
+      e.target.value !== undefined &&
+      filterValue.order !== undefined &&
+      filterValue.sortField !== undefined
+    ) {
+      debounceFetchClass({
+        ...filterValue,
+        page: page,
+        limit: rowsPerPage,
+      });
+    }
+  };
+
   React.useEffect(() => {
-    fetchClasses({ page: page + 1 });
-  }, [page]);
+    fetchClasses({ page: page + 1, limit: rowsPerPage, ...filter });
+  }, [page, rowsPerPage]);
 
   return (
-    <>
+    <div className="flex flex-col">
       <div className="flex flex-row items-center justify-between h-8">
         <div className="text-lg mb-4 font-bold">{t('classManagement')}</div>
         <div className="text-sm mb-4 font-bold">
           {isLoading && <CircularProgress />}
         </div>
       </div>
+      {/* Filter */}
+      <div className="flex flex-row items-center justify-between mb-4 h-10">
+        <div className="flex flex-row items-center">
+          <FilterListIcon sx={{ marginRight: 4 }} />
+          <Select
+            value={filter.sortField}
+            name="sortField"
+            onChange={onFilterChange}
+            sx={{
+              minWidth: 120,
+              mr: 4,
+              height: 40,
+            }}
+            displayEmpty
+            inputProps={{ 'aria-label': 'Without label' }}
+          >
+            <MenuItem value={undefined}>
+              <em>{t('none')}</em>
+            </MenuItem>{' '}
+            {SortField.map((s) => (
+              <MenuItem key={s.label} value={s.value}>
+                {s.label}
+              </MenuItem>
+            ))}
+          </Select>{' '}
+          <Select
+            value={filter.order}
+            onChange={onFilterChange}
+            name="order"
+            sx={{
+              minWidth: 120,
+              mr: 4,
+              height: 40,
+            }}
+            displayEmpty
+            inputProps={{ 'aria-label': 'Without label' }}
+          >
+            <MenuItem value={undefined}>
+              <em>{t('none')}</em>
+            </MenuItem>
+            {Order.map((o) => (
+              <MenuItem key={o.label} value={o.value}>
+                {o.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+        <div className="flex flex-row items-center">
+          <TextField
+            id="outlined-basic"
+            label={t('searchByClassName')}
+            variant="outlined"
+            size="small"
+            name="search"
+            onChange={(e) => {
+              const { value } = e.target;
+              const filterValue = {
+                ...filter,
+                search: value,
+              };
+              setFilter((prev) => {
+                return {
+                  ...prev,
+                  search: value,
+                };
+              });
+              if (value !== undefined) {
+                debounceFetchClass({
+                  ...filterValue,
+                  page: page,
+                  limit: rowsPerPage,
+                });
+              }
+            }}
+          />{' '}
+        </div>
+      </div>
+
+      {/* Table */}
+
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer>
           <Table stickyHeader aria-label="sticky table">
@@ -331,6 +467,6 @@ export default function StickyHeadTable() {
           {selectedClass?.isActive ? t('inactiveClass') : t('activeClass')}
         </MenuItem>
       </Menu>
-    </>
+    </div>
   );
 }

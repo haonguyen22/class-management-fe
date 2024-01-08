@@ -173,5 +173,11 @@
   "status": "Trạng thái",
   "inactive": "Không hoạt động",
   "inactiveClass": "Chuyển sang không hoạt động?",
-  "activeClass": "Kích hoạt lớp học?"
+  "activeClass": "Kích hoạt lớp học?",
+  "filter": "Lọc",
+  "none": "Không",
+  "searchByClassName": "Tìm kiếm theo tên lớp học",
+  "createdAt": "Ngày tạo",
+  "asc": "Tăng dần",
+  "desc": "Giảm dần"
 }
