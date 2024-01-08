@@ -6,6 +6,8 @@ export interface IUser {
   address?: string;
   avatar?: string;
   studentId?: string;
+  role?: string;
+  isActive?: boolean;
 }
 
 export interface UpdateUserDTO {

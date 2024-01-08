@@ -157,5 +157,15 @@
   "gradeReview.AssignmentLabel": "Assignment",
   "assignment": "Assignment",
   "gradeReview.messageLabel": "Message",
-  "admin": "Admin"
+  "admin": "Admin",
+  "classManagement": "Class management",
+  "userMapping": "User mapping",
+  "userManagement": "User management",
+  "role": "Role",
+  "userId": "User ID",
+  "accountNotActivated": "Account is not activated",
+  "editUser": "Edit user",
+  "blockSuccess": "Block user successfully",
+  "deleteSuccess": "Delete user successfully",
+  "editSuccess": "Edit user successfully"
 }

@@ -30,7 +30,9 @@ import HomeworkList from '../pages/Homework/HomeworkList';
 import CreateHomework from '../pages/Homework/CreateHomework';
 import UserProfilePage from '../pages/User/UserProfile';
 import GradeTab from '../pages/Grade/GradeTab';
-import AdminPage from '../pages/Admin';
+import UserManagementAdminPage from '../pages/Admin/UserManagement';
+import UserMappingAdminPage from '../pages/Admin/UserMapping';
+import ClassManagementAdminPage from '../pages/Admin/ClassManagement';
 
 export const RouteList = {
   home: '/',
@@ -54,7 +56,9 @@ export const RouteList = {
   classHomeworks: '/class/:id/homeworks',
   createClassHomworks: '/class/:id/homeworks/create',
 
-  admin: '/admin',
+  adminUsers: '/admin/users',
+  adminClasses: '/admin/classes',
+  adminMapping: '/admin/mapping',
 };
 
 function Routes() {
@@ -79,9 +83,6 @@ function Routes() {
             </>
           }
         >
-          <Route path={RouteList.admin}>
-            <Route path="" element={<AdminPage />} />
-          </Route>
           <Route path={RouteList.login} element={<LoginPage />} />,
           <Route path={RouteList.signup} element={<SignUpPage />} />,
           <Route path={RouteList.resetPassword} element={<ResetPassword />} />
@@ -134,6 +135,9 @@ function Routes() {
               element={<GradeReviewDetail />}
             />
           </Route>
+          <Route path={RouteList.adminUsers} element={<UserManagementAdminPage />} />
+          <Route path={RouteList.adminClasses} element={<ClassManagementAdminPage />} />
+          <Route path={RouteList.adminMapping} element={<UserMappingAdminPage />} />
         </Route>
         <Route
           path={RouteList.forgotPassword}

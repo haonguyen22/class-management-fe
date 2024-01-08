@@ -155,5 +155,15 @@
   "gradeReview.AssignmentLabel": "Bài tập",
   "assignment": "Bài tập",
   "gradeReview.messageLabel": "Lời nhắn",
-  "admin": "Quản trị viên"
+  "admin": "Quản trị viên",
+  "classManagement": "Quản lý lớp học",
+  "userMapping": "Kết nối MSSV và tài khoản",
+  "userManagement": "Quản lý người dùng",
+  "role": "Vai trò",
+  "userId": "Mã số sinh viên",
+  "accountNotActivated": "Tài khoản chưa được kích hoạt",
+  "editUser": "Chỉnh sửa người dùng",
+  "blockSuccess": "Khóa tài khoản thành công",
+  "deleteSuccess": "Xóa tài khoản thành công",
+  "editSuccess": "Chỉnh sửa tài khoản thành công"
 }

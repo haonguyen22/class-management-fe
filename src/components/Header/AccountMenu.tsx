@@ -102,13 +102,6 @@ export default function AccountMenu() {
 
         <Divider />
 
-        <MenuItem onClick={() => navigate(RouteList.admin)}>
-          <ListItemIcon>
-            <AdminPanelSettingsIcon fontSize="small" />
-          </ListItemIcon>
-          {t('admin')}
-        </MenuItem>
-
         <MenuItem
           onClick={() => {
             handleClose();

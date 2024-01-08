@@ -16,6 +16,8 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import SchoolIcon from '@mui/icons-material/School';
 import ListClassDrawer from './ListClassDrawer';
 import { Drawer, DrawerHeader } from './Style';
+import ListAdminButtonDrawer from './ListAdminButtonDrawer';
+import { useAuthUser } from 'react-auth-kit';
 
 export default function MiniDrawer({
   children,
@@ -26,6 +28,7 @@ export default function MiniDrawer({
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const { t } = useTranslation();
+  const auth = useAuthUser();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -35,6 +38,7 @@ export default function MiniDrawer({
     setOpen(false);
   };
 
+  console.log(auth()!.user);
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -56,7 +60,16 @@ export default function MiniDrawer({
 
         <Divider />
 
-        <ListButtonDrawer open={open} />
+        {((auth()!.user?.role as string)?.toLowerCase() === 'admin' ??
+          false) && (
+          <>
+            <ListButtonDrawer open={open} />
+
+            <Divider />
+          </>
+        )}
+
+        <ListAdminButtonDrawer open={open} />
 
         <Divider />
 

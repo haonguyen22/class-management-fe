@@ -6,13 +6,12 @@ import {
   ListItemText,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 import { useTranslation } from 'react-i18next';
+import GradingIcon from '@mui/icons-material/Grading';
 import { RouteList } from '../../routes/routes';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import ClassIcon from '@mui/icons-material/Class';
-import HubIcon from '@mui/icons-material/Hub';
 
-function ListButtonDrawer({ open }: { open: boolean }) {
+function ListAdminButtonDrawer({ open }: { open: boolean }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   return (
@@ -25,7 +24,7 @@ function ListButtonDrawer({ open }: { open: boolean }) {
             justifyContent: open ? 'initial' : 'center',
             px: 2.5,
           }}
-          onClick={() => navigate(RouteList.adminUsers)}
+          onClick={() => navigate('/')}
         >
           <ListItemIcon
             sx={{
@@ -34,15 +33,13 @@ function ListButtonDrawer({ open }: { open: boolean }) {
               justifyContent: 'center',
             }}
           >
-            <AdminPanelSettingsIcon />
+            <HomeIcon />
           </ListItemIcon>
-          <ListItemText
-            primary={t('userManagement')}
-            sx={{ opacity: open ? 1 : 0 }}
-          />
+          <ListItemText primary={t('home')} sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </ListItem>
 
+      {/* My grade review requested */}
       <ListItem disablePadding sx={{ display: 'block' }}>
         <ListItemButton
           sx={{
@@ -50,7 +47,7 @@ function ListButtonDrawer({ open }: { open: boolean }) {
             justifyContent: open ? 'initial' : 'center',
             px: 2.5,
           }}
-          onClick={() => navigate(RouteList.adminMapping)}
+          onClick={() => navigate(RouteList.gradeReview)}
         >
           <ListItemIcon
             sx={{
@@ -59,35 +56,10 @@ function ListButtonDrawer({ open }: { open: boolean }) {
               justifyContent: 'center',
             }}
           >
-            <HubIcon />
+            <GradingIcon />
           </ListItemIcon>
           <ListItemText
-            primary={t('userMapping')}
-            sx={{ opacity: open ? 1 : 0 }}
-          />
-        </ListItemButton>
-      </ListItem>
-
-      <ListItem disablePadding sx={{ display: 'block' }}>
-        <ListItemButton
-          sx={{
-            minHeight: 48,
-            justifyContent: open ? 'initial' : 'center',
-            px: 2.5,
-          }}
-          onClick={() => navigate(RouteList.adminClasses)}
-        >
-          <ListItemIcon
-            sx={{
-              minWidth: 0,
-              mr: open ? 3 : 'auto',
-              justifyContent: 'center',
-            }}
-          >
-            <ClassIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary={t('classManagement')}
+            primary={t('gradeReview')}
             sx={{ opacity: open ? 1 : 0 }}
           />
         </ListItemButton>
@@ -96,4 +68,4 @@ function ListButtonDrawer({ open }: { open: boolean }) {
   );
 }
 
-export default ListButtonDrawer;
+export default ListAdminButtonDrawer;

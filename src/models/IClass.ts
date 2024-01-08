@@ -22,3 +22,8 @@ export interface ClassRole {
   studentClass: IClass[];
   teacherClass: IClass[];
 }
+
+export interface UpdateClassDTO {
+  name?: string;
+  description?: string;
+}

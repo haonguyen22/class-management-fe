@@ -8,7 +8,6 @@ class AuthService {
   }
 
   async signup(data: ISignup) {
-    console.log(data);
     const res = await api.post('/auth/signup', data);
     return res;
   }
