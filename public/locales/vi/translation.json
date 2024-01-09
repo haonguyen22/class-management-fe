@@ -167,7 +167,6 @@
   "deleteSuccess": "Xóa tài khoản thành công",
   "editSuccess": "Chỉnh sửa tài khoản thành công",
   "delete": "Xóa",
-
   "classId": "Mã lớp học",
   "numOfStudent/numOfTeacher": "Số lượng học sinh/giáo viên",
   "status": "Trạng thái",
@@ -179,5 +178,13 @@
   "searchByClassName": "Tìm kiếm theo tên lớp học",
   "createdAt": "Ngày tạo",
   "asc": "Tăng dần",
-  "desc": "Giảm dần"
+  "desc": "Giảm dần",
+  "exportMapListStudent": "Tải mẫu học sinh",
+  "uploadMapListStudent": "Cập nhật danh sách học sinh",
+  "backToClassManagement": "Quay lại quản lý lớp học",
+  "studentListInClass": "Danh sách học sinh trong lớp học",
+  "editStudent": "Chỉnh sửa học sinh",
+  "update": "Cập nhật",
+  "unmap": "Hủy kết nối",
+  "unmapSuccess": "Hủy kết nối thành công"
 }

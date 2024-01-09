@@ -33,3 +33,11 @@ export interface IPagination {
   limit: number;
   total: number;
 }
+
+export interface IClassFilter {
+  sortField: string | undefined;
+  order: string | undefined;
+  page: number;
+  limit: number;
+  search: string | undefined;
+}

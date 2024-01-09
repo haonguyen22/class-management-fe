@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useTranslation } from 'react-i18next';
-import { IClass, IPagination } from '../../models/IClass';
+import { IClass, IClassFilter, IPagination } from '../../models/IClass';
 import { apiCall } from '../../utils/apiCall';
 import { adminService } from '../../services/admin/AdminService';
 import {
@@ -26,6 +26,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { debounce } from 'lodash';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 interface Column {
   id:
@@ -56,8 +57,6 @@ interface Data {
   quantity: React.ReactNode;
   activted: React.ReactNode;
 }
-
-
 
 export default function StickyHeadTable() {
   const { t } = useTranslation();
@@ -97,7 +96,7 @@ export default function StickyHeadTable() {
 
   const Order = [
     { value: 'asc', label: t('asc') },
-    { value: 'desc', label: t('desc')},
+    { value: 'desc', label: t('desc') },
   ];
 
   const [page, setPage] = React.useState(0);
@@ -108,6 +107,7 @@ export default function StickyHeadTable() {
   const [selectedClass, setSelectedClass] = React.useState<IClass | null>(null);
   const [filter, setFilter] = React.useState<FilterClass>({});
   const total = React.useRef(0);
+  const navigate = useNavigate();
 
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -125,7 +125,7 @@ export default function StickyHeadTable() {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setRowsPerPage(+event.target.value);
-    setPage(1);
+    setPage(0);
   };
 
   const rows: Data[] =
@@ -156,41 +156,47 @@ export default function StickyHeadTable() {
     }) ?? [];
 
   const fetchClasses = async ({
-    page,
-    limit,
+    page = 1,
+    limit = 10,
     sortField,
     order,
     search,
   }: {
     page?: number;
     limit?: number;
-    sortField?: string;
-    order?: string;
+    sortField?: string | undefined;
+    order?: string | undefined;
     search?: string;
   }) => {
+    console.log(page, limit, sortField, order, search);
     setIsLoading(true);
-    await apiCall(
-      adminService.fetchAllClasses({
-        page,
-        limit,
+    let body: IClassFilter = {
+      page,
+      limit,
+      search,
+      sortField: undefined,
+      order: undefined,
+    };
+    if (sortField !== undefined && order !== undefined) {
+      body = {
+        ...body,
         sortField,
         order,
-        search,
-      }),
-      {
-        ifSuccess: (res) => {
-          const data = res.metadata as {
-            classes: IClass[];
-            paging: IPagination;
-          };
-          setClasses(data.classes);
-          total.current = data.paging.total;
-        },
-        ifFailed: (err) => {
-          console.log(err);
-        },
+      };
+    }
+    await apiCall(adminService.fetchAllClasses(body), {
+      ifSuccess: (res) => {
+        const data = res.metadata as {
+          classes: IClass[];
+          paging: IPagination;
+        };
+        setClasses(data.classes);
+        total.current = data.paging.total;
       },
-    );
+      ifFailed: (err) => {
+        console.log(err);
+      },
+    });
     setIsLoading(false);
   };
 
@@ -228,7 +234,7 @@ export default function StickyHeadTable() {
 
   const debounceFetchClass = React.useCallback(
     debounce((nextValue) => {
-      setPage(1);
+      setPage(0);
       fetchClasses(nextValue);
     }, 1000),
     [],
@@ -247,9 +253,10 @@ export default function StickyHeadTable() {
       };
     });
     if (
-      e.target.value !== undefined &&
-      filterValue.order !== undefined &&
-      filterValue.sortField !== undefined
+      (e.target.value !== undefined &&
+        filterValue.order !== undefined &&
+        filterValue.sortField !== undefined) ||
+      filterValue.search !== undefined
     ) {
       debounceFetchClass({
         ...filterValue,
@@ -382,7 +389,14 @@ export default function StickyHeadTable() {
                     {columns.map((column) => {
                       const value = row[column.id as keyof typeof row];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          sx={{
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => navigate('/admin/classes/' + row.id)}
+                        >
                           {value}
                         </TableCell>
                       );

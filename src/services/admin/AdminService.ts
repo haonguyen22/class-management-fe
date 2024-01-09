@@ -28,15 +28,31 @@ class AdminService {
     return res;
   }
 
-  async mapStudentIdToUser(id: number, studentId: string) {
-    const res = await api.put(`/admin/users/${id}/map-studentId`, {
-      studentId: studentId,
-    });
+  async mapStudentIdToUser(userId: number, studentId: string, classId: string) {
+    const res = await api.patch(
+      `/admin/users/${userId}/map-studentId`,
+      {
+        studentId: studentId,
+      },
+      {
+        headers: {
+          'class-id': parseInt(classId),
+        },
+      },
+    );
     return res;
   }
 
-  async unMapStudentIdToUser(id: number) {
-    const res = await api.put(`/admin/users/${id}/unmap-studentId`);
+  async unMapStudentIdToUser(userId: number, classId: string) {
+    const res = await api.patch(
+      `/admin/users/${userId}/unmap-studentId`,
+      {},
+      {
+        headers: {
+          'class-id': parseInt(classId),
+        },
+      },
+    );
     return res;
   }
 
@@ -82,6 +98,22 @@ class AdminService {
 
   async inactiveClass(id: number) {
     const res = await api.patch(`/admin/class/${id}/inactive`);
+    return res;
+  }
+
+  async exportUserExcel() {
+    const res = await api.get('/admin/users/export/excel', {
+      responseType: 'blob',
+    });
+    return res;
+  }
+
+  async uploadUserExcel(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await api.patch('/admin/users/map-studentId-excel', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
     return res;
   }
 }

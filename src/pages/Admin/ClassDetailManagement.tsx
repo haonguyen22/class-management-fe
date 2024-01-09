@@ -12,10 +12,8 @@ import { apiCall } from '../../utils/apiCall';
 import { adminService } from '../../services/admin/AdminService';
 import { IUser } from '../../models/User';
 import { enqueueSnackbar } from 'notistack';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PersonIcon from '@mui/icons-material/Person';
-import BlockIcon from '@mui/icons-material/Block';
-import SendIcon from '@mui/icons-material/Send';
+import SpaIcon from '@mui/icons-material/Spa';
 import {
   Avatar,
   Button,
@@ -28,13 +26,11 @@ import {
   Tooltip,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { avatarDefault } from '../../constants/globalConst';
-import DownloadIcon from '@mui/icons-material/Download';
-import UploadIcon from '@mui/icons-material/Upload';
-import { Upload } from '@mui/icons-material';
-import { downloadFileXlsx } from '../../utils/xlsx';
-import FormUpload from '../../components/Grade/FormUpload';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { useNavigate, useParams } from 'react-router-dom';
+import { RouteList } from '../../routes/routes';
+import { classService } from '../../services/class/ClassService';
 
 interface Column {
   id:
@@ -62,19 +58,22 @@ function createData(
   return { role, userId, studentId, email, name, phoneNumber, address };
 }
 
-export default function UserManagementPage() {
+export default function ClassDetailManagementPage() {
+  const { id } = useParams<{ id: string }>();
+
   const { t } = useTranslation();
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [users, setUsers] = React.useState<IUser[]>([]);
+  const [students, setStudents] = React.useState<IUser[]>([]);
+  const [teachers, setTeachers] = React.useState<IUser[]>([]);
   const [open, setOpen] = React.useState(false);
   const [editUser, setEditUser] = React.useState<IUser>();
   const [isLoading, setIsLoading] = React.useState(false);
-  const [openUpload, setOpenUpload] = React.useState(false);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
-    fetchUsers();
+    fetchMember();
   }, []);
 
   const onEditUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,17 +98,7 @@ export default function UserManagementPage() {
       label: t('name'),
       minWidth: 100,
     },
-    {
-      id: 'phoneNumber',
-      label: t('phoneNumber'),
-      minWidth: 100,
-    },
-    { id: 'role', label: t('role'), minWidth: 120 },
-    {
-      id: 'address',
-      label: t('address'),
-      minWidth: 170,
-    },
+    { id: 'role', label: t('Role'), minWidth: 100 },
   ];
 
   const handleClickOpen = () => {
@@ -121,12 +110,16 @@ export default function UserManagementPage() {
   };
 
   const rows =
-    users?.map((user) => {
+    [...teachers, ...students]?.map((user, index) => {
       return createData(
-        user?.role?.toLowerCase() === 'admin' ?? false ? (
-          <AdminPanelSettingsIcon color="primary" />
+        index < teachers.length ? (
+          <Tooltip title={t('teacher')}>
+            <SpaIcon color="secondary" />
+          </Tooltip>
         ) : (
-          <PersonIcon color="primary" />
+          <Tooltip title={t('student')}>
+            <PersonIcon color="primary" />
+          </Tooltip>
         ),
         user?.id?.toString() ?? '',
         user?.studentId ?? '',
@@ -144,12 +137,17 @@ export default function UserManagementPage() {
       );
     }) ?? [];
 
-  const fetchUsers = async () => {
+  const fetchMember = async () => {
     setIsLoading(true);
-    await apiCall(adminService.fetchAllUsers(), {
+    await apiCall(classService.getListMember(id), {
       ifSuccess: (res) => {
-        const result = res as unknown as IUser[];
-        setUsers(result);
+        console.log(res.metadata);
+        const result = res.metadata as {
+          teachers: IUser[];
+          students: IUser[];
+        };
+        setStudents(result.students);
+        setTeachers(result.teachers);
       },
       ifFailed: (error) => {
         console.log(error);
@@ -169,17 +167,18 @@ export default function UserManagementPage() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  const handleBlockUser = async (id: number) => {
+  const updateStudentIdMap = async (userId: number, studentId: string) => {
     setIsLoading(true);
-    await apiCall(adminService.lockUser(id), {
+    await apiCall(adminService.mapStudentIdToUser(userId, studentId, id!), {
       ifSuccess: () => {
-        setUsers((prev) => {
-          const index = prev.findIndex((x) => x.id === id);
-          prev[index].isActive = false;
-          return [...prev];
+        setStudents((prev) => {
+          const newStudents = [...prev];
+          const index = newStudents.findIndex((user) => user.id === userId);
+          newStudents[index].studentId = studentId;
+          return newStudents;
         });
-        enqueueSnackbar(t('blockSuccess'), { variant: 'success' });
+        handleClose();
+        enqueueSnackbar(t('editSuccess'), { variant: 'success' });
       },
       ifFailed: (error) => {
         console.log(error);
@@ -189,82 +188,22 @@ export default function UserManagementPage() {
     setIsLoading(false);
   };
 
-  const deleteUser = async (id: number) => {
+  const unMapStudentIdToUser = async (userId: number, classId: string) => {
     setIsLoading(true);
-
-    await apiCall(adminService.deleteUser(id), {
+    console.log(userId, classId);
+    await apiCall(adminService.unMapStudentIdToUser(userId, classId), {
       ifSuccess: () => {
-        setUsers((prev) => {
-          const index = prev.findIndex((x) => x.id === id);
-          prev.splice(index, 1);
-          return [...prev];
+        setStudents((prev) => {
+          const newStudents = [...prev];
+          const index = newStudents.findIndex((user)  => user.id === userId);
+          newStudents[index].studentId = '';
+          return newStudents;
         });
-        enqueueSnackbar(t('deleteSuccess'), { variant: 'success' });
+        handleClose();
+        enqueueSnackbar(t('unmapSuccess'), { variant: 'success' });
       },
       ifFailed: (error) => {
         console.log(error);
-        enqueueSnackbar(error.message, { variant: 'error' });
-      },
-    });
-    setIsLoading(false);
-  };
-
-  const updateUser = async (id: number) => {
-    setIsLoading(true);
-    await apiCall(
-      adminService.updateUser(id, {
-        address: editUser?.address,
-        name: editUser?.name,
-        phoneNumber: editUser?.phoneNumber,
-        studentId: editUser?.studentId,
-      }),
-      {
-        ifSuccess: () => {
-          setUsers((prev) => {
-            const index = prev.findIndex((x) => x.id === editUser?.id);
-            prev[index] = editUser as IUser;
-            return [...prev];
-          });
-          handleClose();
-          enqueueSnackbar(t('editSuccess'), { variant: 'success' });
-        },
-        ifFailed: (error) => {
-          console.log(error);
-          enqueueSnackbar(error.message, { variant: 'error' });
-        },
-      },
-    );
-    setIsLoading(false);
-  };
-
-  const exportMapListStudent = async () => {
-    setIsLoading(true);
-    await apiCall(adminService.exportUserExcel(), {
-      ifSuccess: (data) => {
-        downloadFileXlsx({
-          data: data as unknown as Blob,
-          fileName: `map-studentid-${new Date().getTime()}`,
-        });
-        enqueueSnackbar('Download success', {
-          variant: 'success',
-        });
-      },
-      ifFailed: (error) => {
-        console.log(error);
-        enqueueSnackbar(error.message, { variant: 'error' });
-      },
-    });
-    setIsLoading(false);
-  };
-
-  const uploadMapListStudent = async (file: File) => {
-    setIsLoading(true);
-    await apiCall(adminService.uploadUserExcel(file), {
-      ifSuccess: (data) => {
-        enqueueSnackbar(data.message, { variant: 'success' });
-        fetchUsers();
-      },
-      ifFailed: (error) => {
         enqueueSnackbar(error.message, { variant: 'error' });
       },
     });
@@ -273,30 +212,23 @@ export default function UserManagementPage() {
 
   return (
     <div className="flex flex-col items-start">
+      <Button
+        variant="contained"
+        startIcon={<ArrowBackIosNewIcon />}
+        onClick={() => navigate(RouteList.adminClasses)}
+      >
+        {t('backToClassManagement')}
+      </Button>
+      <div className="h-4"></div>
       <div className="w-full flex flex-row items-center justify-between h-8">
-        <div className="text-lg mb-4 font-bold">{t('userManagement')}</div>
+        <div className="text-lg mb-4 font-bold">
+          {t('studentListInClass')} 1234
+        </div>
         <div className="text-sm mb-4 font-bold">
           {isLoading && <CircularProgress />}
         </div>
       </div>
-      <div className="flex flex-row items-center">
-        <Button
-          variant="contained"
-          startIcon={<DownloadIcon />}
-          onClick={exportMapListStudent}
-        >
-          {t('exportMapListStudent')}
-        </Button>
-        <div className="w-4" />
-        <Button
-          variant="contained"
-          className="my-2"
-          onClick={() => setOpenUpload(true)}
-          startIcon={<Upload />}
-        >
-          {t('uploadMapListStudent')}
-        </Button>
-      </div>
+
       <Paper sx={{ width: '100%', overflow: 'hidden', marginTop: 2 }}>
         <TableContainer>
           <Table stickyHeader aria-label="sticky table">
@@ -324,7 +256,7 @@ export default function UserManagementPage() {
               {rows
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 ?.map((row, index) => {
-                  const isActive = users[index]?.isActive ?? false;
+                  const isTeacher = index < teachers.length;
                   return (
                     <TableRow
                       hover
@@ -333,36 +265,25 @@ export default function UserManagementPage() {
                       key={row.userId}
                       sx={{
                         backgroundColor: `${
-                          !isActive ? 'rgba(255,0,0,0.08)' : ''
+                          isTeacher ? 'rgba(0,0,255,0.1)' : 'white'
                         }`,
                       }}
                     >
                       {columns.map((column) => {
+                        console.log(row.userId);
                         const value = row[column.id as keyof typeof row];
                         return <TableCell key={column.id}>{value}</TableCell>;
                       })}
                       <TableCell>
-                        {isActive ? (
+                        {!isTeacher && row.userId !== '' && (
                           <>
-                            <Tooltip title={t('block')}>
-                              <BlockIcon
-                                onClick={() =>
-                                  handleBlockUser(parseInt(row.userId))
-                                }
-                                color="error"
-                                sx={{
-                                  marginX: 1,
-                                  ':hover': {
-                                    cursor: 'pointer',
-                                  },
-                                }}
-                              />
-                            </Tooltip>
                             <Tooltip title={t('edit')}>
                               <EditIcon
                                 onClick={() => {
                                   handleClickOpen();
-                                  setEditUser(users[index]);
+                                  setEditUser(
+                                    students[index - teachers.length],
+                                  );
                                 }}
                                 color="primary"
                                 sx={{
@@ -373,21 +294,7 @@ export default function UserManagementPage() {
                                 }}
                               />
                             </Tooltip>
-                            <Tooltip title={t('delete')}>
-                              <HighlightOffIcon
-                                onClick={() => deleteUser(parseInt(row.userId))}
-                                color="error"
-                                sx={{
-                                  marginX: 1,
-                                  ':hover': {
-                                    cursor: 'pointer',
-                                  },
-                                }}
-                              />
-                            </Tooltip>
                           </>
-                        ) : (
-                          <div>{t('accountNotActivated')}</div>
                         )}
                       </TableCell>
                     </TableRow>
@@ -407,16 +314,9 @@ export default function UserManagementPage() {
         />
       </Paper>
 
-      <FormUpload
-        handleSubmit={(file) => uploadMapListStudent(file)}
-        titleForm={t('uploadMapListStudent')}
-        open={openUpload}
-        setOpen={setOpenUpload}
-      />
-
       {/* edit user */}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{t('editUser')}</DialogTitle>
+        <DialogTitle>{t('editStudent')}</DialogTitle>
         <DialogContent>
           {/* id */}
           <TextField
@@ -465,38 +365,27 @@ export default function UserManagementPage() {
             variant="outlined"
             name={'email'}
           />
-          <TextField
-            id="input-with-sx"
-            className="w-full"
-            label={t('phoneNumber')}
-            margin="normal"
-            required={true}
-            value={editUser?.phoneNumber}
-            onChange={onEditUserChange}
-            variant="outlined"
-            name={'phoneNumber'}
-          />
-          <TextField
-            id="input-with-sx"
-            className="w-full"
-            label={t('address')}
-            required={true}
-            margin="normal"
-            value={editUser?.address}
-            onChange={onEditUserChange}
-            variant="outlined"
-            name={'address'}
-          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t('cancel')}</Button>
           <Button
             onClick={async () => {
-              await updateUser(editUser?.id ?? 0);
+              await updateStudentIdMap(editUser!.id!, editUser!.studentId!);
               handleClose();
             }}
+            variant="contained"
           >
-            {t('edit')}
+            {t('update')}
+          </Button>
+          <Button
+            onClick={async () => {
+              await unMapStudentIdToUser(editUser!.id!, id!);
+              handleClose();
+            }}
+            color="error"
+            variant="contained"
+          >
+            {t('unmap')}
           </Button>
         </DialogActions>
       </Dialog>
