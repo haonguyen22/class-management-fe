@@ -154,5 +154,7 @@
   "expectedValue": "Điểm mong muốn",
   "gradeReview.AssignmentLabel": "Bài tập",
   "assignment": "Bài tập",
-  "gradeReview.messageLabel": "Lời nhắn"
+  "gradeReview.messageLabel": "Lời nhắn",
+  "ClassCode.copied": "Sao chép thành công",
+  "ClassCode.copyFailed": "Sao chép thất bại"
 }

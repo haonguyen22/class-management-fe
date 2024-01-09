@@ -156,5 +156,7 @@
   "expectedValue": "Expected value",
   "gradeReview.AssignmentLabel": "Assignment",
   "assignment": "Assignment",
-  "gradeReview.messageLabel": "Message"
+  "gradeReview.messageLabel": "Message",
+  "ClassCode.copied": "Copy successfully",
+  "ClassCode.copyFailed": "Copy failed"
 }
