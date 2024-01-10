@@ -92,12 +92,10 @@ export default function StickyHeadTable({
     setLoading(true);
     await apiCall(gradeManagementService.getGradeStudentBoard(parseInt(id!)), {
       ifSuccess: (data) => {
-        console.log(data);
         const res = data.metadata as {
           totalGradeBoard: IGradeBoardColumn[];
           student: IStudentList[];
         };
-        console.log(res);
         setGradeBoardColumns(res.totalGradeBoard);
         setStudentList(res.student);
       },
@@ -564,6 +562,7 @@ export default function StickyHeadTable({
                                           parseInt(e.target.value) || 0,
                                           assignment.assignmentId,
                                         );
+                                        calcFinalScore(studentIdx);
                                         setLocalLoading('');
                                       }, 3000)}
                                       sx={{

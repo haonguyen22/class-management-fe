@@ -20,7 +20,7 @@ const GradeReviewList: React.FC<GradeReviewListProps> = ({ data }) => {
             student={item.studentId}
             className={item.className}
             checked={false}
-            time={new Date(item.time).toLocaleDateString()}
+            time={item.time}
           />
         ))
       }

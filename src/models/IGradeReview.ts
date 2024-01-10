@@ -32,7 +32,7 @@ interface IGradeReview {
 interface IComment {
   gradeReviewId: number;
   message: string;
-  time: string;
+  time: Date;
   byUser: string;
   avatar?: string;
 }

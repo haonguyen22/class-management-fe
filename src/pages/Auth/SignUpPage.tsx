@@ -41,11 +41,10 @@ function SignUpPage() {
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
   ) => {
     try {
-      await apiCall( authService.signup(value), {
+      await apiCall(authService.signup(value), {
         ifSuccess: (data) => {
-          console.log(data);
           if (data.status === 200) {
-            setMessage(data.message as string);
+            setMessage(data.message);
           }
         },
         ifFailed: (err) => {

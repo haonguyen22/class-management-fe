@@ -5,12 +5,15 @@ import GradeCommentInput from '../../components/Grade/GradeCommentInput';
 import { useTranslation } from 'react-i18next';
 import { apiCall } from '../../utils/apiCall';
 import { gradeReviewService } from '../../services/gradeReview/GradeReviewService';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 // yup
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { IComment, IGradeReview } from '../../models/IGradeReview';
 import GradeCommentList from '../../components/Grade/GradeCommentList';
+import { useSnackbar } from 'notistack';
+import { ClassContext } from '../../context/ClassContext';
+import { Role } from '../../enums/RoleClass';
 
 
 
@@ -21,6 +24,8 @@ const GradeReviewDetail = () => {
 
   const { t } = useTranslation();
   const { id } = useParams();
+  const {enqueueSnackbar} = useSnackbar();
+  const {role} = useContext(ClassContext);
 
   const getGradeReviewDetail = async (gradeReviewId: number) => {
     setIsLoading(true);
@@ -48,9 +53,11 @@ const GradeReviewDetail = () => {
     ), {
       ifSuccess: (data) => {
         console.log(data);
+        enqueueSnackbar(data.message, {variant: 'success'});
       },
       ifFailed: (error) => {
         console.log(error);
+        enqueueSnackbar(error.message, {variant: 'error'});
       }
     });
   };
@@ -65,8 +72,7 @@ const GradeReviewDetail = () => {
     },
     validationSchema: validationScore,
     onSubmit: async (values) => {
-      console.log(values);
-      // await handleApproveReject(true, values.value);
+      await handleApproveReject(true, values.value);
     },
   });
 
@@ -111,17 +117,19 @@ const GradeReviewDetail = () => {
                     error={formikScore.touched.value && Boolean(formikScore.errors.value)}
                     helperText={formikScore.touched.value && formikScore.errors.value}
                   />
-                  <div className='flex gap-1 min-w-max ml-3'>
-                    <Button variant='contained' type='submit'>
-                      {t('gradeReviewDetail.confirm')}
-                    </Button>
-                    <Button variant='contained' color='error' style={{paddingTop: '15px', paddingBottom:'15px' }}
-                      onClick={()=>
-                        handleApproveReject(false,gradeReview?.value||0)
-                      }>
-                      {t('gradeReviewDetail.reject')}
-                    </Button>
-                  </div>
+                  { role !== Role.STUDENT && role !== Role.NONE &&
+                    <div className='flex gap-1 min-w-max ml-3'>
+                      <Button variant='contained' type='submit'>
+                        {t('gradeReviewDetail.confirm')}
+                      </Button>
+                      <Button variant='contained' color='error' style={{paddingTop: '15px', paddingBottom:'15px' }}
+                        onClick={()=>
+                          handleApproveReject(false,gradeReview?.value||0)
+                        }>
+                        {t('gradeReviewDetail.reject')}
+                      </Button>
+                    </div>
+                  }
                 </form>
               </div>
             </div>

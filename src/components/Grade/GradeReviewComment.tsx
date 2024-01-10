@@ -17,7 +17,7 @@ const GradeReviewComment: React.FC<GradeReviewCommentProps> = ({comment}) => {
           <span>{comment.message}</span>
         </div>
       </div>
-      <div className='ml-16 text-sm text-gray-500 mt-0.5'>{comment.time}</div>
+      <div className='ml-16 text-sm text-gray-500 mt-0.5'>{new Date(comment.time).toLocaleDateString('vi-VN')}</div>
     </div>
   );
 };

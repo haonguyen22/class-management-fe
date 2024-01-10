@@ -49,14 +49,13 @@ const GradeCommentInput: React.FC<IGradeCommentInputProps> = ({setCommentData}) 
       setIsLoading(true);
       await apiCall(gradeReviewService.createComment(parseInt(id!),values), {
         ifSuccess: async (data) => {
-          console.log(data);
           await getUser();
           setCommentData((prev) =>
             [...prev,
               {
                 ...values,
                 gradeReviewId: parseInt(id!),
-                time: new Date().toLocaleString(),
+                time: new Date(),
                 avatar: user?.address,
                 byUser: user?.name || '',
               },

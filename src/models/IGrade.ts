@@ -5,5 +5,5 @@ export interface GradeReviewRowProps {
   imgSrc: string;
   message: string;
   checked?: boolean | undefined;
-  time?: string | undefined;
+  time?: Date | undefined;
 }

@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { RouteList } from '../../routes/routes';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import ClassIcon from '@mui/icons-material/Class';
-import HubIcon from '@mui/icons-material/Hub';
 
 function ListButtonDrawer({ open }: { open: boolean }) {
   const navigate = useNavigate();
@@ -38,31 +37,6 @@ function ListButtonDrawer({ open }: { open: boolean }) {
           </ListItemIcon>
           <ListItemText
             primary={t('userManagement')}
-            sx={{ opacity: open ? 1 : 0 }}
-          />
-        </ListItemButton>
-      </ListItem>
-
-      <ListItem disablePadding sx={{ display: 'block' }}>
-        <ListItemButton
-          sx={{
-            minHeight: 48,
-            justifyContent: open ? 'initial' : 'center',
-            px: 2.5,
-          }}
-          onClick={() => navigate(RouteList.adminMapping)}
-        >
-          <ListItemIcon
-            sx={{
-              minWidth: 0,
-              mr: open ? 3 : 'auto',
-              justifyContent: 'center',
-            }}
-          >
-            <HubIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary={t('userMapping')}
             sx={{ opacity: open ? 1 : 0 }}
           />
         </ListItemButton>

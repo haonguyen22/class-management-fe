@@ -11,8 +11,9 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    const token =
+      document?.cookie?.match('(^|;)\\s*_auth\\s*=\\s*([^;]+)')?.[2] ?? '';
+    if (token?.length > 0 ?? false) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;

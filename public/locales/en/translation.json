@@ -182,5 +182,13 @@
   "searchByClassName": "Search by class name",
   "createdAt": "Created at",
   "asc": "Ascending",
-  "desc": "Descending"
+  "desc": "Descending",
+  "exportMapListStudent": "Export map list student",
+  "uploadMapListStudent": "Upload map list student",
+  "backToClassManagement": "Back to class management",
+  "studentListInClass": "Student list in class",
+  "editStudent": "Edit student",
+  "update": "Update",
+  "unmap": "Unmap",
+  "unmapSuccess": "Unmap successfully"
 }

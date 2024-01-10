@@ -20,13 +20,15 @@ const GradeReviewRow: React.FC<GradeReviewRowProps> = ({ id, imgSrc, message, st
           <Typography className='line-clamp-1 md:w-1/3'>
             {`${className} - ${student}`}
           </Typography>
-        } secondary={
-          <Typography className='line-clamp-1 text-gray-500'>
-            {message}
-          </Typography>
-        } />
+          } secondary={
+            <Typography className='line-clamp-1 text-gray-500'>
+              {message}
+            </Typography>
+          }
+        />
       </div>
-      {time && <span className='min-w-max'>{time}</span>}
+      {/* format dd-mm-yyyy */}
+      {time && <span className='min-w-max'>{new Date(time).toLocaleDateString('vi-VN')}</span>}
     </ListItem>
   );
 };

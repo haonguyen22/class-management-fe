@@ -41,10 +41,12 @@ function Header() {
               <option value="vi">Việt nam</option>
             </select>
 
-            <NotificationButton />
-
             {isAuthenticate() ? (
-              <AccountMenu />
+              <>
+                <NotificationButton />
+
+                <AccountMenu />
+              </>
             ) : (
               <>
                 <Link

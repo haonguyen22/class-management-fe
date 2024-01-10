@@ -3,7 +3,6 @@ import { IUser } from './User';
 export interface ICreateCLass {
   name: string;
   description: string;
-  subject: string;
 }
 
 export interface IClass {
@@ -32,4 +31,12 @@ export interface IPagination {
   page: number;
   limit: number;
   total: number;
+}
+
+export interface IClassFilter {
+  sortField: string | undefined;
+  order: string | undefined;
+  page: number;
+  limit: number;
+  search: string | undefined;
 }
