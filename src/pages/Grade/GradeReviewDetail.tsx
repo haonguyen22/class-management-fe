@@ -135,14 +135,21 @@ const GradeReviewDetail = () => {
             </div>
             <div className='wrap-right grid grid-rows-2 gap-3'>
               <div className='mark flex gap-1 min-w-max'>
-                <div className='current-score w-full border border-gray-300 rounded-md flex flex-col items-center justify-center min-w-max shadow-md hover:shadow-lg'>
+                <div className='current-score w-full border border-gray-300 rounded-md flex flex-col items-center justify-center min-w-max shadow-md hover:shadow-lg px-3'>
+                  <div>
+                    <Scoreboard fontSize="medium" style={{ verticalAlign: 'middle', marginLeft: '5px', color: 'red' }} />
+                    <span className='ml-2 text-lg font-semibold'>{t('gradeReviewDetail.composition')} </span>
+                  </div>
+                  <span className='font-bold text-lg'>{gradeReview.value}</span>
+                </div>
+                <div className='current-score w-full border border-gray-300 rounded-md flex flex-col items-center justify-center min-w-max shadow-md hover:shadow-lg px-3'>
                   <div>
                     <Scoreboard fontSize="medium" style={{ verticalAlign: 'middle', marginLeft: '5px', color: 'red' }} />
                     <span className='ml-2 text-lg font-semibold'>{t('gradeReviewDetail.currenScore')} </span>
                   </div>
                   <span className='font-bold text-lg'>{gradeReview.value}</span>
                 </div>
-                <div className='new-score w-full border border-gray-300 rounded-md flex flex-col items-center justify-center min-w-max shadow-md hover:shadow-lg'>
+                <div className='new-score w-full border border-gray-300 rounded-md flex flex-col items-center justify-center min-w-max shadow-md hover:shadow-lg px-3'>
                   <div>
                     <SubjectIcon fontSize="medium" style={{ verticalAlign: 'middle', marginLeft: '5px', color:'green' }} />
                     <span className='ml-2 text-lg font-semibold'>{t('gradeReviewDetail.expectedScore')} </span>

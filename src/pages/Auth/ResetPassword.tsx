@@ -51,17 +51,17 @@ function ResetPassword() {
     try {
       await apiCall( authService.resetPassword(token!, value), {
         ifSuccess: (response) => {
+          console.log(response);
           if (response.status === 200) {
-            console.log(response);
-            setMessage(response.data.message as string);
+            setMessage(response.message);
           }
         },
         ifFailed: (err) => {
           const response = err as IError<IErrorResponse>;
+          console.log(response);
           setError(response?.response?.data?.message ?? response?.message);
         },
       });
-
       setSubmitting(false);
     } catch (error) {
       console.error('Error calling API:', error);
@@ -86,7 +86,7 @@ function ResetPassword() {
             .oneOf([Yup.ref('password')], t('confirmPassword.notMatch'))
             .required(t('confirmPassword.required')),
         })}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={ (values, { setSubmitting }) => {
           submitChangePassword(values.password, { setSubmitting });
         }}
       >

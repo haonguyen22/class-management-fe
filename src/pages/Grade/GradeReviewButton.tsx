@@ -60,26 +60,19 @@ const GradeReviewButton: React.FC<IGradeReviewButton> = ({
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setIsLoading(true);
-      console.log(1);
       await apiCall(gradeReviewService.createGradeReview(classId, values), {
         ifSuccess: (data) => {
-          console.log(2);
-
           enqueueSnackbar(data.message, {
             variant: 'success',
           });
         },
         ifFailed: (error) => {
-          console.log(3);
-
           enqueueSnackbar(error.message, {
             variant: 'error',
           });
         },
       });
       setIsLoading(false);
-      console.log(0);
-
       handleClose();
     },
   });
@@ -88,10 +81,10 @@ const GradeReviewButton: React.FC<IGradeReviewButton> = ({
     <div className="p-4">
       <div
         onClick={handleClickOpen}
-        className="flex items-center justify-center"
+        className="flex gap-2 items-center justify-center"
       >
         <span>{`${value}/${maxScore}`}</span>
-        <RateReviewIcon className="w-24 h-24" />
+        <RateReviewIcon className="w-24 h-24 text-blue-600 cursor-pointer" />
       </div>
       <Dialog
         open={open}

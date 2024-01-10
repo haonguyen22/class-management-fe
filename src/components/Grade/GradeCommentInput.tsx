@@ -28,6 +28,7 @@ const GradeCommentInput: React.FC<IGradeCommentInputProps> = ({setCommentData}) 
   const getUser = async () => {
     await apiCall(authService.getProfile(), {
       ifSuccess: (data) => {
+        console.log(data);
         setUser(data.metadata as IUser);
       },
       ifFailed: (error) => {
@@ -49,7 +50,7 @@ const GradeCommentInput: React.FC<IGradeCommentInputProps> = ({setCommentData}) 
       setIsLoading(true);
       await apiCall(gradeReviewService.createComment(parseInt(id!),values), {
         ifSuccess: async (data) => {
-          await getUser();
+          console.log(user);
           setCommentData((prev) =>
             [...prev,
               {
@@ -72,6 +73,10 @@ const GradeCommentInput: React.FC<IGradeCommentInputProps> = ({setCommentData}) 
       setIsLoading(false);
     },
   });
+
+  React.useEffect(() => {
+    getUser();
+  }, []);
 
 
   return (

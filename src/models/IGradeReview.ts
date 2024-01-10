@@ -27,6 +27,7 @@ interface IGradeReview {
   time: string;
   value: number;
   avatar: string;
+  composition?: number;
 }
 
 interface IComment {

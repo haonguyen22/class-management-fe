@@ -35,17 +35,8 @@ class AuthService {
     return res;
   }
 
-  async changePassword(token: string, password: string) {
-    const res = await api.post('/auth/reset-password', {
-      data: { token, password },
-    });
-    return res;
-  }
-
   async resetPassword(token: string, newPassword: string) {
-    const res = await api.put('/auth/reset-password', {
-      data: { token, newPassword },
-    });
+    const res = await api.put('/auth/reset-password', { token, newPassword });
     return res;
   }
 

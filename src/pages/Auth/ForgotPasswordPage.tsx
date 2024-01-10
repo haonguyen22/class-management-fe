@@ -45,7 +45,7 @@ function ForgotPasswordPage() {
           await apiCall(authService.forgotPassword(values.email), {
             ifSuccess: (data) => {
               if (data.status === 200) {
-                setMessage(data.data?.message as string);
+                setMessage(data.message);
               }
             },
             ifFailed: (err) => {
