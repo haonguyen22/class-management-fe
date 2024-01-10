@@ -10,7 +10,7 @@ interface GradeReviewPaginationProps {
 const GradeReviewPagination: React.FC<GradeReviewPaginationProps> = ({totalPages, page}) => {
   return (
     <>
-      {totalPages > 1 &&
+      {totalPages >= 1 &&
         <div className='flex justify-center mt-5'>
           <Pagination
           page={page}

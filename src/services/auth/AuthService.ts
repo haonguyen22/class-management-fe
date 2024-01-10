@@ -8,7 +8,6 @@ class AuthService {
   }
 
   async signup(data: ISignup) {
-    console.log(data);
     const res = await api.post('/auth/signup', data);
     return res;
   }
@@ -47,6 +46,11 @@ class AuthService {
     const res = await api.put('/auth/reset-password', {
       data: { token, newPassword },
     });
+    return res;
+  }
+
+  async getProfile() {
+    const res = await api.get('/auth/me');
     return res;
   }
 }

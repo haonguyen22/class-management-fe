@@ -8,6 +8,8 @@ import { apiCall } from './utils/apiCall';
 import { classService } from './services/class/ClassService';
 import LocaleContext from './context/LocaleContext';
 import { SnackbarProvider } from 'notistack';
+import { userService } from './services/user/UserService';
+import { INotification } from './models/User';
 
 function App() {
   const [locale, setLocale] = useState(i18n.language);
@@ -17,6 +19,9 @@ function App() {
     teacherClass: [],
   });
   const [isFetchingClasses, setIsFetchingClasses] = useState(false);
+  
+  const [notifications, setNotifications] = useState<INotification[]>([]);
+  const [isFetchingNotifications, setIsFetchingNotifications] = useState(false);
 
   useEffect(() => {
     i18n.on('languageChanged', () => {
@@ -53,6 +58,22 @@ function App() {
     });
   };
 
+
+  const fetchNotifications = async () => {
+    setIsFetchingNotifications(true);
+    await apiCall(userService.getAllNotifications(), {
+      ifSuccess: (data) => {
+        setNotifications(
+          (data.metadata as { notifications: INotification[] }).notifications,
+        );
+      },
+      ifFailed: (err) => {
+        console.log(err.message);
+      },
+    });
+    setIsFetchingNotifications(false);
+  };
+
   return (
     <SnackbarProvider>
       <LocaleContext.Provider value={{ locale, setLocale }}>
@@ -63,6 +84,10 @@ function App() {
             fetchClasses,
             isFetchingClasses,
             classRoles,
+            setNotifications,
+            notifications,
+            fetchNotifications,
+            isFetchingNotifications,
           }}
         >
           <AuthProvider

@@ -30,6 +30,9 @@ import HomeworkList from '../pages/Homework/HomeworkList';
 import CreateHomework from '../pages/Homework/CreateHomework';
 import UserProfilePage from '../pages/User/UserProfile';
 import GradeTab from '../pages/Grade/GradeTab';
+import UserManagementAdminPage from '../pages/Admin/UserManagement';
+import UserMappingAdminPage from '../pages/Admin/UserMapping';
+import ClassManagementAdminPage from '../pages/Admin/ClassManagement';
 
 export const RouteList = {
   home: '/',
@@ -52,6 +55,10 @@ export const RouteList = {
   classSettings: '/class/:id/settings',
   classHomeworks: '/class/:id/homeworks',
   createClassHomworks: '/class/:id/homeworks/create',
+
+  adminUsers: '/admin/users',
+  adminClasses: '/admin/classes',
+  adminMapping: '/admin/mapping',
 };
 
 function Routes() {
@@ -128,6 +135,9 @@ function Routes() {
               element={<GradeReviewDetail />}
             />
           </Route>
+          <Route path={RouteList.adminUsers} element={<UserManagementAdminPage />} />
+          <Route path={RouteList.adminClasses} element={<ClassManagementAdminPage />} />
+          <Route path={RouteList.adminMapping} element={<UserMappingAdminPage />} />
         </Route>
         <Route
           path={RouteList.forgotPassword}

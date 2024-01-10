@@ -22,6 +22,11 @@ class UserService {
     });
     return res;
   }
+
+  async getAllNotifications() {
+    const res = await api.get('/users/cotext/notification');
+    return res;
+  }
 }
 
 export const userService = new UserService();

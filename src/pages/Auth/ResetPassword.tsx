@@ -52,6 +52,7 @@ function ResetPassword() {
       await apiCall( authService.resetPassword(token!, value), {
         ifSuccess: (response) => {
           if (response.status === 200) {
+            console.log(response);
             setMessage(response.data.message as string);
           }
         },

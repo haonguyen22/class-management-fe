@@ -6,6 +6,8 @@ export interface IUser {
   address?: string;
   avatar?: string;
   studentId?: string;
+  role?: string;
+  isActive?: boolean;
 }
 
 export interface UpdateUserDTO {
@@ -13,4 +15,11 @@ export interface UpdateUserDTO {
   phoneNumber?: string;
   address?: string;
   studentId?: string;
+}
+
+export interface INotification {
+  id: number;
+  title: string;
+  notificationType: string;
+  link: string;
 }

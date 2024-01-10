@@ -2,214 +2,72 @@ import React from 'react';
 import GradeReviewList from '../../components/Grade/GradeReviewList';
 import GradeReviewPagination from '../../components/Grade/GradeReviewPagination';
 import { useLocation } from 'react-router-dom';
-import { GradeReviewRowProps } from '../../models/IGrade';
 import { useTranslation } from 'react-i18next';
-
-
-const reviewList: GradeReviewRowProps[] =  [
-  {
-    id: 1,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A adsgasdg adgasgas awgawgawgaw',
-    checked: true,
-    time: '1-1-2021'
-  },
-  {
-    id: 2,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2021'
-  },
-  {
-    id: 3,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: false,
-    time: '1-1-2023'
-  },
-  {
-
-    id: 4,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: false,
-    time: '1-1-2023'
-  },
-  {
-    id: 5,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 6,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 7,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-
-  },
-  {
-    id: 8,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 9,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 10,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 11,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 12,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 13,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 14,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 15,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 16,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 17,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 18,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 19,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: true,
-    time: '1-1-2023'
-  },
-  {
-    id: 20,
-    className: 'Lớp 1',
-    imgSrc: 'https://mui.com/static/images/avatar/1.jpg',
-    message: 'phúc khảo điểm toán',
-    student: 'Nguyễn Văn A',
-    checked: false,
-    time: '1-1-2023'
-  },
-
-];
+import { gradeReviewService } from '../../services/gradeReview/GradeReviewService';
+import { apiCall } from '../../utils/apiCall';
+import { gradeReviewClass } from '../../models/IGradeReview';
+import { CircularProgress } from '@mui/material';
 
 
 const GradeReview = () => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { t } = useTranslation();
   const location = useLocation();
+  const [gradeReviews, setGradeReviews] = React.useState<gradeReviewClass[]>([]);
   const query = new URLSearchParams(location.search);
-  const sortData = reviewList.sort((a, b) => {
-    if (a.checked && !b.checked) return 1;
-    if (!a.checked && b.checked) return -1;
-    return 0;
-  });
-  const page = parseInt(query.get('page') || '1', 10);
-  const data = sortData.slice((page - 1) * 7, page * 7);
+
+  const getGradeReview = async () => {
+    setIsLoading(true);
+    await apiCall(gradeReviewService.getGradeReview(), {
+      ifSuccess: (data) => {
+        const result = data.metadata as gradeReviewClass[];
+        const filterResult = result.filter((item) => item.gradeReviews.length > 0);
+        setGradeReviews(filterResult);
+      },
+      ifFailed: (error) => {
+        console.log(error);
+      },
+    });
+    setIsLoading(false);
+  };
+
+  React.useEffect(() => {
+    getGradeReview();
+  }, []);
+
+  const limit = 7;
+  const data = gradeReviews.map((item) => {
+    const temp = item.gradeReviews.map((gradeReview) => {
+      return {
+        ...gradeReview,
+        className: item.className,
+        classId: item.id
+      };
+    });
+    return {
+      ...item,
+      gradeReviews: temp,
+    };
+  }).flatMap((item) => item.gradeReviews);
+
+  const page = Number(query.get('page')) || 1;
+  const totalPages = Math.ceil(data.length / limit);
+  const dataPerPage = data.slice((page - 1) * limit, page * limit);
 
   return (
     <div className='sm:mx-0 md:mx-10 lg:mx-20 xl:mx-40'>
       <h1 className='text-xl font-semibold text-center mb-3'>{t('gradeReview.title')}</h1>
-      <GradeReviewList data={data}/>
-      <GradeReviewPagination totalPages={Math.ceil(sortData.length / 7)} page={page}/>
+      { !isLoading &&
+        <>
+          <GradeReviewList data={dataPerPage}/>
+          <GradeReviewPagination totalPages={totalPages} page={page}/>
+        </>
+      }
+      {isLoading &&
+        <div className='flex justify-center'>
+          <CircularProgress className='w-12 h-12'/>
+        </div>
+      }
     </div>
   );
 };

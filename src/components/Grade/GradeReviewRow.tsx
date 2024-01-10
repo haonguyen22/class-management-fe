@@ -26,7 +26,7 @@ const GradeReviewRow: React.FC<GradeReviewRowProps> = ({ id, imgSrc, message, st
           </Typography>
         } />
       </div>
-      <span className='min-w-max'>{time}</span>
+      {time && <span className='min-w-max'>{time}</span>}
     </ListItem>
   );
 };

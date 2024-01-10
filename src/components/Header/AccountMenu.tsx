@@ -6,12 +6,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { Logout, Settings } from '@mui/icons-material';
+import { Logout } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { RouteList } from '../../routes/routes';
 import { useAuthUser, useSignOut } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
 import { avatarDefault } from '../../constants/globalConst';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 export default function AccountMenu() {
   const signOut = useSignOut();
@@ -98,13 +99,9 @@ export default function AccountMenu() {
           </Avatar>
           {t('profile')}
         </MenuItem>
+
         <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          {t('settings')}
-        </MenuItem>
+
         <MenuItem
           onClick={() => {
             handleClose();

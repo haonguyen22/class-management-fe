@@ -45,7 +45,7 @@ function SignUpPage() {
         ifSuccess: (data) => {
           console.log(data);
           if (data.status === 200) {
-            setMessage(data.data.message as string);
+            setMessage(data.message as string);
           }
         },
         ifFailed: (err) => {

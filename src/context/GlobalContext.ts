@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { ClassRole, IClass } from '../models/IClass';
+import { INotification } from '../models/User';
 
 interface GlobalContextType {
   classes: IClass[];
@@ -7,6 +8,10 @@ interface GlobalContextType {
   fetchClasses: () => void;
   isFetchingClasses: boolean;
   classRoles: ClassRole;
+  notifications: INotification[];
+  setNotifications: (notifications: INotification[]) => void;
+  fetchNotifications: () => void;
+  isFetchingNotifications: boolean;
 }
 
 export const GlobalContext = createContext<GlobalContextType>({
@@ -18,4 +23,8 @@ export const GlobalContext = createContext<GlobalContextType>({
     studentClass: [],
     teacherClass: [],
   },
+  notifications: [],
+  setNotifications: () => {},
+  fetchNotifications: () => {},
+  isFetchingNotifications: false,
 });
