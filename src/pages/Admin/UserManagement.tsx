@@ -123,7 +123,7 @@ export default function UserManagementPage() {
   const rows =
     users?.map((user) => {
       return createData(
-        user?.role?.toLowerCase() === 'admin' ?? false ? (
+        user?.role?.toLowerCase() !== 'admin' ?? false ? (
           <AdminPanelSettingsIcon color="primary" />
         ) : (
           <PersonIcon color="primary" />
@@ -324,6 +324,7 @@ export default function UserManagementPage() {
               {rows
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 ?.map((row, index) => {
+                  console.log(row);
                   const isActive = users[index]?.isActive ?? false;
                   return (
                     <TableRow
@@ -342,22 +343,24 @@ export default function UserManagementPage() {
                         return <TableCell key={column.id}>{value}</TableCell>;
                       })}
                       <TableCell>
-                        {isActive ? (
+                        {isActive  ? (
                           <>
-                            <Tooltip title={t('block')}>
-                              <BlockIcon
-                                onClick={() =>
-                                  handleBlockUser(parseInt(row.userId))
-                                }
-                                color="error"
-                                sx={{
-                                  marginX: 1,
-                                  ':hover': {
-                                    cursor: 'pointer',
-                                  },
-                                }}
-                              />
-                            </Tooltip>
+                            { row.userId !== '1' &&
+                              <Tooltip title={t('block')}>
+                                <BlockIcon
+                                  onClick={() =>
+                                    handleBlockUser(parseInt(row.userId))
+                                  }
+                                  color="error"
+                                  sx={{
+                                    marginX: 1,
+                                    ':hover': {
+                                      cursor: 'pointer',
+                                    },
+                                  }}
+                                />
+                              </Tooltip>
+                            }
                             <Tooltip title={t('edit')}>
                               <EditIcon
                                 onClick={() => {
@@ -373,18 +376,20 @@ export default function UserManagementPage() {
                                 }}
                               />
                             </Tooltip>
-                            <Tooltip title={t('delete')}>
-                              <HighlightOffIcon
-                                onClick={() => deleteUser(parseInt(row.userId))}
-                                color="error"
-                                sx={{
-                                  marginX: 1,
-                                  ':hover': {
-                                    cursor: 'pointer',
-                                  },
-                                }}
-                              />
-                            </Tooltip>
+                            { row.userId !== '1' &&
+                              <Tooltip title={t('delete')}>
+                                <HighlightOffIcon
+                                  onClick={() => deleteUser(parseInt(row.userId))}
+                                  color="error"
+                                  sx={{
+                                    marginX: 1,
+                                    ':hover': {
+                                      cursor: 'pointer',
+                                    },
+                                  }}
+                                />
+                              </Tooltip>
+                            }
                           </>
                         ) : (
                           <div>{t('accountNotActivated')}</div>
