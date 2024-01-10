@@ -25,7 +25,6 @@ function CreateClassDialog() {
   const initCreateClass: ICreateCLass = {
     name: '',
     description: '',
-    subject: '',
   };
   const { fetchClasses } = useContext(GlobalContext);
 
@@ -68,12 +67,7 @@ function CreateClassDialog() {
   };
 
   const submitCreateClass = async () => {
-    if (
-      createClass.name === '' ||
-      createClass.description === '' ||
-      createClass.subject === ''
-    )
-      return;
+    if (createClass.name === '' || createClass.description === '') return;
     await apiCall(classService.createClass(createClass), {
       ifSuccess: (data) => {
         console.log(data);
@@ -156,18 +150,6 @@ function CreateClassDialog() {
             name="description"
             helperText={createClass.description === '' ? t('required') : ''}
             value={createClass.description}
-            onChange={handleChangeClassName}
-            margin="dense"
-          />
-          <TextField
-            id="outlined-subject-input"
-            label={t('subject')}
-            type="text"
-            error={createClass.subject === ''}
-            fullWidth
-            name="subject"
-            helperText={createClass.subject === '' ? t('required') : ''}
-            value={createClass.subject}
             onChange={handleChangeClassName}
             margin="dense"
           />

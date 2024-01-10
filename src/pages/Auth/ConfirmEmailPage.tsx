@@ -17,7 +17,7 @@ function ConfirmEmailPage() {
     try {
       await apiCall(authService.confirmEmail(token ?? ''), {
         ifSuccess: (data) => {
-          setMessage(data.data.message as string);
+          setMessage(data.message as string);
         },
         ifFailed: (err) => {
           setError(err?.response?.data.message ?? err.message);

@@ -12,7 +12,6 @@ import { RouteList } from '../../routes/routes';
 import { useAuthUser, useSignOut } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
 import { avatarDefault } from '../../constants/globalConst';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 export default function AccountMenu() {
   const signOut = useSignOut();
@@ -105,7 +104,6 @@ export default function AccountMenu() {
         <MenuItem
           onClick={() => {
             handleClose();
-            localStorage.removeItem('token');
             logOut();
           }}
         >

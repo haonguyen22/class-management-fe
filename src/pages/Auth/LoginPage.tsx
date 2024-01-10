@@ -58,7 +58,6 @@ function LoginPage() {
               expiresIn: 3600,
               authState: { user: res.user },
             });
-            localStorage.setItem('token', res.token);
 
             if (cookies.redirectUrl) {
               navigate(RouteList.joinClass + cookies.redirectUrl);
@@ -83,7 +82,10 @@ function LoginPage() {
       <h1 className="text-4xl font-bold text-center py-10">{t('Login')}</h1>
       {/* sign in with google */}
       <Formik
-        initialValues={{ email: 'hieu@gmail.com', password: '12345678' }}
+        initialValues={{
+          email: 'kimhieu153255@gmail.com',
+          password: '12345678',
+        }}
         validationSchema={Yup.object({
           email: Yup.string()
             .email(t('email.invalid'))

@@ -186,5 +186,6 @@
   "editStudent": "Chỉnh sửa học sinh",
   "update": "Cập nhật",
   "unmap": "Hủy kết nối",
-  "unmapSuccess": "Hủy kết nối thành công"
+  "unmapSuccess": "Hủy kết nối thành công",
+  "gradeReview": "Phúc khảo điểm"
 }

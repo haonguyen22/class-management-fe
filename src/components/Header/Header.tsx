@@ -18,7 +18,9 @@ function Header() {
   const { fetchNotifications } = useContext(GlobalContext);
 
   useEffect(() => {
-    fetchNotifications();
+    if (isAuthenticate()) {
+      fetchNotifications();
+    }
   }, []);
 
   return (
