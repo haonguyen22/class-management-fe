@@ -37,23 +37,26 @@ function JoinClassPage() {
         window.location.href = RouteList.login;
       }, 1000);
     } else {
-      if (auth()?.user.studentId !== '') {
-        setStudentId(auth()?.user.studentId);
+      if (auth()?.user?.studentId !== '') {
+        setStudentId(auth()?.user?.studentId);
         joinClass();
       } else {
         setIsLoading(false);
       }
     }
-  }, [auth()?.user.studentId]);
+  }, [auth()?.user?.studentId]);
 
   const code = searchParams.get('code');
   const { enqueueSnackbar } = useSnackbar();
 
   const joinClass = async () => {
-    if (auth()?.user.studentId !== '' || studentId !== '') {
+    const hasStudentId = auth()?.user?.studentId ?? false;
+    setIsLoading(false);
+
+    if (hasStudentId || studentId !== '') {
       setIsLoading(true);
       await apiCall(
-        classService.joinClass(code!, auth()?.user.studentId ?? studentId!),
+        classService.joinClass(code!, auth()?.user?.studentId ?? studentId!),
         {
           ifSuccess: (data) => {
             if (data.status === 200) {
@@ -84,7 +87,7 @@ function JoinClassPage() {
         },
       );
     }
-    if (studentId === '' && auth()?.user.studentId === '') {
+    if (studentId === '' && auth()?.user?.studentId === '') {
       setIsLoading(false);
       return;
     }
