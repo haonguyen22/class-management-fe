@@ -32,8 +32,10 @@ import GradeReviewButton from '../../pages/Grade/GradeReviewButton';
 export default function StickyHeadTable({
   setLoading,
   flag,
+  getBoardFlag,
 }: {
   flag: number;
+  getBoardFlag: number;
   setLoading: (isLoading: boolean) => void;
 }) {
   const { id } = useParams<{ id: string }>();
@@ -252,8 +254,10 @@ export default function StickyHeadTable({
       studentData.push(student.fullName);
       studentData.push(`${finalGrade[studentIdx].toFixed(2)}%`);
       gradeBoardColumns?.forEach((gradeColumn) => {
-        gradeColumn.assignmentsBoard?.forEach((assignment) => {
-          studentData.push(`${assignment.gradesBoard[studentIdx].value}`);
+        gradeColumn?.assignmentsBoard?.forEach((assignment) => {
+          studentData.push(
+            `${assignment?.gradesBoard?.[studentIdx]?.value ?? 0}`,
+          );
         });
       });
       dataBoard.push(studentData);
@@ -338,13 +342,16 @@ export default function StickyHeadTable({
   };
 
   useEffect(() => {
-    role === Role.TEACHER && getTotalGradeBoard();
     role === Role.STUDENT && getGradeStudentBoard();
   }, [role]);
 
   useEffect(() => {
     if (flag !== 0) exportGradeBoard();
   }, [flag]);
+
+  useEffect(() => {
+    getTotalGradeBoard();
+  }, [getBoardFlag]);
 
   return (
     <>

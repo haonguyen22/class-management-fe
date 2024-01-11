@@ -43,7 +43,31 @@ function GradeStructureBox() {
     event: React.ChangeEvent<HTMLInputElement>,
     item: GradeStructureItem,
   ) => {
-    const { name, value } = event.target;
+    const name = event.target.name;
+    const value = event.target.value;
+    setGrades((prev) =>
+      prev.map((i) =>
+        i?.gradeCategory?.id === item?.gradeCategory?.id
+          ? {
+              ...i,
+              gradeCategory: {
+                ...i.gradeCategory,
+                [name]: value,
+              },
+            }
+          : i,
+      ),
+    );
+  };
+
+  const onPercentageChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    item: GradeStructureItem,
+  ) => {
+    const name = event.target.name;
+    const value = isNaN(parseInt(event.target.value))
+      ? '0'
+      : event.target.value;
     setGrades((prev) =>
       prev.map((i) =>
         i?.gradeCategory?.id === item?.gradeCategory?.id
@@ -64,8 +88,11 @@ function GradeStructureBox() {
       ...prev,
       {
         gradeCategory: {
-          id: prev.length + 1,
-          priority: prev.length + 1,
+          id:
+            (grades?.[grades.length - 1]?.gradeCategory?.id ?? 1) + 10000 ?? 1,
+          priority:
+            (grades?.[grades.length - 1]?.gradeCategory?.priority ?? 1) +
+              10000 ?? 1,
           name: '',
           weight: 0,
         },
@@ -349,7 +376,7 @@ function GradeStructureBox() {
                     readOnly: !isTeacherRole,
                   }}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onTextChange(e, item)
+                    onPercentageChange(e, item)
                   }
                   defaultValue={item?.gradeCategory?.weight?.toString()}
                   value={item?.gradeCategory?.weight?.toString()}
