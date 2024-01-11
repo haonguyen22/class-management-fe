@@ -156,12 +156,12 @@ function UserProfilePage() {
             </Avatar>
           </div>
           <div className="flex flex-col  justify-center ml-10">
-            <div className="text-2xl font-bold mb-4">{auth()!.user.name}</div>
+            <div className="text-2xl font-bold mb-4">{auth()!.user?.name}</div>
             <div className="text-base font-thin text-gray-500">
-              {t('studentId')}: {auth()!.user.studentId}
+              {t('studentId')}: {auth()!.user?.studentId}
             </div>{' '}
             <div className="text-base font-thin text-gray-500">
-              {t('accountId')}: {auth()!.user.id}
+              {t('accountId')}: {auth()!.user?.id}
             </div>
           </div>
         </div>
@@ -196,7 +196,7 @@ function UserProfilePage() {
 
           <FieldInfoRow
             label={t('email')}
-            value={auth()!.user.email}
+            value={auth()!.user?.email}
             required
             disabled
             icon={
