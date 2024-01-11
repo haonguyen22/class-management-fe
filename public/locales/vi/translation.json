@@ -189,5 +189,6 @@
   "update": "Cập nhật",
   "unmap": "Hủy kết nối",
   "unmapSuccess": "Hủy kết nối thành công",
-  "gradeReview": "Phúc khảo điểm"
+  "gradeReview": "Phúc khảo điểm",
+  "gradeReviewDetail.composition": "Điểm thành phần"
 }

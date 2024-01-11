@@ -23,11 +23,11 @@ interface IGradeReview {
   expectedValue: number;
   id: number;
   message: string;
-  studentId: number;
+  studentId: string;
   time: string;
   value: number;
   avatar: string;
-  composition?: number;
+  composition: number;
 }
 
 interface IComment {
@@ -38,4 +38,17 @@ interface IComment {
   avatar?: string;
 }
 
-export { GradeReviewItem, gradeReviewClass, IGradeReview, IComment };
+interface IGradeComposition {
+  id: number;
+  name: string;
+  weight: number;
+  priority: number;
+}
+
+export {
+  GradeReviewItem,
+  gradeReviewClass,
+  IGradeReview,
+  IComment,
+  IGradeComposition,
+};

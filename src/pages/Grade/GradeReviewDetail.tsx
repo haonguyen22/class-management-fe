@@ -5,15 +5,16 @@ import GradeCommentInput from '../../components/Grade/GradeCommentInput';
 import { useTranslation } from 'react-i18next';
 import { apiCall } from '../../utils/apiCall';
 import { gradeReviewService } from '../../services/gradeReview/GradeReviewService';
-import { useContext, useEffect, useState } from 'react';
-// yup
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { IComment, IGradeReview } from '../../models/IGradeReview';
+import { IComment, IGradeComposition, IGradeReview } from '../../models/IGradeReview';
 import GradeCommentList from '../../components/Grade/GradeCommentList';
 import { useSnackbar } from 'notistack';
-import { ClassContext } from '../../context/ClassContext';
 import { Role } from '../../enums/RoleClass';
+import { authService } from '../../services/auth/AuthService';
+import { IUser } from '../../models/User';
+import { gradeManagementService } from '../../services/gradeManagement/GradeManagementService';
 
 
 
@@ -21,20 +22,23 @@ const GradeReviewDetail = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [gradeReview, setGradeReview] = useState<IGradeReview>();
   const [commentData, setCommentData] = useState<IComment[]>([]);
+  const [gradeComposition, setGradeComposition] = useState<IGradeComposition>(); // [
+  const [user, setUser] = useState<IUser>();
 
   const { t } = useTranslation();
   const { id } = useParams();
-  const {enqueueSnackbar} = useSnackbar();
-  const {role} = useContext(ClassContext);
+  const { enqueueSnackbar } = useSnackbar();
 
   const getGradeReviewDetail = async (gradeReviewId: number) => {
     setIsLoading(true);
     await apiCall(gradeReviewService.getGradeReviewDetail(gradeReviewId), {
       ifSuccess: (data) => {
         console.log(data);
-        const {gradeReview, comments} = data.metadata as {gradeReview: IGradeReview, comments: IComment[]};
+        const {gradeReview, comments, gradeComposition} = data.metadata as {gradeReview: IGradeReview, comments: IComment[], gradeComposition: IGradeComposition};
+        formikScore.setFieldValue('value', gradeReview.value);
         gradeReview && setGradeReview(gradeReview);
         comments.length>0 && setCommentData(comments);
+        gradeComposition && setGradeComposition(gradeComposition);
       },
       ifFailed: (error) => {
         console.log(error);
@@ -62,13 +66,24 @@ const GradeReviewDetail = () => {
     });
   };
 
+  const getUser = async () => {
+    await apiCall(authService.getProfile(), {
+      ifSuccess: (data) => {
+        setUser(data.metadata as IUser);
+      },
+      ifFailed: (error) => {
+        console.log(error);
+      }
+    });
+  };
+
   const validationScore = yup.object({
     value: yup.number().min(0).required(),
   });
 
   const formikScore = useFormik({
     initialValues: {
-      value: 0,
+      value: gradeReview?.value || 0,
     },
     validationSchema: validationScore,
     onSubmit: async (values) => {
@@ -76,9 +91,12 @@ const GradeReviewDetail = () => {
     },
   });
 
+
   useEffect(() => {
+    getUser();
     getGradeReviewDetail(parseInt(id!));
   }, [id]);
+
 
   return (
     <>
@@ -117,7 +135,7 @@ const GradeReviewDetail = () => {
                     error={formikScore.touched.value && Boolean(formikScore.errors.value)}
                     helperText={formikScore.touched.value && formikScore.errors.value}
                   />
-                  { role !== Role.STUDENT && role !== Role.NONE &&
+                  { user?.studentId !== gradeReview.studentId &&
                     <div className='flex gap-1 min-w-max ml-3'>
                       <Button variant='contained' type='submit'>
                         {t('gradeReviewDetail.confirm')}
@@ -138,21 +156,27 @@ const GradeReviewDetail = () => {
                 <div className='current-score w-full border border-gray-300 rounded-md flex flex-col items-center justify-center min-w-max shadow-md hover:shadow-lg px-3'>
                   <div>
                     <Scoreboard fontSize="medium" style={{ verticalAlign: 'middle', marginLeft: '5px', color: 'red' }} />
-                    <span className='ml-2 text-lg font-semibold'>{t('gradeReviewDetail.composition')} </span>
+                    <span className='ml-2 text-lg font-semibold'>
+                      {t('gradeReviewDetail.composition')}
+                    </span>
                   </div>
-                  <span className='font-bold text-lg'>{gradeReview.value}</span>
+                  <span className='font-bold text-lg'>{gradeComposition?.weight} %</span>
                 </div>
                 <div className='current-score w-full border border-gray-300 rounded-md flex flex-col items-center justify-center min-w-max shadow-md hover:shadow-lg px-3'>
                   <div>
                     <Scoreboard fontSize="medium" style={{ verticalAlign: 'middle', marginLeft: '5px', color: 'red' }} />
-                    <span className='ml-2 text-lg font-semibold'>{t('gradeReviewDetail.currenScore')} </span>
+                    <span className='ml-2 text-lg font-semibold'>
+                      {t('gradeReviewDetail.currenScore')}
+                    </span>
                   </div>
                   <span className='font-bold text-lg'>{gradeReview.value}</span>
                 </div>
                 <div className='new-score w-full border border-gray-300 rounded-md flex flex-col items-center justify-center min-w-max shadow-md hover:shadow-lg px-3'>
                   <div>
                     <SubjectIcon fontSize="medium" style={{ verticalAlign: 'middle', marginLeft: '5px', color:'green' }} />
-                    <span className='ml-2 text-lg font-semibold'>{t('gradeReviewDetail.expectedScore')} </span>
+                    <span className='ml-2 text-lg font-semibold'>
+                      {t('gradeReviewDetail.expectedScore')}
+                    </span>
                   </div>
                   <span className='font-bold text-lg'>{gradeReview.expectedValue}</span>
                 </div>

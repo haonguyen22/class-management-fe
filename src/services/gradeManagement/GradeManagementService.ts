@@ -108,6 +108,14 @@ class GradeManagementService {
     });
     return res;
   }
+
+  async viewGrade(classId: number, compositionId: number) {
+    const res = await api.get('/grade-management/view-grade', {
+      headers: { 'class-id': classId },
+      params: { compositionId },
+    });
+    return res;
+  }
 }
 
 export const gradeManagementService = new GradeManagementService();
