@@ -164,13 +164,7 @@ const NotificationButton = () => {
                         alignItems="flex-start"
                         onClick={() => {
                           console.log(notification);
-                          // navigate(
-                          //   notification.link.replace(
-                          //     'http://localhost:3000',
-                          //     '',
-                          //   ),
-                          //   // `/grade/${}`
-                          // );
+                          navigate(notification.link);
                         }}
                         sx={{
                           ':hover': {
