@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
-import { useAuthHeader, useSignIn } from 'react-auth-kit';
+import { useSignIn } from 'react-auth-kit';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { apiCall } from '../../utils/apiCall';
-import { userService } from '../../services/user/UserService';
-import { IUser } from '../../models/User';
 
 function SocialAuth() {
   const location = useLocation();
@@ -15,26 +12,6 @@ function SocialAuth() {
 
   const name = searchParams.get('name');
 
-  const getMe = async () => {
-    const authHeader = useAuthHeader();
-
-    const [tokenType, token] = authHeader().split(' ');
-
-    await apiCall(userService.getMe(), {
-      ifSuccess: (data) => {
-        SignIn({
-          token,
-          tokenType,
-          expiresIn: 3600,
-          authState: { user: data.metadata as IUser },
-        });
-      },
-      ifFailed: (error) => {
-        console.log(error);
-      },
-    });
-  };
-
   useEffect(() => {
     if (!token || !name) {
       navigate('/login');
@@ -45,7 +22,6 @@ function SocialAuth() {
         expiresIn: 3600,
         authState: { email: 'email' },
       });
-      getMe();
 
       navigate('/');
     }
