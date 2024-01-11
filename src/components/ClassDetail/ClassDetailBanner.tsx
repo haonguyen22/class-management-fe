@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { avatarDefault } from '../../constants/globalConst';
+import { avatarDefault, backgroundDefault } from '../../constants/globalConst';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -43,7 +43,7 @@ const ClassDetailBanner: React.FC<ClassBannerProps> = ({
       <div className="relative rounded-md object-center h-full">
         <div className="w-full h-full rounded-md">
           <img
-            src={backgroundImage ?? 'https://picsum.photos/1300/400'}
+            src={backgroundImage ?? backgroundDefault}
             alt="banner"
             className="relative w-full h-full min-h-[300px] max-h-[400px] rounded-md"
           />
