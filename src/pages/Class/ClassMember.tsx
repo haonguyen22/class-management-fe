@@ -8,7 +8,6 @@ import { IUser } from '../../models/User';
 import { Role } from '../../enums/RoleClass';
 
 const ClassMember = () => {
-  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
 
   const [teachers, setTeachers] = React.useState<IUser[]>([]);
@@ -22,8 +21,13 @@ const ClassMember = () => {
             students: IUser[];
             teachers: IUser[];
           };
+          console.log(metadata.students);
           setTeachers(metadata.teachers as IUser[]);
-          setStudents(metadata.students as IUser[]);
+          setStudents(
+            (metadata.students as IUser[])?.filter(
+              (student) => student?.id !== null ?? false,
+            ),
+          );
         }
       },
       ifFailed: (err) => {

@@ -36,8 +36,8 @@ function CreateClassDialog() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setStudentId(auth()!.user?.studentId ?? '');
-  }, [auth]);
+    setStudentId(auth()?.user?.studentId ?? '');
+  }, [auth()!.user?.studentId]);
 
   const [isOpenCreateDialog, setIsOpenCreateDialog] = useState(false);
   const [isOpenJoinDialog, setIsOpenJoinDialog] = useState(false);

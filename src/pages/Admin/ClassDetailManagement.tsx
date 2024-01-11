@@ -190,12 +190,11 @@ export default function ClassDetailManagementPage() {
 
   const unMapStudentIdToUser = async (userId: number, classId: string) => {
     setIsLoading(true);
-    console.log(userId, classId);
     await apiCall(adminService.unMapStudentIdToUser(userId, classId), {
       ifSuccess: () => {
         setStudents((prev) => {
           const newStudents = [...prev];
-          const index = newStudents.findIndex((user)  => user.id === userId);
+          const index = newStudents.findIndex((user) => user.id === userId);
           newStudents[index].studentId = '';
           return newStudents;
         });
@@ -262,17 +261,20 @@ export default function ClassDetailManagementPage() {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.userId}
+                      key={index}
                       sx={{
                         backgroundColor: `${
                           isTeacher ? 'rgba(0,0,255,0.1)' : 'white'
                         }`,
                       }}
                     >
-                      {columns.map((column) => {
-                        console.log(row.userId);
+                      {columns.map((column, indexColumn) => {
                         const value = row[column.id as keyof typeof row];
-                        return <TableCell key={column.id}>{value}</TableCell>;
+                        return (
+                          <TableCell key={`${index} - ${indexColumn}`}>
+                            {value}
+                          </TableCell>
+                        );
                       })}
                       <TableCell>
                         {!isTeacher && row.userId !== '' && (

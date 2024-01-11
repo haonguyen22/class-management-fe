@@ -16,12 +16,13 @@ import { gradeManagementService } from '../../services/gradeManagement/GradeMana
 const GradeTab = () => {
   const { id } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(false);
-  const {role} = useContext(ClassContext);
+  const { role } = useContext(ClassContext);
   const { enqueueSnackbar } = useSnackbar();
   const { classDetail } = useContext(ClassContext);
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [flag, setFlag] = useState(0);
+  const [getBoardFlag, setGetBoardFlag] = useState(0);
 
   const handleOpen = () => {
     setOpen(true);
@@ -60,6 +61,7 @@ const GradeTab = () => {
       gradeManagementService.uploadStudentList(parseInt(id!), formData),
       {
         ifSuccess: (data) => {
+          setGetBoardFlag(getBoardFlag + 1);
           enqueueSnackbar(data.message, {
             variant: 'success',
           });
@@ -75,7 +77,7 @@ const GradeTab = () => {
 
   return (
     <>
-      { role && role !== 'student' &&
+      {role && role !== 'student' && (
         <div className="flex flex-row items-center justify-between">
           <div className="flex gap-3 mb-3">
             <Button
@@ -111,8 +113,12 @@ const GradeTab = () => {
           {/* Loading */}
           {isLoading && <CircularProgress size={30} />}
         </div>
-      }
-      <GradeManagementTable setLoading={setIsLoading} flag={flag} />
+      )}
+      <GradeManagementTable
+        setLoading={setIsLoading}
+        flag={flag}
+        getBoardFlag={getBoardFlag}
+      />
     </>
   );
 };

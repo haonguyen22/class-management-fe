@@ -9,7 +9,9 @@ function SocialAuth() {
 
   const searchParams = new URLSearchParams(location.search);
   const token = searchParams.get('token');
+
   const name = searchParams.get('name');
+
   useEffect(() => {
     if (!token || !name) {
       navigate('/login');
@@ -20,6 +22,7 @@ function SocialAuth() {
         expiresIn: 3600,
         authState: { email: 'email' },
       });
+
       navigate('/');
     }
   }, [SignIn, name, navigate, token]);
