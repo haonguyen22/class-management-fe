@@ -344,8 +344,8 @@ export default function StickyHeadTable({
   }, [flag]);
 
   useEffect(() => {
-    role === Role.STUDENT && getGradeStudentBoard();
-    role === Role.TEACHER || role === Role.ADMIN && getTotalGradeBoard();
+    console.log(role);
+    Role.isStudentRole(role) ? getGradeStudentBoard() : getTotalGradeBoard();
   }, [getBoardFlag, role]);
 
   return (

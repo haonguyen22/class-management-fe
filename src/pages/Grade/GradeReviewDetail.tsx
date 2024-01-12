@@ -33,7 +33,6 @@ const GradeReviewDetail = () => {
     setIsLoading(true);
     await apiCall(gradeReviewService.getGradeReviewDetail(gradeReviewId), {
       ifSuccess: (data) => {
-        console.log(data);
         const {gradeReview, comments, gradeComposition} = data.metadata as {gradeReview: IGradeReview, comments: IComment[], gradeComposition: IGradeComposition};
         formikScore.setFieldValue('value', gradeReview.currentGrade);
         gradeReview && setGradeReview(gradeReview);
