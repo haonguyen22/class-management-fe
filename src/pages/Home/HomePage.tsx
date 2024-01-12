@@ -18,8 +18,8 @@ const HomePage = () => {
 
   const { classes, fetchClasses, isFetchingClasses } =
     useContext(GlobalContext);
+  const authHeader = useAuthHeader();
   const getMe = async () => {
-    const authHeader = useAuthHeader();
 
     const [tokenType, token] = authHeader().split(' ');
 
