@@ -64,8 +64,12 @@ const ClassDetail = () => {
 
   useEffect(() => {
     console.log(role);
+    console.log(index.current);
     getClassDetail();
-    if (role === Role.TEACHER && index.current != 0) getClassCode();
+    if (role === Role.TEACHER && index.current != 0){
+      console.log('🐛 Get class code');
+      getClassCode();
+    };
     index.current++;
   }, [id, role]);
 

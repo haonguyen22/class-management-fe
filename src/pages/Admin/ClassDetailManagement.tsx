@@ -221,7 +221,7 @@ export default function ClassDetailManagementPage() {
       <div className="h-4"></div>
       <div className="w-full flex flex-row items-center justify-between h-8">
         <div className="text-lg mb-4 font-bold">
-          {t('studentListInClass')} 1234
+          {t('studentListInClass')}
         </div>
         <div className="text-sm mb-4 font-bold">
           {isLoading && <CircularProgress />}
