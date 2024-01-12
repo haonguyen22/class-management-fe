@@ -28,6 +28,7 @@ interface IGradeReview {
   value: number;
   avatar: string;
   composition: number;
+  currentGrade: number;
 }
 
 interface IComment {

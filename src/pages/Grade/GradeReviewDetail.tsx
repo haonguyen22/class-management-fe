@@ -35,7 +35,7 @@ const GradeReviewDetail = () => {
       ifSuccess: (data) => {
         console.log(data);
         const {gradeReview, comments, gradeComposition} = data.metadata as {gradeReview: IGradeReview, comments: IComment[], gradeComposition: IGradeComposition};
-        formikScore.setFieldValue('value', gradeReview.value);
+        formikScore.setFieldValue('value', gradeReview.currentGrade);
         gradeReview && setGradeReview(gradeReview);
         comments.length>0 && setCommentData(comments);
         gradeComposition && setGradeComposition(gradeComposition);
@@ -83,7 +83,7 @@ const GradeReviewDetail = () => {
 
   const formikScore = useFormik({
     initialValues: {
-      value: gradeReview?.value || 0,
+      value: gradeReview?.currentGrade ||0,
     },
     validationSchema: validationScore,
     onSubmit: async (values) => {
