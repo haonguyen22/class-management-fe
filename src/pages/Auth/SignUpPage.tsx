@@ -68,7 +68,7 @@ function SignUpPage() {
           password: '',
           confirmPassword: '',
           name: '',
-          phone: '',
+          phoneNumber: '',
           address: '',
         }}
         validationSchema={Yup.object({
@@ -82,7 +82,7 @@ function SignUpPage() {
           confirmPassword: Yup.string()
             .oneOf([Yup.ref('password')], t('confirmPassword.notMatch'))
             .required(t('confirmPassword.required')),
-          phone: Yup.string()
+          phoneNumber: Yup.string()
             .matches(phoneRegrex, t('phone.invalid'))
             .required(t('phone.required')),
           address: Yup.string().required(t('address.required')),
@@ -148,15 +148,15 @@ function SignUpPage() {
               </div>
             </div>
             <div className="w-full">
-              <label htmlFor="phone">{t('phone.label')}</label>
+              <label htmlFor="phoneNumber">{t('phone.label')}</label>
               <Field
-                name="phone"
+                name="phoneNumber"
                 type="text"
                 placeholder={t('phone.label')}
                 className="w-full px-3 py-2 border ring-1 border-gray-500 rounded-md focus:outline-none focus:ring-green-300 transition-all"
               />
               <div className="w-full text-base text-red-500 font-semibold">
-                <ErrorMessage name="phone" />
+                <ErrorMessage name="phoneNumber" />
               </div>
             </div>
             <div className="w-full">
