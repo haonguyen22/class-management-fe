@@ -350,7 +350,7 @@ export default function StickyHeadTable({
   }, [flag]);
 
   useEffect(() => {
-    getTotalGradeBoard();
+    role === Role.TEACHER && getTotalGradeBoard();
   }, [getBoardFlag]);
 
   return (

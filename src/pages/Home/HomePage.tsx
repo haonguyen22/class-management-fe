@@ -18,28 +18,28 @@ const HomePage = () => {
 
   const { classes, fetchClasses, isFetchingClasses } =
     useContext(GlobalContext);
-  const getMe = async () => {
-    const authHeader = useAuthHeader();
+  // const getMe = async () => {
+  //   const authHeader = useAuthHeader();
 
-    const [tokenType, token] = authHeader().split(' ');
+  //   const [tokenType, token] = authHeader().split(' ');
 
-    await apiCall(userService.getMe(), {
-      ifSuccess: (data) => {
-        SignIn({
-          token,
-          tokenType,
-          expiresIn: 3600,
-          authState: { user: data.metadata as IUser },
-        });
-      },
-      ifFailed: (error) => {
-        console.log(error);
-      },
-    });
-  };
+  //   await apiCall(userService.getMe(), {
+  //     ifSuccess: (data) => {
+  //       SignIn({
+  //         token,
+  //         tokenType,
+  //         expiresIn: 3600,
+  //         authState: { user: data.metadata as IUser },
+  //       });
+  //     },
+  //     ifFailed: (error) => {
+  //       console.log(error);
+  //     },
+  //   });
+  // };
 
   useEffect(() => {
-    getMe();
+    // getMe();
     fetchClasses();
   }, []);
 

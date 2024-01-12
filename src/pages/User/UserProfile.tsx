@@ -15,6 +15,7 @@ import { apiCall } from '../../utils/apiCall';
 import { useSnackbar } from 'notistack';
 import styled from '@emotion/styled';
 import { IUser } from '../../models/User';
+import { avatarDefault } from '../../constants/globalConst';
 
 interface UserProfileUpdate {
   name: string;
@@ -131,7 +132,7 @@ function UserProfilePage() {
           <div className=" relative" style={{ width: 130, height: 130 }}>
             <Avatar
               alt="Remy Sharp"
-              src={profile.avatar}
+              src={profile.avatar ?? avatarDefault}
               sx={{ width: 130, height: 130, marginRight: '20px' }}
               className=" absolute top-0 left-0"
             />
