@@ -122,7 +122,7 @@ const NotificationButton = () => {
                         onClick={() => {
                           navigate(
                             notification.link.replace(
-                              'http://localhost:3000',
+                              'https://class-management-fe.vercel.app',
                               '',
                             ),
                           );
@@ -154,7 +154,7 @@ const NotificationButton = () => {
                     </div>
                   );
                 })}
-               
+
               </>
             )}
           </List>

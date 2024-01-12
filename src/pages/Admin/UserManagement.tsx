@@ -342,7 +342,7 @@ export default function UserManagementPage() {
                         const value = row[column.id as keyof typeof row];
                         return <TableCell key={column.id}>{value}</TableCell>;
                       })}
-                      <TableCell>
+                      <TableCell className='min-w-max'>
                         {isActive  ? (
                           <>
                             { row.userId !== '1' &&
