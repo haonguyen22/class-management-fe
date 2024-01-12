@@ -157,6 +157,8 @@
   "gradeReview.AssignmentLabel": "Assignment",
   "assignment": "Assignment",
   "gradeReview.messageLabel": "Message",
+  "ClassCode.copied": "Copy successfully",
+  "ClassCode.copyFailed": "Copy failed",
   "admin": "Admin",
   "classManagement": "Class management",
   "userMapping": "User mapping",
@@ -188,5 +190,6 @@
   "editStudent": "Edit student",
   "update": "Update",
   "unmap": "Unmap",
-  "unmapSuccess": "Unmap successfully"
+  "unmapSuccess": "Unmap successfully",
+  "gradeReviewDetail.composition": "Grade composition"
 }

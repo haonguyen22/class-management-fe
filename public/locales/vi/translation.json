@@ -155,6 +155,8 @@
   "gradeReview.AssignmentLabel": "Bài tập",
   "assignment": "Bài tập",
   "gradeReview.messageLabel": "Lời nhắn",
+  "ClassCode.copied": "Sao chép thành công",
+  "ClassCode.copyFailed": "Sao chép thất bại",
   "admin": "Quản trị viên",
   "classManagement": "Quản lý lớp học",
   "userMapping": "Kết nối MSSV và tài khoản",
@@ -187,5 +189,6 @@
   "update": "Cập nhật",
   "unmap": "Hủy kết nối",
   "unmapSuccess": "Hủy kết nối thành công",
-  "gradeReview": "Phúc khảo điểm"
+  "gradeReview": "Phúc khảo điểm",
+  "gradeReviewDetail.composition": "Điểm thành phần"
 }

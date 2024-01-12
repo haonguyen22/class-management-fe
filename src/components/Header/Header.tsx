@@ -17,10 +17,9 @@ function Header() {
   const location = useLocation();
   const { fetchNotifications } = useContext(GlobalContext);
 
+
   useEffect(() => {
-    if (isAuthenticate()) {
-      fetchNotifications();
-    }
+    isAuthenticate() && fetchNotifications();
   }, []);
 
   return (

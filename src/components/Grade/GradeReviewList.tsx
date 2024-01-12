@@ -1,26 +1,29 @@
 import React from 'react';
 import { GradeReviewRowProps } from '../../models/IGrade';
 import GradeReviewRow from './GradeReviewRow';
+import { GradeReviewItem } from '../../models/IGradeReview';
 
 interface GradeReviewListProps {
-  data: GradeReviewRowProps[];
+  data: GradeReviewItem[];
 }
 
 const GradeReviewList: React.FC<GradeReviewListProps> = ({ data }) => {
   return (
     <div className='flex flex-col gap-3'>
-      {data.map((row, ind) => (
-        <GradeReviewRow
-          key={ind}
-          id={row.id}
-          time={row.time}
-          imgSrc={row.imgSrc}
-          message={row.message}
-          student={row.student}
-          className={row.className}
-          checked={row.checked}
-        />
-      ))}
+      {
+        data.map((item, ind) => (
+          <GradeReviewRow
+            key={ind}
+            id={item.id}
+            imgSrc={item.avatar}
+            message={item.message}
+            student={item.studentId}
+            className={item.className}
+            checked={false}
+            time={item.time}
+          />
+        ))
+      }
     </div>
   );
 };

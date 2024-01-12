@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AddMemberButton from '../ClassMember/AddMemberDialog';
 import { Role } from '../../enums/RoleClass';
+import { useSnackbar } from 'notistack';
 
 interface DropdownCodeProps {
   code?: string;
@@ -20,6 +21,7 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code, type }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const {enqueueSnackbar} = useSnackbar();
 
   const handleMoreClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -34,9 +36,15 @@ const DropdownCode: React.FC<DropdownCodeProps> = ({ code, type }) => {
       .writeText(text)
       .then(() => {
         console.log('Text copied to clipboard:', text);
+        enqueueSnackbar(t('ClassCode.copied'), {
+          variant: 'success',
+        });
       })
       .catch((err) => {
         console.error('Unable to copy text to clipboard', err);
+        enqueueSnackbar(t('ClassCode.copyFailed'), {
+          variant: 'error',
+        });
       });
     setAnchorEl(null);
   };

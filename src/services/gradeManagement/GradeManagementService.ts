@@ -101,6 +101,21 @@ class GradeManagementService {
     );
     return res;
   }
+
+  async getListAssignment(classId: number) {
+    const res = await api.get('/grade-management/assignment', {
+      headers: { 'class-id': classId },
+    });
+    return res;
+  }
+
+  async viewGrade(classId: number, compositionId: number) {
+    const res = await api.get('/grade-management/view-grade', {
+      headers: { 'class-id': classId },
+      params: { compositionId },
+    });
+    return res;
+  }
 }
 
 export const gradeManagementService = new GradeManagementService();

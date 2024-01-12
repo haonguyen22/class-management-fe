@@ -38,7 +38,6 @@ export default function MiniDrawer({
     setOpen(false);
   };
 
-  console.log(auth()!.user);
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
