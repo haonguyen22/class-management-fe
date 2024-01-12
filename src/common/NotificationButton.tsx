@@ -163,8 +163,12 @@ const NotificationButton = () => {
                       <ListItem
                         alignItems="flex-start"
                         onClick={() => {
-                          console.log(notification);
-                          navigate(notification.link);
+                          navigate(
+                            notification.link.replace(
+                              'http://localhost:3000',
+                              '',
+                            ),
+                          );
                         }}
                         sx={{
                           ':hover': {
