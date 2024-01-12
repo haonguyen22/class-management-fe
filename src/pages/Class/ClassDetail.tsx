@@ -19,6 +19,7 @@ const ClassDetail = () => {
   const [code, setCode] = useState('');
   const { role } = useContext(ClassContext);
   const index = useRef(0);
+  const currentId = useRef(id);
 
   const getClassCode = async () => {
     await apiCall(classService.getClassCode(id!), {
@@ -64,12 +65,14 @@ const ClassDetail = () => {
 
   useEffect(() => {
     console.log(role);
-    console.log(index.current);
     getClassDetail();
-    if (role === Role.TEACHER && index.current != 0){
-      console.log('🐛 Get class code');
+    if (
+      role === Role.TEACHER &&
+      (index.current != 0 || currentId.current == id)
+    ) {
+      currentId.current = id;
       getClassCode();
-    };
+    }
     index.current++;
   }, [id, role]);
 
