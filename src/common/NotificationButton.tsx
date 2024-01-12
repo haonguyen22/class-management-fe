@@ -154,49 +154,7 @@ const NotificationButton = () => {
                     </div>
                   );
                 })}
-                {notifications.map((notification) => {
-                  const type = NotificationType.convert(
-                    notification.notificationType,
-                  );
-                  return (
-                    <div key={notification.id}>
-                      <ListItem
-                        alignItems="flex-start"
-                        onClick={() => {
-                          navigate(
-                            notification.link.replace(
-                              'http://localhost:3000',
-                              '',
-                            ),
-                          );
-                        }}
-                        sx={{
-                          ':hover': {
-                            backgroundColor: 'whitesmoke',
-                            cursor: 'pointer',
-                          },
-                        }}
-                      >
-                        <ListItemAvatar>{type?.icon}</ListItemAvatar>
-                        <ListItemText
-                          primary={
-                            <React.Fragment>
-                              <Typography
-                                sx={{ display: 'inline' }}
-                                component="span"
-                                variant="body2"
-                                color="text.primary"
-                              >
-                                {notification.title}
-                              </Typography>
-                            </React.Fragment>
-                          }
-                        />
-                      </ListItem>
-                      <Divider variant="inset" component="li" />
-                    </div>
-                  );
-                })}
+               
               </>
             )}
           </List>

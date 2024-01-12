@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import ClassDetailBanner from '../../components/ClassDetail/ClassDetailBanner';
 import { useParams } from 'react-router-dom';
 
@@ -18,6 +18,7 @@ const ClassDetail = () => {
 
   const [code, setCode] = useState('');
   const { role } = useContext(ClassContext);
+  const index = useRef(0);
 
   const getClassCode = async () => {
     await apiCall(classService.getClassCode(id!), {
@@ -57,10 +58,15 @@ const ClassDetail = () => {
       },
     });
   };
+  useEffect(() => {
+    index.current = 0;
+  }, [id]);
 
   useEffect(() => {
-    if (role === Role.TEACHER) getClassCode();
+    console.log(role);
     getClassDetail();
+    if (role === Role.TEACHER && index.current != 0) getClassCode();
+    index.current++;
   }, [id, role]);
 
   if (isLoading)

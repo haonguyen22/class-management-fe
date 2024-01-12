@@ -75,7 +75,9 @@ function ListClassDrawer({
           <List>
             {classes.map((item: IClass) => (
               <ListItem
-                onClick={() => navigate(`/class/${item.id}/detail`)}
+                onClick={async () => {
+                  navigate(`/class/${item.id}/detail`);
+                }}
                 key={item.id}
                 disablePadding
                 sx={{ display: 'block' }}
